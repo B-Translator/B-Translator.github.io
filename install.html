@@ -1,0 +1,55 @@
+---
+layout: default
+---
+
+<h2>Installation</h2>
+
+<p>The recommended way of installation for a production server is to
+install it inside a chroot, in precise (Ubuntu 12.04). Assuming that
+we have already installed a minimal Ubuntu server 12.04 (precise),
+btranslator can be installed in it like this:</p>
+
+<pre class="example">mkdir /var/chroot
+cd /var/chroot/
+git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
+nohup nice B-Translator/install/install.sh btr &amp;
+tail -f nohup.out
+chroot btr/ /tmp/install/config.sh
+chroot btr/ rm -rf /tmp/install
+reboot  ## it is advisable to reboot the host after this installation
+</pre>
+
+<p>This will install in <code>/var/chroot/btr</code> a minimal ubuntu system,
+B-Translator, and everything that is needed for the normal work of
+the system. It will also make the neccessary common configurations
+of the system and prompt for customizing it (for example the domain,
+email address, etc.)</p>
+
+<p>The installation script will also create the init script
+<code>/etc/init.d/chroot-btr</code>, which can be used to start and
+stop the services inside the chroot:</p>
+
+<pre class="example">service chroot-btr start
+service chroot-btr stop
+</pre>
+
+<p><b>Note:</b> The default options of the script are: <code>--arch=i386</code>,
+<code>--suite=precise</code>
+and <code>--mirror=http://archive.ubuntu.com/ubuntu</code> . If you
+want to use something different, you have to give the option
+explicitly on the command line. For example, on a <i>rackspace</i>
+server it can be like this:</p>
+
+<pre class="example">nohup nice B-Translator/install/install.sh btr \
+      --mirror=http://mirror.rackspace.com/ubuntu/ --arch=amd64 &amp;
+</pre>
+
+<p>On <i>amazon</i> it can be like this:
+<code>--mirror=http://us-east-1.ec2.archive.ubuntu.com/ubuntu/</code></p>
+
+<p>For development purposes, the scripts
+in <code>B-Translator/install/dev/</code> can be used to make a
+development environment.</p>
+
+<p>For more details about installation
+see <a href="https://github.com/dashohoxha/B-Translator/blob/master/docs/INSTALL.org">docs/INSTALL.org</a>.</p>
