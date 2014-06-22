@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>B-Translator by dashohoxha</title>
+<title>B-Translator</title>
 
 <link rel="stylesheet" href="stylesheets/styles.css">
 <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -23,21 +23,20 @@
   <p class="header"></p>
 
   <ul>
-    <li><a class="buttons github" href="https://github.com/dashohoxha/B-Translator">View On GitHub</a></li>
-    <li class="download"><a class="buttons" href="https://github.com/dashohoxha/B-Translator/tarball/master">Download TAR</a></li>
-    <li class="download"><a class="buttons" href="https://github.com/dashohoxha/B-Translator/zipball/master">Download ZIP</a></li>
+    <li><a class="buttons github" href="https://github.com/B-Translator">View On GitHub</a></li>
+    <li class="download"><a class="buttons" href="">Client TGZ</a></li>
+    <li class="download"><a class="buttons" href="">Server TGZ</a></li>
   </ul>
 
   <ul class="links">
     <li><a href="index.html">Index</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="install.html">Install</a></li>
+    <li><a href="api/">API</a></li>
     <li><a href="docs.html">Docs</a></li>
     <li><a href="sites.html">Sites</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-
-  <p class="header">Developed by <a class="header name" href="https://github.com/dashohoxha">dashohoxha</a></p>
 
 </header>
 
@@ -45,55 +44,79 @@
       <section>
         <h2>Installation</h2>
 
-<p>The recommended way of installation for a production server is to
-install it inside a chroot, in precise (ubuntu 12.04). Assuming that
-we have already installed a minimal ubuntu server 12.04 (precise),
-btranslator can be installed in it like this:</p>
+<p>B-Translator is made of two parts, a client application and a
+server application, which communicate with each-other through an HTTP
+API. They can be installed together on the same server, or they can be
+installed on different servers. Both of these applications are built
+with Drupal7. For more flexibility, there is also a drupal module for
+the client, that can be installed independently on any Drupal
+application or distribution.</p>
 
+<h3>Installing B-Translator Client</h3>
+
+<p>The recommended way of installation for a production server is to
+install it inside a chroot, in <em>trusty</em> (ubuntu
+14.04). Assuming that we have already installed a minimal ubuntu
+server 14.04 (trusty), B-Translator Client can be installed in it like
+this:
 <pre class="example">mkdir /var/chroot
 cd /var/chroot/
-git clone https://github.com/dashohoxha/B-Translator.git
-nohup nice B-Translator/install/install.sh btr &amp;
+git clone https://github.com/B-Translator/btr_client.git
+cp btr_client/install/settings.sh bcl.sh
+vim bcl.sh
+nohup nice btr_client/install/chroot.sh bcl.sh &
 tail -f nohup.out
-chroot btr/ /tmp/install/config.sh
-chroot btr/ rm -rf /tmp/install
-reboot  ## it is advisable to reboot the host after this installation
-</pre>
+less -r nohup.out</pre>
+</p>
 
-<p>This will install in <code>/var/chroot/btr</code> a minimal ubuntu system,
-B-Translator, and everything that is needed for the normal work of
-the system. It will also make the neccessary common configurations
-of the system and prompt for customizing it (for example the domain,
-email address, etc.)</p>
+<p>This will install in <code>/var/chroot/</code> a minimal ubuntu
+system, B-Translator Client, and everything that is needed for the
+normal work of the system. It will also make the neccessary common
+configurations of the system.</p>
+
+<p>The installation script will also create the init script
+<code>/etc/init.d/chroot-bcl</code>, which can be used to start and
+stop the services inside the chroot:
+<pre class="example">service chroot-bcl start
+service chroot-bcl stop</pre>
+</p>
+
+<h3>Installing B-Translator Server</h3>
+
+<p>The recommended way of installation for a production server is to
+install it inside a chroot, in <em>trusty</em> (ubuntu
+14.04). Assuming that we have already installed a minimal ubuntu
+server 14.04 (trusty), B-Translator Server can be installed in it like
+this:
+<pre class="example">mkdir /var/chroot
+cd /var/chroot/
+git clone https://github.com/B-Translator/btr_client.git
+git clone https://github.com/B-Translator/btr_server.git
+cp btr_server/install/settings.sh btr.sh
+vim btr.sh
+nohup nice btr_server/install/chroot.sh btr.sh &
+tail -f nohup.out
+less -r nohup.out</pre>
+</p>
+
+<p>This will install in <code>/var/chroot/</code> a minimal ubuntu
+system, B-Translator Server, B-Translator Client, and everything that
+is needed for the normal work of the system. It will also make the
+neccessary common configurations of the system.</p>
 
 <p>The installation script will also create the init script
 <code>/etc/init.d/chroot-btr</code>, which can be used to start and
-stop the services inside the chroot:</p>
-
+stop the services inside the chroot:
 <pre class="example">service chroot-btr start
-service chroot-btr stop
-</pre>
+service chroot-btr stop</pre>
+</p>
 
-<p><b>Note:</b> The default options of the script are: <code>--arch=i386</code>,
-<code>--suite=precise</code>
-and <code>--mirror=http://archive.ubuntu.com/ubuntu</code> . If you
-want to use something different, you have to give the option
-explicitly on the command line. For example, on a <i>rackspace</i>
-server it can be like this:</p>
+<h3>Installing btrClient Module</h3>
 
-<pre class="example">nohup nice B-Translator/install/install.sh btr \
-      --mirror=http://mirror.rackspace.com/ubuntu/ --arch=amd64 &amp;
-</pre>
-
-<p>On <i>amazon</i> it can be like this:
-<code>--mirror=http://us-east-1.ec2.archive.ubuntu.com/ubuntu/</code></p>
-
-<p>For development purposes, the scripts
-in <code>B-Translator/install/dev/</code> can be used to make a
-development environment.</p>
-
-<p>For more details about installation
-see <a href="https://github.com/dashohoxha/B-Translator/blob/master/docs/INSTALL.org">docs/INSTALL.org</a>.</p>
+<p>The module btrClient is intended for Drupal developers who want to
+integrate it into their Drupal application. For instruction about it
+see <a href="https://github.com/B-Translator/btrClient">https://github.com/B-Translator/btrClient</a>
+or <a href="https://drupal.com/projects/btrclient">https://drupal.com/projects/btrclient</a>.</p>
 
       </section>
 
