@@ -74,8 +74,42 @@ service chroot-btr stop</pre>
 <h3>Installing btrClient Module</h3>
 
 <p>The module btrClient is intended for Drupal developers who want to
-integrate it into their Drupal application. For instruction about it
+integrate it into their Drupal application. For instructions about it
 see <a href="https://github.com/B-Translator/btrClient"
 target="_blank">https://github.com/B-Translator/btrClient</a>
 or <a href="https://drupal.org/project/btrclient"
 target="_blank">https://drupal.org/project/btrclient</a>.</p>
+
+<h3>Quick Installation</h3>
+
+<p>Creating a chroot installation with installation scripts takes some
+time (1-2 hours) and sometimes it can fail if there are temporary
+network connection problems or other problems. A quicker way of
+installation is to download a pre-installed chroot filesystem and then
+change only the configuration.</p>
+
+<ol>
+  <li>Download the archive of B-Translator Client or B-Translator
+  Server:
+    <a href="https://drive.google.com/file/d/0B7H_DCc2DjNGRjU0RFdZZGlrV3M/edit?usp=sharing"
+    target="_blank">B-Translator Client TGZ</a> (~400MB),
+    <a href="https://drive.google.com/file/d/0B7H_DCc2DjNGX0Y3NmNhRmw1VzQ/edit?usp=sharing"
+    target="_blank">B-Translator Server TGZ</a> (~600MB).
+  </li>
+  <li>Extract the archive on the root (It will create the
+    directory <code>/var/chroot/bcl/</code> containing the chroot
+    system, and the init script
+    <code>/etc/init.d/chroot-bcl</code>):
+    <pre class="example">sudo tar --extract --absolute-names --gunzip --file=bcl.tgz</pre>
+  </li>
+  <li>Customize the configuration of the chroot system (It will allow
+  you to change the domain, change the passwords, etc.):
+    <pre class="example">sudo su
+/etc/init.d/chroot-bcl start
+cd /var/chroot/
+chroot bcl/
+cd /var/www/bcl/profiles/btr_client/
+install/config.sh
+</pre>
+  </li>
+</ol>

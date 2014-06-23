@@ -12,12 +12,14 @@ code {
 }
 
 pre {
-    padding: 15px;
+    padding: 10px;
     border: 1pt solid #AEBDCC;
     border-radius: 5px;
     background-color: #000000;
     color: #eeeeee;
     font-family: Ubuntu Mono, monospace, courier;
+    font-size: 16px;
+    line-height: 22px;
 }
 
 b {
