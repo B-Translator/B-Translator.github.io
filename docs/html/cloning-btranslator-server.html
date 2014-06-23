@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Cloning a B-Translator Server</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-06-23 19:32:35 CEST"/>
+<meta name="author" content="Dashamir Hoxha"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link href="css/org.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Cloning a B-Translator Server</h1>
+
+
+
+
+<p>
+Why do I need to clone a <a href="http://info.btranslator.org">B-Translator</a> server? An obvious reason is to
+have a backup server. In case that something goes wrong with the main
+server I can quickly switch to the backup server, until I find and fix
+the problem.
+</p>
+<p>
+A clone can also be used for testing. Before applying something on the
+main server I can test it first on a clone/backup server.
+</p>
+<p>
+Another reason for cloning can be load-balancing. It is possible to
+keep several clone servers synchronised with each-other, and then the
+work can be shared between them with a load balancer. I haven't tried
+this yet, but I think that it should work.
+</p>
+<p>
+It can be possible and even simple to make identical clones just by
+copying the physical disk or the filesystem. However I prefer to build
+a new server from scratch and copy only the relevant data from the old
+server.
+</p>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Installation </a></li>
+<li><a href="#sec-2">Setting the domain name </a></li>
+<li><a href="#sec-3">Replacing NGINX with Apache2 </a></li>
+<li><a href="#sec-4">Enable other drupal features </a>
+<ul>
+<li><a href="#sec-4.1">Enable the feature btr_fb </a></li>
+</ul>
+</li>
+<li><a href="#sec-5">Start ssh </a></li>
+<li><a href="#sec-6">Reset the password of drupal admin </a></li>
+<li><a href="#sec-7">Transfer content </a></li>
+<li><a href="#sec-8">Fix path aliases and menus </a></li>
+<li><a href="#sec-9">Transfer drupal private settings </a></li>
+<li><a href="#sec-10">Sync users and contributions </a></li>
+<li><a href="#sec-11">Sync vocabulary data </a></li>
+<li><a href="#sec-12">Get and import PO files </a>
+<ul>
+<li><a href="#sec-12.1">Download (get) PO files </a></li>
+<li><a href="#sec-12.2">Import PO files </a></li>
+</ul>
+</li>
+<li><a href="#sec-13">Switching to the new server </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Installation </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+First, I build a new server from scratch:
+</p>
+
+
+<pre class="example">mkdir /var/chroot
+cd /var/chroot/
+git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
+nohup nice B-Translator/install/install.sh btr-1 &amp;
+tail -f nohup.out
+</pre>
+
+
+
+
+<p>
+Then configure it:
+</p>
+
+
+<pre class="example">chroot btr-1/ /tmp/install/config.sh
+</pre>
+
+
+
+
+<p>
+And then reboot the host:
+</p>
+
+
+<pre class="example">reboot  ## it is advisable to reboot the host after this installation
+</pre>
+
+
+
+
+<p>
+The last step of configuration is about setting the primary language
+of translation (<b>sq</b> in my case), and a list of auxiliary languages.
+This list should include at least <b>fr</b>, since it is used instead of
+POT (PO template) files, when they are missing. But the features
+related to auxiliary languages are not implemented yet, so it is not
+much useful to include other languages on that list, and I leave
+just <b>fr</b>.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Setting the domain name </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+If I can assign a domain name to this copy of B-Translator (for
+example <code>test.l10n.org.al</code>), but during the configuration it is not
+given properly, then I can correct/change it like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/btr-1
+cd /var/www/btr/profiles/btranslator
+install/config/domain.sh
+</pre>
+
+
+
+
+<p>
+If this is a local copy (installed on my local machine) and its
+domain name is for example <code>l10n.org.xy</code>, then I also add this
+domain name on the file <code>/etc/hosts</code> of my machine:
+</p>
+
+
+<pre class="example">127.0.0.1       l10n.org.xy  localhost
+</pre>
+
+
+
+<p>
+This way I can access it by typing <code>https://l10n.org.xy</code> on the
+browser location (not <code>https://127.0.0.1</code> or <code>https://localhost</code>).
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Replacing NGINX with Apache2 </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+I have used NGINX as the default web server because it is supposed
+to be faster and more responsive under heavy load.  Unfortunately it
+has been working very slow, for some reasons that I have not been
+able to find and fix. On the log file
+<code>/var/log/nginx/btr.error.log</code> I see messages like this:
+</p>
+
+
+<pre class="example">2013/07/15 13:31:57 [info] 10294#0: *47 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
+2013/07/15 13:31:57 [info] 10294#0: *48 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
+</pre>
+
+
+
+<p>
+<b>Note:</b> If find out what is wrong with NGINX and manage to fix it,
+please let me know.
+</p>
+<p>
+So, I replace NGINX with Apache2 like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/btr-1
+cd /var/www/btr/profiles/btranslator
+dev/apache2.sh start
+</pre>
+
+
+
+<p>
+It will stop services <i>nginx</i>, <i>php5-fpm</i> and <i>memcached</i>, will
+start <i>apache2</i>, will disable drupal module <i>memcache</i>, and will
+modify properly <code>settings.php</code>.
+</p>
+<p>
+However there are also some changes outside <i>chroot</i> that should be
+done. The script <code>dev/apache2.sh start</code> cannot do them automatically
+(because it runs inside the chroot), so I have to do them manually.
+On the init script <code>/etc/init.d/chroot-btr-1</code> I make this change:
+</p>
+
+
+<pre class="example">#CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
+CHROOT_SERVICES="cron mysql apache2"
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Enable other drupal features </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+After installation I also enable some features that are optional
+and are not enabled by default during installation:
+</p>
+
+
+<pre class="example">drush features-list
+drush --yes pm-enable btr_simplenews
+drush --yes pm-enable btr_mass_contact
+## drush --yes pm-enable btr_googleanalytics
+## drush --yes pm-enable btr_drupalchat
+</pre>
+
+
+
+
+
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1">Enable the feature btr_fb </h3>
+<div class="outline-text-3" id="text-4.1">
+
+
+<p>
+<b>Note:</b> The feature <code>btr_fb</code> is not yet finished and tested
+properly.
+</p>
+<p>
+Enable it like this:
+</p>
+
+
+<pre class="example">## drush --yes pm-enable btr_fb
+</pre>
+
+
+
+
+<p>
+After installing <code>btr_fb</code>, the configuration part related to FB
+should be un-commented, at the end of the file
+<code>/var/www/btr/sites/default/settings.php</code>:
+</p>
+
+
+<pre class="example">// /* fb config
+$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
+include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
+include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
+if (!headers_sent()) {
+  header('P3P: CP="We do not have a P3P policy."');
+}
+// fb config */
+</pre>
+
+
+
+<p>
+If you forget to do it, you will notice performance degrade with
+the site.
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Start ssh </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+If this copy of B-Translator is remote, then I install <b>ssh</b> as
+well for accessing it easily and for using remote drush commands:
+</p>
+
+
+<pre class="example">chroot /var/chroot/btr-1
+cd /var/www/btr/profiles/btranslator
+dev/install-sshd.sh
+</pre>
+
+
+
+
+<p>
+This script will also take care to change the ssh port to <b>2201</b>,
+in order to avoid any conflicts with any existing daemon on the
+host environment, and also for increased security.
+</p>
+<p>
+For drush remote access to work correctly, the public/private key
+ssh access should be set up and configured as well. For more
+detailed instructions on how to do it see:
+<a href="http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html">http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html</a>
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Reset the password of drupal admin </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+I almost always forget the password of <b>admin</b> (the primary user of
+Drupal) that I assign during installation. So, I have to reset it:
+</p>
+
+
+<pre class="example">drush user-password admin --password="new-password"
+</pre>
+
+
+
+
+<p>
+By the way, on the file <code>/etc/drush/drushrc.php</code> you can see this
+drush setting:
+</p>
+
+
+<pre class="example">&lt;?php
+// by default use the B-Translator root directory
+$options['r'] = '/var/www/btr';
+</pre>
+
+
+
+<p>
+This means that the root directory of <code>drush</code> is always
+<code>/var/www/btr</code>, no matter where we call it from.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Transfer content </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+On the master (main/live) server, I export all the content as a
+feature, with the help of the module <b>node_export</b>. But first I have
+to disable the existing <b>btr_content</b> feature, otherwise the feature
+export will fail.
+</p>
+
+
+<pre class="example">drush --yes pm-disable btr_content
+drush --yes features-export --destination=/tmp btr_content_1 node_export_features
+tar --create --gzip --file=btr_content_1.tgz --directory=/tmp btr_content_1
+</pre>
+
+
+
+
+<p>
+Now I transfer <code>btr_content_1.tgz</code> to the clone server and
+replace the existing content with it:
+</p>
+
+
+<pre class="example">cd /var/www/btr/profiles/btranslator
+cd modules/features/
+tar --extract --gunzip --file=btr_content_1.tgz
+drush --yes pm-disable btr_content
+drush delete-all all  ## delete all existing nodes
+drush --yes pm-enable btr_content_1
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Fix path aliases and menus </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+Path aliases and some menus have to be fixed (recreated) manually.
+I couldn't find any modules, drush commands or scripts that can
+transfer them automatically. If you know any tricks to export/import
+them automatically, please let me know.
+</p>
+<p>
+I transfer manually the configuration of the Homebox as well.  I
+open <code>admin/structure/homebox</code> on both sites (the main and the
+clone), export the configuration of 'dashboard' from the main, then
+copy/paste and import it on the clone.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Transfer drupal private settings </h2>
+<div class="outline-text-2" id="text-9">
+
+
+<p>
+Private settings are those variables that are site specific and
+cannot be included in features, for example: <code>disqus_domain</code>,
+<code>disqus_userapikey</code>, <code>disqus_publickey</code>, <code>disqus_secretkey</code>, etc.
+</p>
+<p>
+We can transfer them like this:
+</p>
+<ul>
+<li>
+Save them on the main site:
+
+
+
+<pre class="example">cd /var/www/btr/profiles/btranslator
+modules/features/save-private-vars.sh
+</pre>
+
+
+
+<p>
+It will generate the file <code>restore-private-vars.php</code>.
+</p>
+</li>
+<li>
+Transfer <code>restore-private-vars.php</code> to the clone site and then
+apply it like this:
+
+
+
+<pre class="example">drush php-script restore-private-vars.php
+</pre>
+
+
+
+
+</li>
+</ul>
+
+<p><b>Note:</b> If the clone site will be used for testing, you may consider
+to edit manually the file <code>restore-private-vars.php</code>, before
+applying it, and change some values. For example, I usually change
+email addresses from <code>info@l10n.org.al</code> to <code>info+test@l10n.org.al</code>.
+I also enable email rerouting by changing these variables:
+</p>
+
+
+<pre class="example">$variables['reroute_email_enable'] = 1;
+$variables['reroute_email_enable_message'] = 1;
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10">Sync users and contributions </h2>
+<div class="outline-text-2" id="text-10">
+
+
+<p>
+Now the cloned site is almost identical with the primary site in
+terms of Drupal settings and configuration and in terms of
+translation data (projects that are imported, strings and their
+translations, etc.). What is still missing is the list of users that
+are registered on the primary site, as well as their contributions
+(votes and suggested translations).
+</p>
+<p>
+We can transfer them like this:
+</p>
+<ul>
+<li>
+Export them on the primary site:
+
+
+
+<pre class="example">cd /var/www/data
+db/export-users.sh
+db/export-contributions.sh
+</pre>
+
+
+
+
+</li>
+<li>
+Transfer <code>*.sql.gz</code> files to the clone site and import them:
+
+
+
+<pre class="example">cd /var/www/data
+db/import-users.sh  users-20130717.sql.gz
+db/import-contributions.sh contributions-00000000-20130717.sql.gz
+</pre>
+
+
+
+
+</li>
+</ul>
+
+<p><b>Note:</b> Once you have transferred all the users, the clone site will
+send them daily a string for review, in addition to the one that is
+sent by the primary site. We can prevent this by disabling the
+cron. Edit the file <code>/etc/cron.d/drupal7</code> and comment the line that
+starts the cron.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11">Sync vocabulary data </h2>
+<div class="outline-text-2" id="text-11">
+
+
+<p>
+Vocabulary is a pseudo-project, its PO file does not really belong
+to the translation of any program. I use it to collect interesting
+terms and translations that I encounter while translating the other
+projects. It can help as a reminder (in case that I forget the
+translation of a term). It is also useful for discussing
+translations of difficult terms with other people, and indirectly it
+helps to ensure consistency among the translations. Terms are added
+to vocabulary by the translators. In order to transfer them from one
+instance of B-Translator to another, it can be exported as a PO file
+on one system and imported to the other.
+</p>
+<ul>
+<li>
+Export <code>vocabulary-sq.po</code>:
+
+
+
+<pre class="example">cd /var/www/data
+export/export.sh misc vocabulary sq $(pwd)/tmp
+mv tmp/vocabulary/vocabulary-sq.po .
+rm -rf tmp
+</pre>
+
+
+
+
+</li>
+<li>
+Transfer <code>vocabulary-sq.po</code> to the other system and them import
+it:
+
+
+
+<pre class="example">cd /var/www/data
+mv vocabulary-sq.po vocabulary/
+import/vocabulary.sh
+</pre>
+
+
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12">Get and import PO files </h2>
+<div class="outline-text-2" id="text-12">
+
+
+<p>
+The database of translations is almost empty (it has only the PO
+files that were imported for testing during
+installation). Downloading and importing all the PO files is easy
+(but it takes a long time).
+</p>
+
+</div>
+
+<div id="outline-container-12.1" class="outline-3">
+<h3 id="sec-12.1">Download (get) PO files </h3>
+<div class="outline-text-3" id="text-12.1">
+
+
+
+
+
+<pre class="example">cd /var/www/data
+
+nohup nice get/all.sh &amp;
+tail -f nohup.out
+
+or
+
+cd get/
+./gnome.sh
+./kde.sh
+./firefox-os.sh
+./drupal.sh
+./office.sh
+./mozilla.sh
+./wordpress.sh
+./ubuntu.sh
+</pre>
+
+
+
+
+<p>
+<b>Note:</b> These scripts get the data from some URL. They should be
+checked first, to make sure that the URL still works or that we are
+getting the latest version.
+</p>
+<p>
+<b>Note:</b> Make sure that <code>hostname</code> is listed on <code>/etc/hosts</code>
+otherwise the command <code>svn checkout</code> will not work (strange, but
+that's how it is). For example if the output of the command
+<code>hostname</code> is <code>dashamir</code>, then <code>/etc/hosts</code> should look like this:
+</p>
+
+
+<pre class="example">127.0.0.1 l10n.org.xx localhost dashamir
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-12.2" class="outline-3">
+<h3 id="sec-12.2">Import PO files </h3>
+<div class="outline-text-3" id="text-12.2">
+
+
+
+
+
+<pre class="example">cd /var/www/data
+nohup nice import/all.sh &amp;
+tail -f nohup.out
+</pre>
+
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13">Switching to the new server </h2>
+<div class="outline-text-2" id="text-13">
+
+
+<p>
+Suppose that I want to make the cloned server primary. In this case
+there are some steps that should be done:
+</p>
+<ul>
+<li>
+Transfer GoogleApps verification files. I use GoogleApps for email
+accounts etc. (it offers 10 email accounts for free). To verify
+that I own this domain, GoogleApps requests me to put a certain
+file on the root of my webserver. This file looks like
+<code>google9350a51ac2d503bf.html</code> and I place it on <code>/var/www/btr</code>.
+
+</li>
+<li>
+Transfer SSL certificates. I have obtained a free SSL certificate
+for my site (see:
+<a href="http://arstechnica.com/security/2009/12/how-to-get-set-with-a-secure-sertificate-for-free/">http://arstechnica.com/security/2009/12/how-to-get-set-with-a-secure-sertificate-for-free/</a>).
+The configuration on <code>/etc/nginx/sites-available/default</code> looks like this:
+
+
+
+<pre class="example">ssl_certificate         /etc/ssl/certs/ssl-cert-l10n_org_al.pem;
+ssl_certificate_key     /etc/ssl/private/ssl-cert-l10n_org_al.key;
+</pre>
+
+
+
+<p>
+The corresponding configuration on
+<code>/etc/apache2/sites-available/default-ssl</code> looks like this:
+</p>
+
+
+<pre class="example">SSLCertificateFile    /etc/ssl/certs/ssl-cert-l10n_org_al.pem
+SSLCertificateKeyFile /etc/ssl/private/ssl-cert-l10n_org_al.key
+</pre>
+
+
+
+<p>
+The files <b>.pem</b> and <b>.key</b> need to be transferred to the new
+server and the configuration files of nginx and apache2 should be
+modified properly.
+</p>
+</li>
+<li>
+Enable cron.
+Since I have disabled cron (on a test site), I have to enable it again
+by un-commenting it on <code>/etc/cron.d/drupal7</code>.
+</li>
+<li>
+Replace test settings with live settings. Export drupal setting on the
+main site with <code>modules/features/save-private-vars.sh</code> and then import
+them on the new site with <code>drush php-script restore-private-vars.php</code>.
+</li>
+<li>
+On the DNS server I change the record of <code>l10n.org.al</code> to point to
+the new IP. But the DNS change may take about 2 days to be
+propagated worldwide. So, after 2-3 days I do again a transfer of
+users and contributions from the old server to the new one. These
+transfer operations are designed to be idempotent, which means
+that the result will be the same even if they are applied many
+times.
+</li>
+</ul>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Dashamir Hoxha
+<a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2014-06-23 19:32:35 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

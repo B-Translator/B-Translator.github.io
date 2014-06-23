@@ -1,3 +1,10 @@
+#+OPTIONS: num:nil toc:t ^:nil f:nil TeX:nil LaTeX:nil
+#+STYLE: <link href="css/org.css" rel="stylesheet" type="text/css"/>
+
+#+AUTHOR: Dashamir Hoxha
+#+EMAIL: dashohoxha@gmail.com
+
+#+TITLE: Description of B-Translator
 
 * The goals of the project
 
@@ -39,7 +46,7 @@
   + Helping to ensure consistency among the translations.
   + Merging translations from different sources (for example
     translations made on Launchpad and those made on KDE or GNOME).
-    
+
 
 * What means B-Translator
 

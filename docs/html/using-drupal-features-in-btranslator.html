@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Using Drupal Features in B-Translator</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-06-23 19:31:38 CEST"/>
+<meta name="author" content="Dashamir Hoxha"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link href="css/org.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Using Drupal Features in B-Translator</h1>
+
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Advantages of features </a></li>
+<li><a href="#sec-2">Creating features </a></li>
+<li><a href="#sec-3">Customizing features manually </a></li>
+<li><a href="#sec-4">Making features configurable </a></li>
+<li><a href="#sec-5">Saving and restoring private variables </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Advantages of features </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Features are very useful for building Drupal profiles (re-usable
+applications).  They provide a way to capture and save in code the
+customizations that are done to a Drupal site/application.
+</p>
+<p>
+They have these main benefits:
+</p><ol>
+<li>
+Help development and maintenance of the application.
+Customization/configuration changes can be tracked and versioned
+(for example in git) just like the code of the application.
+</li>
+<li>
+Help the installation of a new instance of the application.
+Customizations can be replayed (applied) easily on a new
+installation of the application, without having to repeat them
+manually.
+</li>
+<li>
+Make the application structured (as opposed to monolithic).  For
+example drupalchat is offered as a feature and can be installed
+very easily by installing the feature.  But sites that do not
+want to use it just don't install that feature.
+
+</li>
+</ol>
+
+<p>For more details about features (and their features) you can read
+these blogs:
+</p><ul>
+<li>
+<a href="http://scotthadfield.ca/2011/09/21/features-part-2-managing-your-feature">http://scotthadfield.ca/2011/09/21/features-part-2-managing-your-feature</a>
+</li>
+<li>
+<a href="http://scotthadfield.ca/2011/09/30/features-part-3-re-usable-features">http://scotthadfield.ca/2011/09/30/features-part-3-re-usable-features</a>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Creating features </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Features can be created and managed through UI. However I find the
+UI for creating features not suitable (tedious, sluggish,
+unreliable), at least when creating features for a Drupal
+profile. Fortunately they can also be fully managed from the command
+line (with <b>drush</b>):
+</p>
+
+
+<pre class="example">drush help --filter=features
+</pre>
+
+
+
+
+<p>
+First of all, we can get a list of all the so called <i>features   components</i>:
+</p>
+
+
+<pre class="example">drush @dev help features-components
+drush @dev features-components '%:%' &gt; features-components.txt
+</pre>
+
+
+
+<p>
+These are all the possible chunks of configuration that can be saved
+in a feature. All we have to do is to search and select the ones
+that are relevant for the feature that we want to build and then
+create a feature with these components. This will automatically
+generate the code (Drupal API) that is necessary to apply these
+configurations.
+</p>
+<p>
+For example, these are the components that I have selected for the
+<i>layout</i> feature (which is supposed to re-construct automatically
+the layout and look of a freshly installed B-Translator site):
+</p>
+
+
+<pre class="example">variable:theme_bootstrap1_settings
+variable:theme_default
+box:headerbox
+context:admin
+context:content
+context:frontpage
+context:page
+context:sitewide
+context:translations
+views_view:front_page
+variable:site_frontpage
+menu_links:main-menu:&lt;front&gt;
+menu_links:main-menu:node/9
+menu_links:main-menu:translations
+menu_links:main-menu:node/1
+menu_links:main-menu:contact
+menu_custom:navig-menu
+menu_links:navig-menu:translations
+menu_links:navig-menu:node/9
+menu_links:navig-menu:translations/search
+menu_links:navig-menu:node/1
+menu_links:navig-menu:contact
+</pre>
+
+
+
+<p>
+These include the theme, blocks layout, the front page view, and the
+menus.
+</p>
+<p>
+Now I can create a feature that includes these components with a
+command like this:
+</p>
+
+
+<pre class="example">drush @dev features-export \
+--destination=profiles/btranslator/modules/features \
+btr_layout $(cat layout_components)
+</pre>
+
+
+
+<p>
+It creates a feature on the directory:
+<code>/var/www/btr_dev/profiles/btranslator/modules/features/btr_layout/</code>
+</p>
+<p>
+Other features that I have created are: <i>btr_disqus</i>,
+<i>btr_invite</i>, <i>btr_sharethis</i>,
+<i>btr_captcha</i>, <i>btr_drupalchat</i>,
+<i>btr_hybridauth</i>, <i>btr_simplenews</i>,
+<i>btr_mass_contact</i>, <i>btr_googleanalytics</i>, etc.  In
+order to recreate them easily, the script <code>create-features.sh</code> can
+be used. It will create a feature for each list of components that
+is on the directory <code>components/</code>.
+</p>
+<p>
+The file <code>create-features.sh</code> has a content like this:
+</p>
+
+
+<pre class="example">#!/bin/bash
+### Create all the features.
+### However some features need manual customization
+### after being created (for example btr_layout).
+
+drush="drush --yes @dev"
+destination="profiles/btranslator/modules/features"
+
+function create_feature
+{
+    components=$1
+    feature_name="btr_$(basename $components)"
+
+
+    xargs --delimiter=$'\n' --arg-file=$components \
+        $drush features-export --destination=$destination $feature_name
+}
+
+### go to the directory of the script
+cd $(dirname $0)
+
+### clear cache etc.
+$drush cc all
+rm -f components/*~
+
+### create a feature for each file in 'components/'
+for components in $(ls components/*)
+do
+    echo "===&gt; $components"
+    create_feature $components
+done
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Customizing features manually </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+A feature is basically just a Drupal module (although it is
+generated automatically by the command <code>features-export</code>). So, we
+can further customize it manually if needed. And sometimes there is
+the need for manual customization because the automatic generation
+cannot get always everything right. In the case of the layout
+feature I added the file <code>btr_layout.install</code>, which uses
+<b>hook_enable()</b> to make further customizations after the feature is
+installed.
+</p>
+
+
+<pre class="example">&lt;?php
+
+/**
+ * Implements hook_enable().
+ */
+function btr_layout_enable() {
+  _btr_layout_create_aliases();
+  _btr_layout_add_login_link();
+  _btr_layout_block_settings();
+}
+
+
+function _btr_layout_create_aliases() {
+  $aliases = array(
+    'udhezuesi' =&gt; 'Udhëzuesi i Përkthyesit',
+    'about' =&gt; 'About',
+  );
+
+  foreach ($aliases as $alias =&gt; $title) {
+    $query = "SELECT nid FROM {node} WHERE title='$title' AND status=1";
+    $nid = db_query($query)-&gt;fetchField();
+    if ($nid == FALSE)  continue;
+    $source = "node/$nid";
+    db_query("DELETE FROM {url_alias} WHERE source='$source' AND alias='$alias'");
+    $args = array('source' =&gt; $source, 'alias' =&gt; $alias);
+    path_save($args);
+  }
+}
+
+function _btr_layout_add_login_link() {
+  $query = "DELETE FROM {menu_links}
+            WHERE menu_name='user-menu'
+              AND link_path='user/login'
+              AND link_title='Login' AND plid='0' ";
+  db_query($query);
+
+  $login = array(
+    'menu_name' =&gt; 'user-menu',
+    'link_path' =&gt; 'user/login',
+    'link_title' =&gt; 'Login',
+    'plid' =&gt; '0',
+    'router_path' =&gt; 'user/login',
+  );
+  menu_link_save($login);
+}
+
+function _btr_layout_block_settings() {
+  // set the title of the menu block as Navigation
+  db_query("UPDATE {block} SET title='Navigation'
+            WHERE theme='bootstrap1' AND delta='navig-menu'");
+
+  // remove the title of the block user-menu
+  db_query("UPDATE {block} SET title='&lt;none&gt;'
+            WHERE theme='bootstrap1' AND delta='user-menu'");
+
+  // disable all the blocks for theme bootstrap1
+  // their place is managed by module context
+  db_query("UPDATE {block} SET status = '0' WHERE theme = 'bootstrap1'");
+}
+</pre>
+
+
+
+
+<p>
+It creates aliases, which cannot be handled properly by the
+<i>features</i>. It creates a <i>Login</i> menu link, which is not handled
+propperly by the <i>features</i> (although in general menu links can be
+handled quite well by the features). It also sets the correct
+settings for the blocks in a simple way, although there are other
+ways to handle them by the <i>features</i>.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Making features configurable </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+Some of the features are required and will be automatically
+installed when the (btranslator) profile is installed, and some
+others are optional and can be installed later by the site
+administrator, if they wish. Most of these features are closely
+related to some contrib modules and basically just save
+default/reasonable values for the configuration settings of the
+module.
+</p>
+<p>
+Some of these modules are just wrappers to external API services,
+like disqus, sharethis, hybridauth, recaptcha, googleanalytics,
+etc. Usually they need some API keys or any other private attributes
+that are different from site to site. We cannot save these private
+attributes on the feature, because they are specific for each
+different site. But we would like to offer the
+administrator/maintainer of the (B-Translator) application an easy
+way to manage them, without having to search up and down among a
+huge number of configuration options available to the Drupal
+admin. In order to do this, I have customized the automatically
+generated features, taking advantage of the fact that they are just
+Drupal modules, and anything that works for Drupal modules works for
+them too.
+</p>
+<p>
+For example, for the feature <i>btr_googleanalytics</i>, I have
+added this line on <code>btr_googleanalytics.module</code>:
+</p>
+
+
+<pre class="example">include_once 'btr_googleanalytics.admin.inc';
+</pre>
+
+
+
+<p>
+I have also created the file <code>btr_googleanalytics.admin.inc</code>
+with a content like this:
+</p>
+
+
+<pre class="example">&lt;?php
+/**
+ * @file
+ * Configuration of googleanalytics.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function btr_googleanalytics_menu() {
+  $items = array();
+  $items['admin/config/btr/googleanalytics'] = array(
+    'title'            =&gt; 'GoogleAnalytics',
+    'description'      =&gt; 'Private GoogleAnalytics settings.',
+    'page callback'    =&gt; 'drupal_get_form',
+    'page arguments'   =&gt; array('btr_googleanalytics_config'),
+    'access arguments' =&gt; array('btranslator-admin'),
+  );
+
+  return $items;
+}
+
+/**
+ * Custom settings for GoogleAnalytics.
+ *
+ * @return
+ *   An array containing form items to place on the module settings page.
+ */
+function btr_googleanalytics_config() {
+  $form = array();
+
+  $form['googleanalytics_account'] = array(
+    '#title' =&gt; t('Web Property ID'),
+    '#type' =&gt; 'textfield',
+    '#default_value' =&gt; variable_get('googleanalytics_account', 'UA-'),
+    '#size' =&gt; 15,
+    '#maxlength' =&gt; 20,
+    '#required' =&gt; TRUE,
+    '#description' =&gt; t('This ID is unique to each site you want to track
+                         separately, and is in the form of UA-xxxxxxx-yy.
+                         To get a Web Property ID, &lt;a href="@analytics"&gt;
+                         register your site with Google Analytics&lt;/a&gt;,
+                         or if you already have registered your site,
+                         go to your Google Analytics Settings page
+                         to see the ID next to every site profile.
+                         &lt;a href="@webpropertyid"&gt;Find more information
+                         in the documentation&lt;/a&gt;.',
+                         array('@analytics' =&gt; 'http://www.google.com/analytics/',
+                               '@webpropertyid' =&gt; url('https://developers.google.com/analytics/resources/concepts/gaConceptsAccounts',
+                                                       array('fragment' =&gt; 'webProperty')))),
+  );
+
+  return system_settings_form($form);
+}
+</pre>
+
+
+
+
+<p>
+It creates a configuration page for GoogleAnalytics under the
+section of B-Translator configurations. This admin/config page
+allows the site administrator to set quickly and easily the <i>account   ID</i> of GoogleAnalytics. All this is just normal Drupal stuff, which
+can be done for any Drupal module. Nothing specially related to
+features. For my convenience, I have copied the definition
+of the form field from the <i>googleanalytics</i> Drupal module itself
+(from the file <code>googleanalytics.abmin.inc</code>).
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Saving and restoring private variables </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+If we cannot and should not keep private settings/attributes in
+features, then there should be some other easy way for the site
+administrators to backup and restore them, without making them
+public and available to everyone. This can be done by the script
+<code>save-private-vars.sh</code>. It takes a list of variables from
+<code>private-vars.txt</code> and creates the file <code>restore-private-vars.php</code>
+which keeps the values of these variables and can restore them.  It
+works like this:
+</p>
+
+
+<pre class="example">features/save-private-vars.sh @dev
+drush @dev php-script restore-private-vars.php
+</pre>
+
+
+
+
+<p>
+The file <code>private-vars.txt</code> looks like this:
+</p>
+
+
+<pre class="example">disqus_domain
+disqus_userapikey
+disqus_publickey
+disqus_secretkey
+sharethis_publisherID
+sharethis_twitter_handle
+sharethis_twitter_suffix
+simplenews_from_address
+simplenews_test_address
+mass_contact_default_sender_email
+mass_contact_default_sender_name
+recaptcha_private_key
+recaptcha_public_key
+googleanalytics_account
+</pre>
+
+
+
+
+<p>
+The script <code>save-private-vars.sh</code> has a content like this:
+</p>
+
+
+<pre class="example">#!/bin/bash
+### Save sensitive/private variables that should not be made public.
+
+echo "Usage: $0 [@drush_alias]"
+
+drush_alias=$1
+drush="drush $drush_alias"
+
+cat &lt;&lt;EOF &gt; restore-private-vars.php
+&lt;?php
+/**
+ * Backup of sensitive/private variables, that are specific
+ * only for this instance of B-Translator. This file should
+ * never be made public.
+ */
+
+// define variables
+EOF
+
+while read var_name
+do
+    $drush vget "$var_name" --exact --pipe &gt;&gt; restore-private-vars.php
+done &lt; $(dirname $0)/private-vars.txt
+
+cat &lt;&lt;EOF &gt;&gt; restore-private-vars.php
+
+// set variables
+foreach (\$variables as \$var_name =&gt; \$var_value) {
+  variable_set(\$var_name, \$var_value);
+}
+EOF
+
+echo "
+Restore variables with the command:
+$drush php-script restore-private-vars.php
+"
+</pre>
+
+
+
+
+<p>
+It can be useful as well to keep different sets of private variables
+for the <i>live</i>, <i>test</i> and <i>dev</i> sites.
+</p></div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Dashamir Hoxha
+<a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2014-06-23 19:31:38 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
