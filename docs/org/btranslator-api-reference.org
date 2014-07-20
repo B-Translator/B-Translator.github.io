@@ -613,6 +613,20 @@
      curl https://btranslator.org/translations/autocomplete/user/sq/d
      #+END_EXAMPLE
 
+   + GET translations/autocomplete/string/$str[/$project[/$origin]] ::
+     Retrieve a JSON list of autocomplete suggestions for strings.
+     - str :: Beginning of a string.
+     - project :: (optional) Limit search to this project.
+     - origin :: (optional) Limit search to this origin.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl https://btranslator.org/translations/autocomplete/string/a
+     curl https://btranslator.org/translations/autocomplete/string/a/ICT_sq
+     curl https://btranslator.org/translations/autocomplete/string/a/ICT_sq/vocabulary
+     curl https://btranslator.org/translations/autocomplete/string/a//vocabulary
+     #+END_EXAMPLE
+
 ** other
 
    + GET translations/languages :: Return a json list of languages
