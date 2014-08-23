@@ -496,6 +496,38 @@
 
 ** import
 
+   Create a custom project (or update an existing one) by importing
+   PO/POT file(s).
+
+   + POST btr/project/import ::
+     - origin ::
+         The origin of the project that will be imported.
+     - project ::
+         The name of the project that will be imported.
+     - file ::
+         A PO file, or an archive of PO/POT files (accepted
+         extensions: .tar, .gz, .tgz, .bz2, .xz, .7z, .zip).
+
+     Returns associative array containing:
+     - messages ::
+         Array of notification messages; each notification message
+         is an array of a message and a type, where type can be one of
+         'status', 'warning', 'error'.
+
+   Example: [[https://dev.btranslator.org/api-examples/php/project/import.php]]
+
+   This is useful for creating custom translation projects. The PO/POT
+   files that are uploaded will be used for importing strings and
+   translations. If there are no POT files, then the PO files will be
+   used both for importing strings and for importing translations. If
+   there are POT files and PO files, their names have to match (except
+   for the extension).
+
+   If you want to create a vocabulary, use =vocabulary= as the origin
+   of the project, and add the suffix =_lng= to the project name. Also
+   use =msgctxt "vocabulary"= as the context of each string in the
+   PO/POT file.
+
 
 * misc
 
