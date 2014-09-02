@@ -301,52 +301,44 @@
 
 ** export
 
-   + POST btr/project/export :: Submit a request for exporting a
-     project. When the request is completed, the user will be notified
-     by email. Accepts these parameters:
+   + POST btr/project/export :: Schedule a project for export. When
+     the request is completed, the user will be notified by
+     email. Accepts these parameters:
 
      - origin ::
          The origin of the project.
      - project ::
-         The name of the project. If not given, then all the projects
-         of the /origin/ will be exported, however only those with
-         /export access rights/ (usually translators) can do this.
-         Contributors can export only a single project at a time.
+         The name of the project.
+     - lng ::
+	 Translation to be exported.
      - export_mode ::
          The export mode that should be used. It can be one of:
-         =most_voted | preferred_by_me | preferred_by_my_friends=.
-         Normal users can use only the default mode: =most_voted=.
-         However those with /export access rights/ (usually translators)
-         can choose another export mode.
-	 - When the mode =most_voted= is used, then the translations
-	   with the highest number of votes are exported.
-	 - When the mode =preferred_by_me= is used, then the translations
-	   voted by the user take precedence over the other translations
-	   despite the number of votes.
-	 - When the mode =preferred_by_my_friends= is used, then the
-	   translations voted by any friends of the user take precedence.
-	   Friends are the users that are listed on the parameter
-	   *friends* (see below).
-     - friends ::
+         =original | most_voted | preferred=.
+	 - The mode =original= exports the translations of the
+	   original files that were imported.
+	 - The mode =most_voted= exports the translations with the
+	   highest number of votes.
+	 - The mode =preferred= gives precedence to the translations
+	   voted by a user or a list of users, despite the number of
+	   votes.
+     - preferred_voters ::
          Comma separated list of usernames. Used only when /export_mode/
-         is =preferred_by_my_friends=.
+         is =preferred=.
 
      Example: [[https://dev.btranslator.org/api-examples/php/project/export.php]]
 
 
-** export_tgz
-
    + GET/POST translations/project/export :: Return an archive of PO
-     files for a given origin/project/lng (usefull for projects that
-     have many POT files). Does not allow concurrent exports because
-     they may affect the performance of the server.  Parameters are
-     received from the request (either GET or POST). They are:
+     files for a given origin/project/lng. Does not allow concurrent
+     exports because they may affect the performance of the server.
+     Parameters are received from the request (either GET or
+     POST). They are:
      - origin ::
-	 Origin of the project (ubuntu, GNOME, KDE, etc.)
+	 Origin of the project.
      - project ::
-	 The name of the project to be exported.
+	 The name of the project.
      - lng ::
-	 Translation to be exported (de, fr, sq, en_GB, etc.)
+	 Translation to be exported.
      - export_mode ::
 	 Mode of export: =most_voted | preferred | original=
 
@@ -362,17 +354,17 @@
 	 the user (or a list of users) whose translations are
 	 preferred.
      - preferred_voters ::
-	 Comma separated list of email addresses of preferred voters.
+	 Comma separated list of usernames of the preferred voters.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.btranslator.org/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
-     curl -k https://dev.btranslator.org/translations/project/export_tgz \
+     curl -k 'https://dev.btranslator.org/translations/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+     curl -k https://dev.btranslator.org/translations/project/export \
 	  -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-     curl -k https://dev.btranslator.org/translations/project/export_tgz \
+     curl -k https://dev.btranslator.org/translations/project/export \
 	  -d origin=test -d project=kturtle -d lng=sq \
-	  -d preferred_voters=email1@example.com,email2@example.com \
-	  -d export_mode=preferred > test1.tgz
+	  -d export_mode=preferred \
+	  -d preferred_voters=user1,user2 > test1.tgz
      #+END_EXAMPLE
 
 ** diff

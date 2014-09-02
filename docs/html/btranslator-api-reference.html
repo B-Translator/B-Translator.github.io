@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B-Translator API Reference</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2014-08-23 14:30:20 CEST"/>
+<meta name="generated" content="2014-09-02 07:38:22 CEST"/>
 <meta name="author" content="Dashamir Hoxha"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -115,13 +115,11 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-3">project </a>
 <ul>
 <li><a href="#sec-3.1">list </a></li>
-<li><a href="#sec-3.2">templates </a></li>
-<li><a href="#sec-3.3">export </a></li>
-<li><a href="#sec-3.4">export_tgz </a></li>
-<li><a href="#sec-3.5">diff </a></li>
-<li><a href="#sec-3.6">add_string </a></li>
-<li><a href="#sec-3.7">del_string </a></li>
-<li><a href="#sec-3.8">import </a></li>
+<li><a href="#sec-3.2">export </a></li>
+<li><a href="#sec-3.3">diff </a></li>
+<li><a href="#sec-3.4">add_string </a></li>
+<li><a href="#sec-3.5">del_string </a></li>
+<li><a href="#sec-3.6">import </a></li>
 </ul>
 </li>
 <li><a href="#sec-4">misc </a>
@@ -807,27 +805,128 @@ curl 'https://btranslator.org/translations/project/list'
 </div>
 
 <div id="outline-container-3.2" class="outline-3">
-<h3 id="sec-3.2">templates </h3>
+<h3 id="sec-3.2">export </h3>
 <div class="outline-text-3" id="text-3.2">
 
 
 <dl>
-<dt>GET translations/project/templates/$origin/$project[/$format]</dt><dd>
+<dt>POST btr/project/export</dt><dd>
+Schedule a project for export. When
+the request is completed, the user will be notified by
+email. Accepts these parameters:
+
+<dl>
+<dt>origin</dt><dd>
 
 <p>
-Return a list of the templates (names of POT files) for a
-project.  Many projects have just one template, however big
-projects are composed of many templates. The third parameter can
-be JSON or TEXT (default).
-Example:
+The origin of the project.
+</p></dd>
+<dt>project</dt><dd>
+
+<p>
+The name of the project.
+</p></dd>
+<dt>lng</dt><dd>
+
+<p>
+Translation to be exported.
+</p></dd>
+<dt>export_mode</dt><dd>
+
+<p>
+The export mode that should be used. It can be one of:
+<code>original | most_voted | preferred</code>.
+</p><ul>
+<li>
+The mode <code>original</code> exports the translations of the
+original files that were imported.
+</li>
+<li>
+The mode <code>most_voted</code> exports the translations with the
+highest number of votes.
+</li>
+<li>
+The mode <code>preferred</code> gives precedence to the translations
+voted by a user or a list of users, despite the number of
+votes.
+</li>
+</ul>
+</dd>
+<dt>preferred_voters</dt><dd>
+
+<p>
+Comma separated list of usernames. Used only when <i>export_mode</i>
+is <code>preferred</code>.
+</p>
+</dd>
+</dl>
+
+<p>Example: <a href="https://dev.btranslator.org/api-examples/php/project/export.php">https://dev.btranslator.org/api-examples/php/project/export.php</a>
+</p>
+
+</dd>
+<dt>GET/POST translations/project/export</dt><dd>
+Return an archive of PO
+files for a given origin/project/lng. Does not allow concurrent
+exports because they may affect the performance of the server.
+Parameters are received from the request (either GET or
+POST). They are:
+<dl>
+<dt>origin</dt><dd>
+
+<p>
+Origin of the project.
+</p></dd>
+<dt>project</dt><dd>
+
+<p>
+The name of the project.
+</p></dd>
+<dt>lng</dt><dd>
+
+<p>
+Translation to be exported.
+</p></dd>
+<dt>export_mode</dt><dd>
+
+<p>
+Mode of export: <code>most_voted | preferred | original</code>
+</p>
+<p>
+Default is <code>most_voted</code> which exports the most voted
+translations and suggestions.
+</p>
+<p>
+The export mode <code>original</code> exports the translations of the
+original file that was imported (useful for making diffs).
+</p>
+<p>
+The export mode <code>preferred</code> gives priority to translations
+that are voted by a certain user or a group of users. It
+requires an additional argument (preferred_voters) to specify
+the user (or a list of users) whose translations are
+preferred.
+</p></dd>
+<dt>preferred_voters</dt><dd>
+
+<p>
+Comma separated list of usernames of the preferred voters.
+</p>
+</dd>
+</dl>
+
+<p>Examples:
 </p>
 
 
-<pre class="example">curl -k https://dev.btranslator.org/translations/project/templates/test/kturtle
-curl -k https://dev.btranslator.org/translations/project/templates/test/kturtle/json
-curl -k https://dev.btranslator.org/translations/project/templates/KDE/kdeedu
+<pre class="example">curl -k 'https://dev.btranslator.org/translations/project/export?origin=test&amp;project=kturtle&amp;lng=sq' &gt; test1.tgz
+curl -k https://dev.btranslator.org/translations/project/export \
+     -d 'origin=test&amp;project=kturtle&amp;lng=sq&amp;export_mode=original' &gt; test1.tgz
+curl -k https://dev.btranslator.org/translations/project/export \
+     -d origin=test -d project=kturtle -d lng=sq \
+     -d export_mode=preferred \
+     -d preferred_voters=user1,user2 &gt; test1.tgz
 </pre>
-
 
 
 
@@ -839,225 +938,8 @@ curl -k https://dev.btranslator.org/translations/project/templates/KDE/kdeedu
 </div>
 
 <div id="outline-container-3.3" class="outline-3">
-<h3 id="sec-3.3">export </h3>
+<h3 id="sec-3.3">diff </h3>
 <div class="outline-text-3" id="text-3.3">
-
-
-<dl>
-<dt>POST btr/project/export</dt><dd>
-Submit a request for exporting a
-project. When the request is completed, the user will be notified
-by email. Accepts these parameters:
-
-<dl>
-<dt>origin</dt><dd>
-
-<p>
-The origin of the project.
-</p></dd>
-<dt>project</dt><dd>
-
-<p>
-The name of the project. If not given, then all the projects
-of the <i>origin</i> will be exported, however only those with
-<i>export access rights</i> (usually translators) can do this.
-Contributors can export only a single project at a time.
-</p></dd>
-<dt>export_mode</dt><dd>
-
-<p>
-The export mode that should be used. It can be one of:
-<code>most_voted | preferred_by_me | preferred_by_my_friends</code>.
-Normal users can use only the default mode: <code>most_voted</code>.
-However those with <i>export access rights</i> (usually translators)
-can choose another export mode.
-</p><ul>
-<li>
-When the mode <code>most_voted</code> is used, then the translations
-with the highest number of votes are exported.
-</li>
-<li>
-When the mode <code>preferred_by_me</code> is used, then the translations
-voted by the user take precedence over the other translations
-despite the number of votes.
-</li>
-<li>
-When the mode <code>preferred_by_my_friends</code> is used, then the
-translations voted by any friends of the user take precedence.
-Friends are the users that are listed on the parameter
-<b>friends</b> (see below).
-</li>
-</ul>
-</dd>
-<dt>friends</dt><dd>
-
-<p>
-Comma separated list of usernames. Used only when <i>export_mode</i>
-is <code>preferred_by_my_friends</code>.
-</p>
-</dd>
-</dl>
-
-<p>Example: <a href="https://dev.btranslator.org/api-examples/php/project/export.php">https://dev.btranslator.org/api-examples/php/project/export.php</a>
-</p>
-</dd>
-<dt>GET/POST translations/project/export</dt><dd>
-Return a PO file as
-plain-text. Does not allow concurrent exports because they may
-affect the performance of the server.  Parameters are received
-from the request (either GET or POST). They are:
-<dl>
-<dt>origin</dt><dd>
-
-<p>
-Origin of the project (ubuntu, GNOME, KDE, etc.)
-</p></dd>
-<dt>project</dt><dd>
-
-<p>
-The name of the project to be exported.
-</p></dd>
-<dt>tplname</dt><dd>
-
-<p>
-The name of the PO template.
-</p></dd>
-<dt>lng</dt><dd>
-
-<p>
-Translation to be exported (de, fr, sq, en_GB, etc.)
-</p></dd>
-<dt>export_mode</dt><dd>
-
-<p>
-Mode of export: <code>most_voted | preferred | original</code>
-</p>
-<p>
-Default is <code>most_voted</code> which exports the most voted
-translations and suggestions.
-</p>
-<p>
-The export mode <code>original</code> exports the translations of the
-original file that was imported (useful for making diffs).
-</p>
-<p>
-The export mode <code>preferred</code> gives priority to translations
-that are voted by a certain user or a group of users. It
-requires an additional argument (preferred_voters) to specify
-the user (or a list of users) whose translations are
-preferred.
-</p></dd>
-<dt>preferred_voters</dt><dd>
-
-<p>
-Comma separated list of email addresses of preferred voters.
-</p>
-</dd>
-</dl>
-
-<p>Examples:
-</p>
-
-
-<pre class="example">curl -k 'https://dev.btranslator.org/translations/project/export?origin=test&amp;project=kturtle&amp;lng=sq' &gt; test.po
-curl -k https://dev.btranslator.org/translations/project/export \
-     -d 'origin=test&amp;project=kturtle&amp;lng=sq&amp;export_mode=original' &gt; test.po
-curl -k https://dev.btranslator.org/translations/project/export \
-     -d origin=test -d project=kturtle -d lng=sq \
-     -d preferred_voters=email1@example.com,email2@example.com \
-     -d export_mode=preferred &gt; test.po
-</pre>
-
-
-
-
-</dd>
-</dl>
-</div>
-
-</div>
-
-<div id="outline-container-3.4" class="outline-3">
-<h3 id="sec-3.4">export_tgz </h3>
-<div class="outline-text-3" id="text-3.4">
-
-
-<dl>
-<dt>GET/POST translations/project/export</dt><dd>
-Return an archive of PO
-files for a given origin/project/lng (usefull for projects that
-have many POT files). Does not allow concurrent exports because
-they may affect the performance of the server.  Parameters are
-received from the request (either GET or POST). They are:
-<dl>
-<dt>origin</dt><dd>
-
-<p>
-Origin of the project (ubuntu, GNOME, KDE, etc.)
-</p></dd>
-<dt>project</dt><dd>
-
-<p>
-The name of the project to be exported.
-</p></dd>
-<dt>lng</dt><dd>
-
-<p>
-Translation to be exported (de, fr, sq, en_GB, etc.)
-</p></dd>
-<dt>export_mode</dt><dd>
-
-<p>
-Mode of export: <code>most_voted | preferred | original</code>
-</p>
-<p>
-Default is <code>most_voted</code> which exports the most voted
-translations and suggestions.
-</p>
-<p>
-The export mode <code>original</code> exports the translations of the
-original file that was imported (useful for making diffs).
-</p>
-<p>
-The export mode <code>preferred</code> gives priority to translations
-that are voted by a certain user or a group of users. It
-requires an additional argument (preferred_voters) to specify
-the user (or a list of users) whose translations are
-preferred.
-</p></dd>
-<dt>preferred_voters</dt><dd>
-
-<p>
-Comma separated list of email addresses of preferred voters.
-</p>
-</dd>
-</dl>
-
-<p>Examples:
-</p>
-
-
-<pre class="example">curl -k 'https://dev.btranslator.org/translations/project/export_tgz?origin=test&amp;project=kturtle&amp;lng=sq' &gt; test1.tgz
-curl -k https://dev.btranslator.org/translations/project/export_tgz \
-     -d 'origin=test&amp;project=kturtle&amp;lng=sq&amp;export_mode=original' &gt; test1.tgz
-curl -k https://dev.btranslator.org/translations/project/export_tgz \
-     -d origin=test -d project=kturtle -d lng=sq \
-     -d preferred_voters=email1@example.com,email2@example.com \
-     -d export_mode=preferred &gt; test1.tgz
-</pre>
-
-
-
-
-</dd>
-</dl>
-</div>
-
-</div>
-
-<div id="outline-container-3.5" class="outline-3">
-<h3 id="sec-3.5">diff </h3>
-<div class="outline-text-3" id="text-3.5">
 
 
 <dl>
@@ -1094,9 +976,9 @@ curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/4/ediff
 
 </div>
 
-<div id="outline-container-3.6" class="outline-3">
-<h3 id="sec-3.6">add_string </h3>
-<div class="outline-text-3" id="text-3.6">
+<div id="outline-container-3.4" class="outline-3">
+<h3 id="sec-3.4">add_string </h3>
+<div class="outline-text-3" id="text-3.4">
 
 
 <p>
@@ -1165,9 +1047,9 @@ across different programs.
 
 </div>
 
-<div id="outline-container-3.7" class="outline-3">
-<h3 id="sec-3.7">del_string </h3>
-<div class="outline-text-3" id="text-3.7">
+<div id="outline-container-3.5" class="outline-3">
+<h3 id="sec-3.5">del_string </h3>
+<div class="outline-text-3" id="text-3.5">
 
 
 <p>
@@ -1194,9 +1076,9 @@ ID of the string to be deleted.
 
 </div>
 
-<div id="outline-container-3.8" class="outline-3">
-<h3 id="sec-3.8">import </h3>
-<div class="outline-text-3" id="text-3.8">
+<div id="outline-container-3.6" class="outline-3">
+<h3 id="sec-3.6">import </h3>
+<div class="outline-text-3" id="text-3.6">
 
 
 <p>
@@ -1610,7 +1492,7 @@ Id of the string.
 <p class="author"> Author: Dashamir Hoxha
 <a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
 </p>
-<p class="date"> Date: 2014-08-23 14:30:20 CEST</p>
+<p class="date"> Date: 2014-09-02 07:38:22 CEST</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
