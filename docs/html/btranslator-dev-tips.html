@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Development Tools, Tips and Tricks</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-09-18 15:56:20 CEST"/>
+<meta name="author" content="Dashamir Hoxha"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="org-info.css" />
+<script type="text/javascript" src="org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "#aadddd");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "overview");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Development Tools, Tips and Tricks</h1>
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Installation </a></li>
+<li><a href="#sec-2">How to access the shell </a></li>
+<li><a href="#sec-3">Install sshd </a></li>
+<li><a href="#sec-4">Change the webserver </a></li>
+<li><a href="#sec-5">Making clones of the application </a></li>
+<li><a href="#sec-6">Re-installing the application </a></li>
+<li><a href="#sec-7">Making a backup of the application </a></li>
+<li><a href="#sec-8">Accessing the code of the application from outside chroot </a></li>
+<li><a href="#sec-9">Pushing commits </a></li>
+<li><a href="#sec-10">The commit workflow </a></li>
+<li><a href="#sec-11">Working with a dev-test-live workflow </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Installation </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+If you need to install frequently (for example for testing), a
+script like this can be useful:
+</p>
+
+
+<pre class="example">#!/bin/bash -x
+
+source=dbox
+installer=chroot
+git_branch=master
+nohup_out="nohup-$source-$git_branch-$installer.out"
+
+rm -f $nohup_out
+nohup time nice $source/install/{$installer.sh,settings.sh} cfg.sh \
+    --git_branch=$git_branch --reboot=true &gt; $nohup_out &amp;
+sleep 1
+tail -f $nohup_out
+</pre>
+
+
+
+
+<p>
+The file <code>cfg.sh</code> overrides the default config settings (for example
+passwords):
+</p>
+
+
+<pre class="example">apt_mirror='http://us-east-1.ec2.archive.ubuntu.com/ubuntu/'
+gmail_account='test@example.org'
+gmail_passwd=3omRoxtho
+development='true'
+</pre>
+
+
+
+
+<p>
+You can also override configuration settings from the command line.
+</p>
+<p>
+<b>Note:</b> The order of giving the settings is important. The last one
+overrides the previous settings.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">How to access the shell </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+When things are still in development and testing we need to access
+the shell of the installed system in order to check log files,
+debug, play with changing configurations, etc.
+</p>
+<p>
+When the installation is done on a chroot directory, then you simply
+switch to it with the command <code>chroot</code>:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+</pre>
+
+
+
+
+<p>
+When the installation is done in a docker container, you have to install
+first the commands <code>nsenter</code> and <code>docker-enter</code> like this:
+</p>
+
+
+<pre class="example">docker run -v /usr/local/bin:/target jpetazzo/nsenter
+</pre>
+
+
+
+
+<p>
+Then you can access the shell of a running container like this:
+</p>
+
+
+<pre class="example">docker-enter bcl
+</pre>
+
+
+
+
+<p>
+See also this article:
+<a href="http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/">http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/</a>
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Install sshd </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+In order to access the server remotely through drush, ssh-client,
+etc. you can install <b>sshd</b> with the script <code>dev/install-sshd.sh</code>,
+like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+dev/install-sshd.sh
+</pre>
+
+
+
+
+<p>
+By default it will install and run a sshd that listens on the port <b>2201</b>,
+but you can also give it the port number as an argument:
+</p>
+
+
+<pre class="example">dev/install-sshd.sh 2211
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Change the webserver </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+There are two webservers installed, apache2 and nginx (with php5-fpm
+and memcached). For development Apache2 can be more suitable, while
+for production NGINX is supposed to be more responsive in high load.
+It also has built-in cache and its configuration is tweaked for DoS
+protection, short timeout, etc.
+</p>
+<p>
+We can choose one of them like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+dev/webserver.sh apache2
+dev/webserver.sh nginx
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">Making clones of the application </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Clones of the main site can be used for development and testing. 
+</p>
+<p>
+Inside the chroot you can make a clone for development like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+dev/clone.sh bcl bcl_dev1
+dev/clone.sh bcl_dev1 bcl_test1
+</pre>
+
+
+
+
+<p>
+It creates a new application with root <b>/var/www/bcl_dev1/</b> and with
+DB named <b>bcl_dev1</b>. It also creates the drush alias <b>@bcl_dev1</b>,
+and modifies the configuration of the webserver so that the cloned
+application can be accessed at <b>dev1.example.org</b>.
+</p>
+<p>
+<b>Caution:</b> The root directory and the DB of the clone will be
+erased, if they exist.
+</p>
+<p>
+Other clones like this can be created for testing etc. To cleanup
+(remove/erase) a clone, you can use <b>clone_rm.sh</b> like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+dev/clone_rm.sh bcl_dev1
+dev/clone_rm.sh bcl_test1
+</pre>
+
+
+
+
+<p>
+By the way, you can also modify a little bit the configuration of a
+development copy of the application (in order to help us not confuse
+a development copy with a live or testing one), with the script
+<code>dev/config.php</code>:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+drush @bcl_dev php-script dev/config.php dev2
+</pre>
+
+
+
+
+<p>
+It will set site_name to 'B-Translator (dev1)', will make site email
+something like 'user+dev1@gmail.com', will enable email re-routing,
+display the <i>devel</i> menu on the footer region, etc. Sometimes it may
+be useful.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Re-installing the application </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+It can be done with the script <code>dev/reinstall.sh</code>:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+nohup nice dev/reinstall.sh settings.sh &amp;
+tail -f nohup.out
+</pre>
+
+
+
+<p>
+It will rebuild the Drupal directory with <b>drush make</b> and install
+the btr_client profile with <b>drush site-install</b>, and then do all the
+rest of configurations just like they are done during installation.
+</p>
+<p>
+Normally there is no need to reinstall the application, unless we
+want to test the installation profile and the installation scripts.
+</p>
+<p>
+Another kind of re-installation, which touches only the database of
+Drupal and nothing else, can be done with the script
+<code>dev/reinstall-db.sh</code>:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+nohup nice dev/reinstall-db.sh @bcl_dev &amp;
+tail -f nohup.out
+</pre>
+
+
+
+
+<p>
+It is useful for testing the installation of custom modules, feature
+modules, etc. The argument <b>@bcl_dev</b> is the alias of the site that
+should be reinstalled.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Making a backup of the application </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+Sometimes, when testing things on Drupal (installing/uninstalling
+modules etc.) things get messy and it is not possible anymore to
+revert to the state that you were before starting the test. In this
+case the only way to get safely to a previous stable state is by
+restoring a backup (or installing from the scratch and repeating all
+the configurations).
+</p>
+<p>
+A snapshot of the application is just like a full backup with a time
+stamp. It saves the state of the application at a certain time, both
+the code (the whole Drupal directory) and the database. It can be
+done like this:
+</p>
+
+
+<pre class="example">chroot /var/chroot/bcl/
+cd /usr/local/src/btr_client/
+dev/snapshot.sh make @bcl
+dev/snapshot.sh make @bcl_dev
+</pre>
+
+
+
+<p>
+These will create the files <code>snapshot-bcl-20140914.tgz</code> and
+<code>snapshot-bcl_dev-20140914.tgz</code>. They can be restored like this:
+</p>
+
+
+<pre class="example">dev/snapshot.sh restore @bcl --file=snapshot-bcl-20140914.tgz
+dev/snapshot.sh restore @bcl --file=snapshot-bcl_dev-20140914.tgz
+dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl-20140914.tgz
+dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl_dev-20140914.tgz
+</pre>
+
+
+
+<p>
+As you may notice, a snapshot of <b>@bcl_dev</b> can also be restored on the
+main application, and the other way around.
+</p>
+<p>
+However, in many cases a backup/restore of the database is all that
+is needed, and it is more efficient. It can be done with <b>drush   sql-dump</b> and <b>drush sql-query</b> like this:
+</p>
+
+
+<pre class="example">drush sql-dump @bcl &gt; bcl.sql
+drush sql-dump @bcl_dev &gt; bcl_dev.sql
+
+drush @bcl sql-query --file=$(pwd)/bcl.sql
+drush @bcl sql-query --file=$(pwd)/bcl_dev.sql
+
+drush @bcl_dev sql-query --file=$(pwd)/bcl.sql
+drush @bcl_dev sql-query --file=$(pwd)/bcl_dev.sql
+</pre>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Accessing the code of the application from outside chroot </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+In order to access easily the code of the application from outside
+chroot, you can create a symbolic link like this:
+</p>
+
+
+<pre class="example">cd /var/chroot/
+ln -s bcl/var/www/bcl_dev/profiles/btr_client/ \
+      bcl_dev
+</pre>
+
+
+
+
+<p>
+Now you can go to <b>/var/chroot/dev/</b> and start <i>emacs</i> or any other
+tools. This way you don't have to install <i>emacs</i> or any other
+development tools inside the <i>chroot</i> and can use the best of
+development tools that your host system can offer.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Pushing commits </h2>
+<div class="outline-text-2" id="text-9">
+
+
+<p>
+The copy of the application on <code>/var/www/bcl_dev/profiles/btr_client/</code>
+(as well as the one on <code>/var/www/bcl/profiles/btr_client/</code>) are actually
+clones of the git repository of the project on GitHub, so we can
+<b>pull</b> from it and <b>push</b> to it. Pulling (to get up-to-date) can be
+done by everybody, however pushing requires a username and password
+(the ones that are used to access the account at GitHub).
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10">The commit workflow </h2>
+<div class="outline-text-2" id="text-10">
+
+
+<p>
+For small or straight-forward changes you can also work directly on
+the <b>master</b> branch, then <b>commit</b>, and then <b>push</b> to github.
+</p>
+<p>
+However I usually use a bit more complicated workflow. First I
+create and checkout a <b>dev</b> branch. When the work is done I merge
+this branch to <b>master</b> and then delete it. Finally <b>push</b> the
+commit(s) to github.
+</p>
+
+
+<pre class="example">git checkout -d dev     ### create a branch and switch to it
+[work...commit...work...comit]
+git checkout master     ### switch back to master
+git pull                ### get any latest commits from github
+git merge dev [--squash]
+git push                ### send commits to github
+git branch -D dev       ### erase the branch
+</pre>
+
+
+
+
+<p>
+Usually there are no commits comming from github, since I am the
+only developper (unless I have worked and commited from some other
+location). So, when I merge without <b>&ndash;squash</b> this usually results
+in <b>fast-forward</b> merge, which means that all the commits that I
+have done on the branch <b>dev</b> are automatically transferred to the
+branch <b>master</b>.
+</p>
+<p>
+However sometimes there may be <i>dirty commits</i> on the <b>dev</b> branch,
+which means that there may be incomplete commits, or commits that
+reverse what was done on the previous commits etc. When I wish to
+reorganize commits and make them cleaner, I use the <b>&ndash;squash</b>
+option, which collects all the changes on the <b>dev</b> branch and
+leaves them on the <b>master</b> sandbox as local modifications
+(uncommitted). Then I can redo the commits on a cleaner or more
+logical way. Afterwards the <b>dev</b> branch will be deleted and the old
+commits will be lost.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11">Working with a dev-test-live workflow </h2>
+<div class="outline-text-2" id="text-11">
+
+
+<p>
+At some point, all the modifications on the local copy of the
+application (sandbox) have to be transferred to a public server,
+where the application is in "production", performing "live". On that
+public server there is the same <i>chroot</i> environment as in the
+development server. The synchronization of the application can be
+done via git push and pull.
+</p>
+<p>
+However <b>drush rsync</b> and <b>drush sql-sync</b> offer another option for
+synchronization. For more details see:
+</p>
+
+
+<pre class="example">drush help rsync
+drush help sql-sync
+drush topic docs-aliases
+</pre>
+
+
+
+
+<p>
+These commands use drush <b>aliases</b>, which allow also remote
+execution of drush commands. On my development environment I have
+created the file <code>/etc/drush/remote.aliases.drushrc.php</code>, which has
+a content like this:
+</p>
+
+
+<pre class="example">&lt;?php
+
+$aliases['live'] = array (
+  'root' =&gt; '/var/www/bcl',
+  'uri' =&gt; 'http://example.org',
+
+  'remote-host' =&gt; 'example.org',
+  'remote-user' =&gt; 'root',
+  'ssh-options' =&gt; '-p 2201 -i /root/.ssh/id_rsa',
+
+  'path-aliases' =&gt; array (
+    '%profile' =&gt; 'profiles/btr_client',
+    '%downloads' =&gt; '/var/www/downloads',
+  ),
+
+  'command-specific' =&gt; array (
+    'sql-sync' =&gt; array (
+      'simulate' =&gt; '1',
+    ),
+    'rsync' =&gt; array (
+      'simulate' =&gt; '1',
+    ),
+  ),
+);
+
+$aliases['test'] = array (
+  'parent' =&gt; '@live',
+  'root' =&gt; '/var/www/bcl',
+  'uri' =&gt; 'http://test.example.org',
+  'remote-host' =&gt; 'test.example.org',
+
+  'command-specific' =&gt; array (
+    'sql-sync' =&gt; array (
+      'simulate' =&gt; '0',
+    ),
+    'rsync' =&gt; array (
+      'simulate' =&gt; '0',
+    ),
+  ),
+);
+</pre>
+
+
+
+
+<p>
+It defines the aliases <b>live</b> and <b>test</b>. The test/stage application
+is almost identical to the live/production one, however it is not
+for public use. The idea is to test there first any updates/upgrades
+of the application, in order to make sure that they don't break any
+things, before applying them to the real live application. In my
+case it is placed on a different server, however it can also be
+placed on the same server as the live application (just make a clone
+of the main application with <code>dev/clone.sh bcl bcl_test</code>).
+</p>
+<p>
+When everything is set up correctly, the synchronization can be done
+as simply as this:
+</p>
+
+
+<pre class="example">drush rsync @live @test
+drush sql-sync @live @test
+drush rsync @live @bcl_dev
+drush sql-sync @live @bcl_dev
+</pre>
+
+
+
+
+<p>
+<b>Note:</b> Synchronizing this way from <b>@test</b> to <b>@live</b> or from
+<b>@bcl_dev</b> to <b>@live</b>, usually is a HUGE mistake, but the <i>simulate</i>
+option on the config file will make sure that it fails.
+</p>
+<p>
+For drush commands to work remotely, <b>ssh</b> daemon has to be running
+on the remote server, inside the chroot environment. By default it
+is not installed, but it can be installed with the script
+<b>dev/install-sshd.sh</b>. This script will also take care to change the
+ssh port to <b>2201</b>, in order to avoid any conflicts with any
+existing daemon on the host environment, and also for increased
+security.
+</p>
+<p>
+For remote access to work correctly, the public/private key ssh
+access should be set up and configured as well. For more detailed
+instructions on how to do it see:
+<a href="http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html">http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html</a>
+</p></div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Dashamir Hoxha
+<a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2014-09-18 15:56:20 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

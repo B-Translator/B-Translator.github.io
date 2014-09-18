@@ -1,0 +1,389 @@
+#+TITLE:     Development Tools, Tips and Tricks
+#+AUTHOR:    Dashamir Hoxha
+#+EMAIL:     dashohoxha@gmail.com
+##+DESCRIPTION:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
+#+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
+
+
+* Installation
+
+  If you need to install frequently (for example for testing), a
+  script like this can be useful:
+  #+BEGIN_EXAMPLE
+  #!/bin/bash -x
+
+  source=dbox
+  installer=chroot
+  git_branch=master
+  nohup_out="nohup-$source-$git_branch-$installer.out"
+
+  rm -f $nohup_out
+  nohup time nice $source/install/{$installer.sh,settings.sh} cfg.sh \
+      --git_branch=$git_branch --reboot=true > $nohup_out &
+  sleep 1
+  tail -f $nohup_out
+  #+END_EXAMPLE
+
+  The file ~cfg.sh~ overrides the default config settings (for example
+  passwords):
+  #+BEGIN_EXAMPLE
+  apt_mirror='http://us-east-1.ec2.archive.ubuntu.com/ubuntu/'
+  gmail_account='test@example.org'
+  gmail_passwd=3omRoxtho
+  development='true'
+  #+END_EXAMPLE
+
+  You can also override configuration settings from the command line.
+
+  *Note:* The order of giving the settings is important. The last one
+  overrides the previous settings.
+
+
+* How to access the shell
+
+  When things are still in development and testing we need to access
+  the shell of the installed system in order to check log files,
+  debug, play with changing configurations, etc.
+
+  When the installation is done on a chroot directory, then you simply
+  switch to it with the command =chroot=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  #+END_EXAMPLE
+
+  When the installation is done in a docker container, you have to install
+  first the commands =nsenter= and =docker-enter= like this:
+  #+BEGIN_EXAMPLE
+  docker run -v /usr/local/bin:/target jpetazzo/nsenter
+  #+END_EXAMPLE
+
+  Then you can access the shell of a running container like this:
+  #+BEGIN_EXAMPLE
+  docker-enter bcl
+  #+END_EXAMPLE
+
+  See also this article:
+  http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/
+
+
+* Install sshd
+
+  In order to access the server remotely through drush, ssh-client,
+  etc. you can install *sshd* with the script ~dev/install-sshd.sh~,
+  like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  dev/install-sshd.sh
+  #+END_EXAMPLE
+
+  By default it will install and run a sshd that listens on the port *2201*,
+  but you can also give it the port number as an argument:
+  #+BEGIN_EXAMPLE
+  dev/install-sshd.sh 2211
+  #+END_EXAMPLE
+
+
+* Change the webserver
+
+  There are two webservers installed, apache2 and nginx (with php5-fpm
+  and memcached). For development Apache2 can be more suitable, while
+  for production NGINX is supposed to be more responsive in high load.
+  It also has built-in cache and its configuration is tweaked for DoS
+  protection, short timeout, etc.
+
+  We can choose one of them like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  dev/webserver.sh apache2
+  dev/webserver.sh nginx
+  #+END_EXAMPLE
+
+
+* Making clones of the application
+
+  Clones of the main site can be used for development and testing. 
+
+  Inside the chroot you can make a clone for development like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  dev/clone.sh bcl bcl_dev1
+  dev/clone.sh bcl_dev1 bcl_test1
+  #+END_EXAMPLE
+
+  It creates a new application with root */var/www/bcl_dev1/* and with
+  DB named *bcl_dev1*. It also creates the drush alias *@bcl_dev1*,
+  and modifies the configuration of the webserver so that the cloned
+  application can be accessed at *dev1.example.org*.
+
+  *Caution:* The root directory and the DB of the clone will be
+  erased, if they exist.
+
+  Other clones like this can be created for testing etc. To cleanup
+  (remove/erase) a clone, you can use *clone_rm.sh* like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  dev/clone_rm.sh bcl_dev1
+  dev/clone_rm.sh bcl_test1
+  #+END_EXAMPLE
+
+  By the way, you can also modify a little bit the configuration of a
+  development copy of the application (in order to help us not confuse
+  a development copy with a live or testing one), with the script
+  =dev/config.php=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  drush @bcl_dev php-script dev/config.php dev2
+  #+END_EXAMPLE
+
+  It will set site_name to 'B-Translator (dev1)', will make site email
+  something like 'user+dev1@gmail.com', will enable email re-routing,
+  display the /devel/ menu on the footer region, etc. Sometimes it may
+  be useful.
+
+
+* Re-installing the application
+
+  It can be done with the script =dev/reinstall.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  nohup nice dev/reinstall.sh settings.sh &
+  tail -f nohup.out
+  #+END_EXAMPLE
+  It will rebuild the Drupal directory with *drush make* and install
+  the btr_client profile with *drush site-install*, and then do all the
+  rest of configurations just like they are done during installation.
+
+  Normally there is no need to reinstall the application, unless we
+  want to test the installation profile and the installation scripts.
+
+  Another kind of re-installation, which touches only the database of
+  Drupal and nothing else, can be done with the script
+  =dev/reinstall-db.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  nohup nice dev/reinstall-db.sh @bcl_dev &
+  tail -f nohup.out
+  #+END_EXAMPLE
+
+  It is useful for testing the installation of custom modules, feature
+  modules, etc. The argument *@bcl_dev* is the alias of the site that
+  should be reinstalled.
+
+
+* Making a backup of the application
+
+  Sometimes, when testing things on Drupal (installing/uninstalling
+  modules etc.) things get messy and it is not possible anymore to
+  revert to the state that you were before starting the test. In this
+  case the only way to get safely to a previous stable state is by
+  restoring a backup (or installing from the scratch and repeating all
+  the configurations).
+
+  A snapshot of the application is just like a full backup with a time
+  stamp. It saves the state of the application at a certain time, both
+  the code (the whole Drupal directory) and the database. It can be
+  done like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/bcl/
+  cd /usr/local/src/btr_client/
+  dev/snapshot.sh make @bcl
+  dev/snapshot.sh make @bcl_dev
+  #+END_EXAMPLE
+  These will create the files ~snapshot-bcl-20140914.tgz~ and
+  ~snapshot-bcl_dev-20140914.tgz~. They can be restored like this:
+  #+BEGIN_EXAMPLE
+  dev/snapshot.sh restore @bcl --file=snapshot-bcl-20140914.tgz
+  dev/snapshot.sh restore @bcl --file=snapshot-bcl_dev-20140914.tgz
+  dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl-20140914.tgz
+  dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl_dev-20140914.tgz
+  #+END_EXAMPLE
+  As you may notice, a snapshot of *@bcl_dev* can also be restored on the
+  main application, and the other way around.
+
+  However, in many cases a backup/restore of the database is all that
+  is needed, and it is more efficient. It can be done with *drush
+  sql-dump* and *drush sql-query* like this:
+  #+BEGIN_EXAMPLE
+  drush sql-dump @bcl > bcl.sql
+  drush sql-dump @bcl_dev > bcl_dev.sql
+
+  drush @bcl sql-query --file=$(pwd)/bcl.sql
+  drush @bcl sql-query --file=$(pwd)/bcl_dev.sql
+
+  drush @bcl_dev sql-query --file=$(pwd)/bcl.sql
+  drush @bcl_dev sql-query --file=$(pwd)/bcl_dev.sql
+  #+END_EXAMPLE
+
+
+* Accessing the code of the application from outside chroot
+
+  In order to access easily the code of the application from outside
+  chroot, you can create a symbolic link like this:
+  #+BEGIN_EXAMPLE
+  cd /var/chroot/
+  ln -s bcl/var/www/bcl_dev/profiles/btr_client/ \
+        bcl_dev
+  #+END_EXAMPLE
+
+  Now you can go to */var/chroot/dev/* and start /emacs/ or any other
+  tools. This way you don't have to install /emacs/ or any other
+  development tools inside the /chroot/ and can use the best of
+  development tools that your host system can offer.
+
+
+* Pushing commits
+
+  The copy of the application on =/var/www/bcl_dev/profiles/btr_client/=
+  (as well as the one on =/var/www/bcl/profiles/btr_client/=) are actually
+  clones of the git repository of the project on GitHub, so we can
+  *pull* from it and *push* to it. Pulling (to get up-to-date) can be
+  done by everybody, however pushing requires a username and password
+  (the ones that are used to access the account at GitHub).
+
+
+* The commit workflow
+
+  For small or straight-forward changes you can also work directly on
+  the *master* branch, then *commit*, and then *push* to github.
+
+  However I usually use a bit more complicated workflow. First I
+  create and checkout a *dev* branch. When the work is done I merge
+  this branch to *master* and then delete it. Finally *push* the
+  commit(s) to github.
+  #+BEGIN_EXAMPLE
+  git checkout -d dev     ### create a branch and switch to it
+  [work...commit...work...comit]
+  git checkout master     ### switch back to master
+  git pull                ### get any latest commits from github
+  git merge dev [--squash]
+  git push                ### send commits to github
+  git branch -D dev       ### erase the branch
+  #+END_EXAMPLE
+
+  Usually there are no commits comming from github, since I am the
+  only developper (unless I have worked and commited from some other
+  location). So, when I merge without *--squash* this usually results
+  in *fast-forward* merge, which means that all the commits that I
+  have done on the branch *dev* are automatically transferred to the
+  branch *master*.
+
+  However sometimes there may be /dirty commits/ on the *dev* branch,
+  which means that there may be incomplete commits, or commits that
+  reverse what was done on the previous commits etc. When I wish to
+  reorganize commits and make them cleaner, I use the *--squash*
+  option, which collects all the changes on the *dev* branch and
+  leaves them on the *master* sandbox as local modifications
+  (uncommitted). Then I can redo the commits on a cleaner or more
+  logical way. Afterwards the *dev* branch will be deleted and the old
+  commits will be lost.
+  
+
+* Working with a dev-test-live workflow
+
+  At some point, all the modifications on the local copy of the
+  application (sandbox) have to be transferred to a public server,
+  where the application is in "production", performing "live". On that
+  public server there is the same /chroot/ environment as in the
+  development server. The synchronization of the application can be
+  done via git push and pull.
+
+  However *drush rsync* and *drush sql-sync* offer another option for
+  synchronization. For more details see:
+  #+BEGIN_EXAMPLE
+  drush help rsync
+  drush help sql-sync
+  drush topic docs-aliases
+  #+END_EXAMPLE
+
+  These commands use drush *aliases*, which allow also remote
+  execution of drush commands. On my development environment I have
+  created the file ~/etc/drush/remote.aliases.drushrc.php~, which has
+  a content like this:
+  #+BEGIN_EXAMPLE
+  <?php
+
+  $aliases['live'] = array (
+    'root' => '/var/www/bcl',
+    'uri' => 'http://example.org',
+
+    'remote-host' => 'example.org',
+    'remote-user' => 'root',
+    'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
+
+    'path-aliases' => array (
+      '%profile' => 'profiles/btr_client',
+      '%downloads' => '/var/www/downloads',
+    ),
+
+    'command-specific' => array (
+      'sql-sync' => array (
+	'simulate' => '1',
+      ),
+      'rsync' => array (
+	'simulate' => '1',
+      ),
+    ),
+  );
+
+  $aliases['test'] = array (
+    'parent' => '@live',
+    'root' => '/var/www/bcl',
+    'uri' => 'http://test.example.org',
+    'remote-host' => 'test.example.org',
+
+    'command-specific' => array (
+      'sql-sync' => array (
+	'simulate' => '0',
+      ),
+      'rsync' => array (
+	'simulate' => '0',
+      ),
+    ),
+  );
+  #+END_EXAMPLE
+
+  It defines the aliases *live* and *test*. The test/stage application
+  is almost identical to the live/production one, however it is not
+  for public use. The idea is to test there first any updates/upgrades
+  of the application, in order to make sure that they don't break any
+  things, before applying them to the real live application. In my
+  case it is placed on a different server, however it can also be
+  placed on the same server as the live application (just make a clone
+  of the main application with =dev/clone.sh bcl bcl_test=).
+
+  When everything is set up correctly, the synchronization can be done
+  as simply as this:
+  #+BEGIN_EXAMPLE
+  drush rsync @live @test
+  drush sql-sync @live @test
+  drush rsync @live @bcl_dev
+  drush sql-sync @live @bcl_dev
+  #+END_EXAMPLE
+
+  *Note:* Synchronizing this way from *@test* to *@live* or from
+  *@bcl_dev* to *@live*, usually is a HUGE mistake, but the /simulate/
+  option on the config file will make sure that it fails.
+
+  For drush commands to work remotely, *ssh* daemon has to be running
+  on the remote server, inside the chroot environment. By default it
+  is not installed, but it can be installed with the script
+  *dev/install-sshd.sh*. This script will also take care to change the
+  ssh port to *2201*, in order to avoid any conflicts with any
+  existing daemon on the host environment, and also for increased
+  security.
+
+  For remote access to work correctly, the public/private key ssh
+  access should be set up and configured as well. For more detailed
+  instructions on how to do it see:
+  http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html
