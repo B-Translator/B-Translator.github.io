@@ -29,10 +29,22 @@ i {
     font-style: italic;
 }
 
-ul li {
-  list-style: disc inside none;
+section ol, section ul {
+  margin-left: 25px;
 }
 
-header ul li {
-  list-style: none;
+section ol li {
+  list-style: decimal outside none;
+  padding-left: 3px;
+  margin-bottom: 10px;
+}
+
+section ul li {
+  list-style: disc outside none;
+  padding-left: 3px;
+  margin-bottom: 10px;
+}
+
+pre.example {
+  margin-bottom: 3px;
 }
