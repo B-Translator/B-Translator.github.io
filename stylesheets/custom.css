@@ -28,3 +28,11 @@ b {
 i {
     font-style: italic;
 }
+
+ul li {
+  list-style: disc inside none;
+}
+
+header ul li {
+  list-style: none;
+}

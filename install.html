@@ -22,9 +22,9 @@ this:
 <pre class="example">mkdir /var/chroot
 cd /var/chroot/
 git clone https://github.com/B-Translator/btr_client.git
-cp btr_client/install/settings.sh bcl.sh
-vim bcl.sh
-nohup nice btr_client/install/chroot.sh bcl.sh &
+cp btr_client/install/settings.sh btr_client/bcl.sh
+vim btr_client/bcl.sh
+nohup time nice btr_client/install/chroot.sh btr_client/bcl.sh &
 tail -f nohup.out
 less -r nohup.out</pre>
 </p>
@@ -37,9 +37,26 @@ configurations of the system.</p>
 <p>The installation script will also create the init script
 <code>/etc/init.d/chroot-bcl</code>, which can be used to start and
 stop the services inside the chroot:
-<pre class="example">service chroot-bcl start
-service chroot-bcl stop</pre>
+<pre class="example">/etc/init.d/chroot-bcl start
+/etc/init.d/chroot-bcl stop</pre>
 </p>
+
+<a id="client"><h3>Installing B-Translator Client in a Docker Container</h3></a>
+
+<p>This is almost the same as the installation above, except that
+instead of <code>install/chroot.sh</code> we
+call <code>install/docker.sh</code>:
+<pre class="example">nohup time nice btr_client/install/docker.sh btr_client/bcl.sh &</pre>
+</p>
+
+<p>Then to start and stop B-Translator Client we do:
+<pre class="example">docker.io start bcl
+docker.io stop bcl</pre>
+</p>
+
+<p>Compared to the installation with chroot, docker has the advantage
+that it is platform independent (the host system does not have to be
+Ubuntu or Debian).</p>
 
 <a id="server"><h3>Installing B-Translator Server</h3></a>
 
@@ -52,9 +69,9 @@ this:
 cd /var/chroot/
 git clone https://github.com/B-Translator/btr_client.git
 git clone https://github.com/B-Translator/btr_server.git
-cp btr_server/install/settings.sh btr.sh
-vim btr.sh
-nohup nice btr_server/install/chroot.sh btr.sh &
+cp btr_server/install/settings.sh btr_server/config.sh
+vim btr_server/config.sh
+nohup time nice btr_server/{install/chroot.sh,config.sh} &
 tail -f nohup.out
 less -r nohup.out</pre>
 </p>
@@ -67,8 +84,21 @@ neccessary common configurations of the system.</p>
 <p>The installation script will also create the init script
 <code>/etc/init.d/chroot-btr</code>, which can be used to start and
 stop the services inside the chroot:
-<pre class="example">service chroot-btr start
-service chroot-btr stop</pre>
+<pre class="example">/etc/init.d/chroot-btr start
+/etc/init.d/chroot-btr stop</pre>
+</p>
+
+<a id="server"><h3>Installing B-Translator Server in a Docker Container</h3></a>
+
+<p>This is almost the same as the installation above, except that
+instead of <code>install/chroot.sh</code> we
+call <code>install/docker.sh</code>:
+<pre class="example">nohup time nice btr_server/{install/chroot.sh,config.sh} &</pre>
+</p>
+
+<p>Then to start and stop B-Translator Server we do:
+<pre class="example">docker.io start btr
+docker.io stop btr</pre>
 </p>
 
 <a id="module"><h3>Installing btrClient Module</h3></a>
@@ -119,27 +149,38 @@ installation is to download a pre-installed chroot filesystem and then
 change only the configuration.</p>
 
 <ol>
-  <li>Download the archive of B-Translator Client or B-Translator
-  Server:
-    <a href="https://drive.google.com/file/d/0B7H_DCc2DjNGRjU0RFdZZGlrV3M/edit?usp=sharing"
-    target="_blank">B-Translator Client TGZ</a> (~400MB),
-    <a href="https://drive.google.com/file/d/0B7H_DCc2DjNGX0Y3NmNhRmw1VzQ/edit?usp=sharing"
-    target="_blank">B-Translator Server TGZ</a> (~600MB).
+  <li>Download one of these archives:
+    <ul>
+      <li><a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/bcl-20140917.tgz">B-Translator Client TGZ</a> (~500MB)</li>
+      <li><a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/bcl-oa-20140917.tgz">B-Translator Client TGZ (openatrium)</a> (~600MB)</li>
+      <li><a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/btr-20140917.tgz">B-Translator Server TGZ</a> (~650MB)</li>
+    </ul>
   </li>
-  <li>Extract the archive on the root (It will create the
+  <li>Extract the archive on the root (it will create the
     directory <code>/var/chroot/bcl/</code> containing the chroot
     system, and the init script
     <code>/etc/init.d/chroot-bcl</code>):
     <pre class="example">sudo tar --extract --absolute-names --gunzip --file=bcl.tgz</pre>
   </li>
-  <li>Customize the configuration of the chroot system (It will allow
-  you to change the domain, change the passwords, etc.):
+  <li>Customize the configuration of the chroot system:
     <pre class="example">sudo su
 /etc/init.d/chroot-bcl start
-cd /var/chroot/
-chroot bcl/
+chroot /var/chroot/bcl/
 cd /var/www/bcl/profiles/btr_client/
 install/config.sh
 </pre>
   </li>
+  <li>Fix also the network connection from inside chroot:
+    <pre class="example">chroot /var/chroot/bcl/
+vim /etc/resolv.conf
+ping www.google.com
+</pre>
+  </li>
 </ol>
+
+<p><strong>Note:</strong>The <strong>openatrium</strong> variant of
+the client is not finished and needs heavy custom configurations. For
+the case of the server, replace <strong>bcl</strong>
+with <strong>btr</strong> in the instructions above.</p>
+
+<a id="quick"><h3>Quick Installation with Docker</h3></a>
