@@ -45,3 +45,7 @@ section ul li {
 pre.example {
   margin-bottom: 3px;
 }
+
+a:hover {
+  text-decoration: none;
+}
