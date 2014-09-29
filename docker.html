@@ -123,8 +123,12 @@ parameters:
 </p>
 
 
-<pre class="example">docker run -d --name=bcl -p 80:80 -p 443:443 btr_client \
+<pre class="example">docker run -d --name=bcl --hostname=example.org \
+       -p 80:80 -p 443:443 btr_client \
        /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
+  OR
+docker run -d --name=bcl --hostname=example.org \
+       -p 80:80 -p 443:443 dashohoxha/btr_client:2.0
 </pre>
 
 
@@ -156,11 +160,8 @@ If needed, we can create other containers from the same image:
 </p>
 
 
-<pre class="example">docker run -d --name=bcl1 -p 81:80 -p 444:443 btr_client \
-       /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
-docker run -d --name=bcl2 -p 82:80 -p 445:443 btr_client \
-       /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
-</pre>
+<pre class="example">docker run -d --name=bcl1 -p 81:80 -p 444:443 dashohoxha/btr_client:2.0
+  docker run -d --name=bcl2 -p 82:80 -p 445:443 dashohoxha/btr_client:2.0</pre>
 
 
 
@@ -293,12 +294,12 @@ in this container.
 
 
 <pre class="example">docker stop bcl
-docker commit bcl btr_client_1
+docker commit bcl btr_client_20140929
 docker images
 docker rm bcl
 docker rmi btr_client
-docker run -d --name=bcl -p 80:80 -p 443:443 -p 2201:2201 btr_client_1 \
-       /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon  
+docker run -d --name=bcl --hostname=example.org \
+           -p 80:80 -p 443:443 -p 2201:2201 btr_client_20140929
 </pre>
 
 

@@ -75,8 +75,12 @@ steps relevant to B-Translator.
   We create containers by running docker on an image, with certain
   parameters:
   #+BEGIN_EXAMPLE
-  docker run -d --name=bcl -p 80:80 -p 443:443 btr_client \
+  docker run -d --name=bcl --hostname=example.org \
+         -p 80:80 -p 443:443 btr_client \
 	 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
+    OR
+  docker run -d --name=bcl --hostname=example.org \
+         -p 80:80 -p 443:443 dashohoxha/btr_client:2.0
   #+END_EXAMPLE
   If we now check the list of containers with =docker ps -a= we will
   see there the container with name *bcl*. Also, the host ports *80*
@@ -95,10 +99,8 @@ steps relevant to B-Translator.
 
   If needed, we can create other containers from the same image: 
   #+BEGIN_EXAMPLE
-  docker run -d --name=bcl1 -p 81:80 -p 444:443 btr_client \
-	 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
-  docker run -d --name=bcl2 -p 82:80 -p 445:443 btr_client \
-	 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
+  docker run -d --name=bcl1 -p 81:80 -p 444:443 dashohoxha/btr_client:2.0
+  docker run -d --name=bcl2 -p 82:80 -p 445:443 dashohoxha/btr_client:2.0
   #+END_EXAMPLE
 
   We can delete containers with =docker rm=, but we have to stop them
@@ -165,12 +167,12 @@ steps relevant to B-Translator.
   in this container.
   #+BEGIN_EXAMPLE
   docker stop bcl
-  docker commit bcl btr_client_1
+  docker commit bcl btr_client_20140929
   docker images
   docker rm bcl
   docker rmi btr_client
-  docker run -d --name=bcl -p 80:80 -p 443:443 -p 2201:2201 btr_client_1 \
-	 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon  
+  docker run -d --name=bcl --hostname=example.org \
+             -p 80:80 -p 443:443 -p 2201:2201 btr_client_20140929
   #+END_EXAMPLE
 
   Now we can enter the container and start the sshd server:
