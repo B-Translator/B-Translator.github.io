@@ -261,11 +261,14 @@ git clone https://github.com/B-Translator/btr_client
 
 
 <p>
-Finally we call the script <code>install/config.sh</code>:
+Finally we call the script <code>install/config.sh</code> (but we
+remove first <code>bcl_dev</code> because the script will recreate
+it):
 </p>
 
 
 <pre class="example">cd btr_client/
+dev/clone_rm.sh bcl_dev
 install/config.sh
 </pre>
 
