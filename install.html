@@ -85,6 +85,14 @@ btr.example.org</code>.</p>
 at <a href="https://github.com/B-Translator/btr_server/blob/master/README.org#installation"
 target="_blank">README.org</a>.</p>
 
+<p><strong>Note:</strong>For the server you also have to update
+manually the function <code>btr_get_sites()</code>
+on <code>modules/custom/btrCore/includes/sites.inc</code> whenever a
+new language site is registered:
+<pre class="example">cd /var/www/btr/profiles/btr_server/
+vim modules/custom/btrCore/includes/sites.inc</pre>
+This is something that has not been automated yet.
+</p>
 
 <a id="module"><h3>Installing btrClient Module</h3></a>
 
