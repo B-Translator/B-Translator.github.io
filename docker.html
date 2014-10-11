@@ -43,10 +43,10 @@ root filesystem of the system, very similar to the root filesystem
 in the case of chroot.
 </p>
 
-<pre class="example">docker search dashohoxha/btr
-docker pull dashohoxha/btr_client:v2.1
-docker pull dashohoxha/btr_client:v2.1-openatrium
-docker pull dashohoxha/btr_server:v2.1
+<pre class="example">docker search btranslator
+docker pull btranslator/btr_client:v2.1
+docker pull btranslator/btr_client:v2.1-openatrium
+docker pull btranslator/btr_server:v2.1
 docker images
 </pre>
 
@@ -55,7 +55,7 @@ Docker images can be deleted with the command <code>docker rmi</code>:
 </p>
 
 
-<pre class="example">docker rmi dashohoxha/btr_client:v2.1 dashohoxha/btr_server:v2.1
+<pre class="example">docker rmi btranslator/btr_client:v2.1 btranslator/btr_server:v2.1
 </pre>
 
 
@@ -77,7 +77,7 @@ Create containers by running docker on an image, with these parameters:
 
 
 <pre class="example">docker run -d --name=bcl --hostname=example.org \
-       -p 80:80 -p 443:443 dashohoxha/btr_client:v2.1
+       -p 80:80 -p 443:443 btranslator/btr_client:v2.1
 </pre>
 
 
@@ -107,8 +107,8 @@ If needed, we can create other containers from the same image:
 </p>
 
 
-<pre class="example">docker run -d --name=bcl1 -p 81:80 -p 444:443 dashohoxha/btr_client:2.0
-docker run -d --name=bcl2 -p 82:80 -p 445:443 dashohoxha/btr_client:2.0</pre>
+<pre class="example">docker run -d --name=bcl1 -p 81:80 -p 444:443 btranslator/btr_client:v2.1
+docker run -d --name=bcl2 -p 82:80 -p 445:443 btranslator/btr_client:v2.1</pre>
 
 
 
