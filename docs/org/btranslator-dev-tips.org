@@ -1,47 +1,13 @@
 #+TITLE:     Development Tools, Tips and Tricks
 #+AUTHOR:    Dashamir Hoxha
 #+EMAIL:     dashohoxha@gmail.com
-##+DESCRIPTION:
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
 #+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
 
-
-* Installation
-
-  If you need to install frequently (for example for testing), a
-  script like this can be useful:
-  #+BEGIN_EXAMPLE
-  #!/bin/bash -x
-
-  source=dbox
-  installer=chroot
-  git_branch=master
-  nohup_out="nohup-$source-$git_branch-$installer.out"
-
-  rm -f $nohup_out
-  nohup time nice $source/install/{$installer.sh,settings.sh} cfg.sh \
-      --git_branch=$git_branch --reboot=true > $nohup_out &
-  sleep 1
-  tail -f $nohup_out
-  #+END_EXAMPLE
-
-  The file ~cfg.sh~ overrides the default config settings (for example
-  passwords):
-  #+BEGIN_EXAMPLE
-  apt_mirror='http://us-east-1.ec2.archive.ubuntu.com/ubuntu/'
-  gmail_account='test@example.org'
-  gmail_passwd=3omRoxtho
-  development='true'
-  #+END_EXAMPLE
-
-  You can also override configuration settings from the command line.
-
-  *Note:* The order of giving the settings is important. The last one
-  overrides the previous settings.
-
+Development Tools, Tips and Tricks
 
 * How to access the shell
 
@@ -49,21 +15,14 @@
   the shell of the installed system in order to check log files,
   debug, play with changing configurations, etc.
 
-  When the installation is done on a chroot directory, then you simply
-  switch to it with the command =chroot=:
-  #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  #+END_EXAMPLE
-
-  When the installation is done in a docker container, you have to install
-  first the commands =nsenter= and =docker-enter= like this:
+  For this we can install the command =docker-enter=:
   #+BEGIN_EXAMPLE
   docker run -v /usr/local/bin:/target jpetazzo/nsenter
   #+END_EXAMPLE
 
-  Then you can access the shell of a running container like this:
+  Then access the shell of a running container like this:
   #+BEGIN_EXAMPLE
-  docker-enter bcl
+  docker-enter btr
   #+END_EXAMPLE
 
   See also this article:
@@ -72,19 +31,27 @@
 
 * Install sshd
 
-  In order to access the server remotely through drush, ssh-client,
-  etc. you can install *sshd* with the script ~dev/install-sshd.sh~,
-  like this:
+  We want to start a sshd server on port 2201 inside the container,
+  but when we created the container with =docker run= we did not think
+  about forwarding this port. We have to destroy this container and
+  create a new one, with an addition =-p= option for the
+  port 2201. But first we should use the command =docker commit= to
+  save to a new image any configurations and data that we already have
+  in this container.
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  dev/install-sshd.sh
+  docker stop btr
+  docker commit btr btr_server:1
+  docker images
+  docker rm btr
+  docker run -d --name=btr --hostname=example.org \
+	     -p 80:80 -p 443:443 -p 2201:2201 btr_server:1
   #+END_EXAMPLE
 
-  By default it will install and run a sshd that listens on the port *2201*,
-  but you can also give it the port number as an argument:
+  Now we can enter the container and start the sshd server:
   #+BEGIN_EXAMPLE
-  dev/install-sshd.sh 2211
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  dev/install-sshd.sh 2201
   #+END_EXAMPLE
 
 
@@ -93,13 +60,11 @@
   There are two webservers installed, apache2 and nginx (with php5-fpm
   and memcached). For development Apache2 can be more suitable, while
   for production NGINX is supposed to be more responsive in high load.
-  It also has built-in cache and its configuration is tweaked for DoS
-  protection, short timeout, etc.
 
   We can choose one of them like this:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
+  docker-enter btr
+  cd /usr/local/src/btr_server/
   dev/webserver.sh apache2
   dev/webserver.sh nginx
   #+END_EXAMPLE
@@ -109,16 +74,16 @@
 
   Clones of the main site can be used for development and testing. 
 
-  Inside the chroot you can make a clone for development like this:
+  Inside the container you can make a clone for development like this:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  dev/clone.sh bcl bcl_dev1
-  dev/clone.sh bcl_dev1 bcl_test1
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  dev/clone.sh btr btr_dev1
+  dev/clone.sh btr_dev1 btr_test1
   #+END_EXAMPLE
 
-  It creates a new application with root */var/www/bcl_dev1/* and with
-  DB named *bcl_dev1*. It also creates the drush alias *@bcl_dev1*,
+  It creates a new application with root */var/www/btr_dev1/* and with
+  DB named *btr_dev1*. It also creates the drush alias *@btr_dev1*,
   and modifies the configuration of the webserver so that the cloned
   application can be accessed at *dev1.example.org*.
 
@@ -128,10 +93,10 @@
   Other clones like this can be created for testing etc. To cleanup
   (remove/erase) a clone, you can use *clone_rm.sh* like this:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  dev/clone_rm.sh bcl_dev1
-  dev/clone_rm.sh bcl_test1
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  dev/clone_rm.sh btr_dev1
+  dev/clone_rm.sh btr_test1
   #+END_EXAMPLE
 
   By the way, you can also modify a little bit the configuration of a
@@ -139,9 +104,9 @@
   a development copy with a live or testing one), with the script
   =dev/config.php=:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  drush @bcl_dev php-script dev/config.php dev2
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  drush @btr_dev php-script dev/config.php dev2
   #+END_EXAMPLE
 
   It will set site_name to 'B-Translator (dev1)', will make site email
@@ -154,13 +119,13 @@
 
   It can be done with the script =dev/reinstall.sh=:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
+  docker-enter btr
+  cd /usr/local/src/btr_server/
   nohup nice dev/reinstall.sh settings.sh &
   tail -f nohup.out
   #+END_EXAMPLE
   It will rebuild the Drupal directory with *drush make* and install
-  the btr_client profile with *drush site-install*, and then do all the
+  the btr_server profile with *drush site-install*, and then do all the
   rest of configurations just like they are done during installation.
 
   Normally there is no need to reinstall the application, unless we
@@ -170,14 +135,14 @@
   Drupal and nothing else, can be done with the script
   =dev/reinstall-db.sh=:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  nohup nice dev/reinstall-db.sh @bcl_dev &
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  nohup nice dev/reinstall-db.sh @btr_dev &
   tail -f nohup.out
   #+END_EXAMPLE
 
   It is useful for testing the installation of custom modules, feature
-  modules, etc. The argument *@bcl_dev* is the alias of the site that
+  modules, etc. The argument *@btr_dev* is the alias of the site that
   should be reinstalled.
 
 
@@ -195,57 +160,93 @@
   the code (the whole Drupal directory) and the database. It can be
   done like this:
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/bcl/
-  cd /usr/local/src/btr_client/
-  dev/snapshot.sh make @bcl
-  dev/snapshot.sh make @bcl_dev
+  docker-enter btr
+  cd /usr/local/src/btr_server/
+  dev/snapshot.sh make @btr
+  dev/snapshot.sh make @btr_dev
   #+END_EXAMPLE
-  These will create the files ~snapshot-bcl-20140914.tgz~ and
-  ~snapshot-bcl_dev-20140914.tgz~. They can be restored like this:
+  These will create the files ~snapshot-btr-20140914.tgz~ and
+  ~snapshot-btr_dev-20140914.tgz~. They can be restored like this:
   #+BEGIN_EXAMPLE
-  dev/snapshot.sh restore @bcl --file=snapshot-bcl-20140914.tgz
-  dev/snapshot.sh restore @bcl --file=snapshot-bcl_dev-20140914.tgz
-  dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl-20140914.tgz
-  dev/snapshot.sh restore @bcl_dev --file=snapshot-bcl_dev-20140914.tgz
+  dev/snapshot.sh restore @btr --file=snapshot-btr-20140914.tgz
+  dev/snapshot.sh restore @btr --file=snapshot-btr_dev-20140914.tgz
+  dev/snapshot.sh restore @btr_dev --file=snapshot-btr-20140914.tgz
+  dev/snapshot.sh restore @btr_dev --file=snapshot-btr_dev-20140914.tgz
   #+END_EXAMPLE
-  As you may notice, a snapshot of *@bcl_dev* can also be restored on the
+  As you may notice, a snapshot of *@btr_dev* can also be restored on the
   main application, and the other way around.
 
   However, in many cases a backup/restore of the database is all that
   is needed, and it is more efficient. It can be done with *drush
   sql-dump* and *drush sql-query* like this:
   #+BEGIN_EXAMPLE
-  drush sql-dump @bcl > bcl.sql
-  drush sql-dump @bcl_dev > bcl_dev.sql
+  drush sql-dump @btr > btr.sql
+  drush sql-dump @btr_dev > btr_dev.sql
 
-  drush @bcl sql-query --file=$(pwd)/bcl.sql
-  drush @bcl sql-query --file=$(pwd)/bcl_dev.sql
+  drush @btr sql-query --file=$(pwd)/btr.sql
+  drush @btr sql-query --file=$(pwd)/btr_dev.sql
 
-  drush @bcl_dev sql-query --file=$(pwd)/bcl.sql
-  drush @bcl_dev sql-query --file=$(pwd)/bcl_dev.sql
+  drush @btr_dev sql-query --file=$(pwd)/btr.sql
+  drush @btr_dev sql-query --file=$(pwd)/btr_dev.sql
   #+END_EXAMPLE
 
 
-* Accessing the code of the application from outside chroot
+* Accessing the code of the application from outside container
 
-  In order to access easily the code of the application from outside
-  chroot, you can create a symbolic link like this:
-  #+BEGIN_EXAMPLE
-  cd /var/chroot/
-  ln -s bcl/var/www/bcl_dev/profiles/btr_client/ \
-        bcl_dev
-  #+END_EXAMPLE
+  In general it is not possible to directly access the directories and
+  files of of a container from the host system.  However we can use
+  the docker /volumes/ to share directories between the container and
+  the host. It can be done like this:
 
-  Now you can go to */var/chroot/dev/* and start /emacs/ or any other
-  tools. This way you don't have to install /emacs/ or any other
-  development tools inside the /chroot/ and can use the best of
-  development tools that your host system can offer.
+  + First we make a backup of the directory inside the container that
+    we want to share:
+    #+BEGIN_EXAMPLE
+    docker-enter btr
+    cd /var/www/btr_dev/profiles/
+    cp -a btr_server/ btr_server-bak
+    exit
+    #+END_EXAMPLE
+
+  + Then we save the image of the container as =btr_server:dev=, in order
+    to start a new container based on it:
+    #+BEGIN_EXAMPLE
+    docker stop btr
+    docker commit btr btr_server:dev
+    docker images
+    #+END_EXAMPLE
+
+  + Next we create a new container that shares a directory with the
+    host system (using the option =-v=):
+    #+BEGIN_EXAMPLE
+    docker run -d --name=btr_dev --hostname=dev.example.org \
+	       -v $(pwd)/btr_dev:/var/www/btr_dev/profiles/btr_server/
+	       -p 80:80 -p 443:443 btr_server:dev
+    #+END_EXAMPLE
+    *Note:* The container *btr* must be stoped before we create and
+    start the new container *btr_dev*, otherwise the ports 80 and 443
+    will conflict.
+
+  + Finally we enter the container and move the content of the backup
+    directory to the shared directory:
+    #+BEGIN_EXAMPLE
+    docker-enter btr_dev
+    cd /var/www/btr_dev/profiles/btr_server/
+    cp -a ../btr_server-bak/* .
+    cp -a ../btr_server-bak/.* .
+    rm -rf ../btr_server-bak/
+    exit
+    #+END_EXAMPLE
+
+  Now we can go to the directory *btr_dev/* and start /emacs/ or any
+  other tools. This way we don't have to install /emacs/ or any other
+  development tools inside the container and we can use the best of
+  development tools that the host system can offer.
 
 
 * Pushing commits
 
-  The copy of the application on =/var/www/bcl_dev/profiles/btr_client/=
-  (as well as the one on =/var/www/bcl/profiles/btr_client/=) are actually
+  The copy of the application on =/var/www/btr_dev/profiles/btr_server/=
+  (as well as the one on =/var/www/btr/profiles/btr_server/=) are actually
   clones of the git repository of the project on GitHub, so we can
   *pull* from it and *push* to it. Pulling (to get up-to-date) can be
   done by everybody, however pushing requires a username and password
@@ -294,7 +295,7 @@
   At some point, all the modifications on the local copy of the
   application (sandbox) have to be transferred to a public server,
   where the application is in "production", performing "live". On that
-  public server there is the same /chroot/ environment as in the
+  public server there is the same docker container as in the
   development server. The synchronization of the application can be
   done via git push and pull.
 
@@ -314,7 +315,7 @@
   <?php
 
   $aliases['live'] = array (
-    'root' => '/var/www/bcl',
+    'root' => '/var/www/btr',
     'uri' => 'http://example.org',
 
     'remote-host' => 'example.org',
@@ -322,7 +323,7 @@
     'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
 
     'path-aliases' => array (
-      '%profile' => 'profiles/btr_client',
+      '%profile' => 'profiles/btr_server',
       '%downloads' => '/var/www/downloads',
     ),
 
@@ -338,7 +339,7 @@
 
   $aliases['test'] = array (
     'parent' => '@live',
-    'root' => '/var/www/bcl',
+    'root' => '/var/www/btr',
     'uri' => 'http://test.example.org',
     'remote-host' => 'test.example.org',
 
@@ -360,24 +361,24 @@
   things, before applying them to the real live application. In my
   case it is placed on a different server, however it can also be
   placed on the same server as the live application (just make a clone
-  of the main application with =dev/clone.sh bcl bcl_test=).
+  of the main application with =dev/clone.sh btr btr_test=).
 
   When everything is set up correctly, the synchronization can be done
   as simply as this:
   #+BEGIN_EXAMPLE
   drush rsync @live @test
   drush sql-sync @live @test
-  drush rsync @live @bcl_dev
-  drush sql-sync @live @bcl_dev
+  drush rsync @live @btr_dev
+  drush sql-sync @live @btr_dev
   #+END_EXAMPLE
 
   *Note:* Synchronizing this way from *@test* to *@live* or from
-  *@bcl_dev* to *@live*, usually is a HUGE mistake, but the /simulate/
+  *@btr_dev* to *@live*, usually is a HUGE mistake, but the /simulate/
   option on the config file will make sure that it fails.
 
   For drush commands to work remotely, *ssh* daemon has to be running
-  on the remote server, inside the chroot environment. By default it
-  is not installed, but it can be installed with the script
+  on the remote server, inside the docker container. By default it is
+  not installed, but it can be installed with the script
   *dev/install-sshd.sh*. This script will also take care to change the
   ssh port to *2201*, in order to avoid any conflicts with any
   existing daemon on the host environment, and also for increased
