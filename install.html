@@ -12,87 +12,43 @@ with Drupal7. For more flexibility, there is also a drupal module for
 the client, that can be installed independently on any Drupal
 application or distribution.</p>
 
-<a id="client"><h3>Installing B-Translator Client</h3></a>
+<h3>Installation with Docker</h3>
 
-<p>Assuming that the host system is Ubuntu, we can install
-in it B-Translator Client like this:</p>
+<p>Docker currently supports only the <strong>amd64</strong>
+architecture. Some basic steps for installation and configuration are here:</p>
+
 <ol>
-  <li>Get and extract the
-    <a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/bcl-20141010.tgz">
-    B-Translator Client TGZ archive </a>:
-    <pre class="example">wget https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/bcl-20141010.tgz
-sudo tar --extract --absolute-names --gunzip --file=bcl-20141010.tgz</pre>
-    This will create the directory <code>/var/chroot/bcl/</code>
-    containing the chroot system, and the init script
-    <code>/etc/init.d/chroot-bcl</code>.
+  <li>Get the image of the system:
+    <pre class="example">docker search btranslator
+docker pull btranslator/btr_client:v2.2</pre>
+  </li>
+  
+  <li>Create a container:
+    <pre class="example">docker run -d --name=bcl --hostname=example.org \
+           -p 80:80 -p 443:443 btranslator/btr_client:v2.2</pre>
   </li>
 
-  <li>Customize the configuration of the chroot system:
-    <pre class="example">sudo /etc/init.d/chroot-bcl start
-sudo chroot /var/chroot/bcl/
-cd /var/www/bcl/profiles/btr_client/
-install/config.sh
-</pre>
-  </li>
-
-  <li>Fix also the network connection from inside chroot:
-    <pre class="example">sudo chroot /var/chroot/bcl/
-vim /etc/resolv.conf
-ping www.google.com
-</pre>
-  </li>
-
-  <li>If this is a test installation or you are installing it on your
-    local machine, add to <code>/etc/hosts</code> a line like
-    this <code>127.0.0.1 example.org</code> with the domain that you
-    used in configuration and the IP of the server. Now you can open
-    in browser <a href="https://example.org"
-    target="_blank">https://example.org</a> and access the
-    application.  You will have to confirm the security exception,
-    since the SSL certificates of the web server are not real ones.
+  <li>Change the configuration:
+    <pre class="example">docker-enter bcl
+cd /usr/local/src/btr_client/
+vim install/settings.sh
+install/{config.sh,settings.sh}</pre>
   </li>
 </ol>
 
-<p>For other systems (Debian, Fedora, CentOS, etc.) small
-modifications to the init script <code>/etc/init.d/chroot-bcl</code>
-may be needed. For other ways of installation, which actually build
-the system from scratch, look at the
-file <a href="https://github.com/B-Translator/btr_client/blob/master/README.org#installation"
-target="_blank">README.org</a> of B-Translation Client.</p>
+<p>Now we can start and stop the container with <code>docker start
+bcl</code> and <code>docker stop bcl</code>.</p>
 
-<p><strong>Note:</strong> A version of the client based
-on <a href="http://openatrium.com" target="_blank">Open Atrium</a> is
-available as well in this
-archive <a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/bcl-oa-20141010.tgz">bcl-oa-20141010.tgz</a>. However
-it is not finished yet and needs heavy customization. Try it only if
-you are a Drupal developer and are confident in your skills.</p>
+<p>There are more details about working with Docker
+in <a href="docker.html">this page</a>.</p>
 
-<a id="server"><h3>Installing B-Translator Server</h3></a>
+<h3>Installation with Chroot</h3>
 
-<p>Installing a server is almost the same as installing a client, but
-we use
-the <a href="https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/btr-20141011.tgz">
-B-Translator Server TGZ archive</a> instead.
+<p>Installation inside a chroot works well on Ubuntu. For other
+distributions it may need small tweaks. The steps for installation
+inside <em>chroot</em> are described in <a href="chroot.html">this
+page</a>.</p>
 
-<pre class="example">wget https://googledrive.com/host/0B7H_DCc2DjNGamstaDd5VjBydUk/btr-20141011.tgz</pre>
-
-Also replace <strong>bcl</strong> with <strong>btr</strong> in the
-instructions above and add a domain for the server
-at <code>/etc/hosts</code>, for example <code>127.0.0.1
-btr.example.org</code>.</p>
-
-<p>Look also at how to build the system from scratch
-at <a href="https://github.com/B-Translator/btr_server/blob/master/README.org#installation"
-target="_blank">README.org</a>.</p>
-
-<p><strong>Note:</strong>For the server you also have to update
-manually the function <code>btr_get_sites()</code>
-on <code>modules/custom/btrCore/includes/sites.inc</code> whenever a
-new language site is registered:
-<pre class="example">cd /var/www/btr/profiles/btr_server/
-vim modules/custom/btrCore/includes/sites.inc</pre>
-This is something that has not been automated yet.
-</p>
 
 <a id="module"><h3>Installing btrClient Module</h3></a>
 
@@ -147,9 +103,3 @@ that defines a block that embeds this iFrame:
 <br/> <a href="https://www.drupal.org/project/btrblocks"
 target="_blank">https://www.drupal.org/project/btrblocks</a>.
 </p>
-
-<a id="quick"><h3 style="clear: both">Installation with Docker</h3></a>
-
-<p>Installation with Docker has some advantages, however it is a bit
-more complicated. The steps are described
-in <a href="docker.html">this page</a>.</p>
