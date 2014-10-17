@@ -30,15 +30,15 @@ steps relevant to B-Translator.
   First we have to get the system images.
   #+BEGIN_EXAMPLE
   docker search btranslator
-  docker pull btranslator/btr_client:v2.1
-  docker pull btranslator/btr_client:v2.1-openatrium
-  docker pull btranslator/btr_server:v2.1
+  docker pull btranslator/btr_client:v2.2
+  docker pull btranslator/btr_client:v2.2-openatrium
+  docker pull btranslator/btr_server:v2.2
   docker images
   #+END_EXAMPLE
 
   Docker images can be deleted with the command =docker rmi=:
   #+BEGIN_EXAMPLE
-  docker rmi btranslator/btr_client:v2.1 btranslator/btr_server:v2.1
+  docker rmi btranslator/btr_client:v2.2 btranslator/btr_server:v2.2
   #+END_EXAMPLE
 
 
@@ -48,7 +48,7 @@ steps relevant to B-Translator.
   parameters:
   #+BEGIN_EXAMPLE
   docker run -d --name=bcl --hostname=example.org \
-             -p 80:80 -p 443:443 btranslator/btr_client:v2.1
+             -p 80:80 -p 443:443 btranslator/btr_client:v2.2
   #+END_EXAMPLE
   If we now check the list of containers with =docker ps -a= we will
   see there the container with name *bcl*. Also, the host ports *80*
@@ -65,8 +65,8 @@ steps relevant to B-Translator.
 
   If needed, we can create other containers from the same image: 
   #+BEGIN_EXAMPLE
-  docker run -d --name=bcl1 -p 81:80 -p 444:443 btranslator/btr_client:v2.1
-  docker run -d --name=bcl2 -p 82:80 -p 445:443 btranslator/btr_client:v2.1
+  docker run -d --name=bcl1 -p 81:80 -p 444:443 btranslator/btr_client:v2.2
+  docker run -d --name=bcl2 -p 82:80 -p 445:443 btranslator/btr_client:v2.2
   #+END_EXAMPLE
 
   We can delete containers with =docker rm=, but we have to stop them
