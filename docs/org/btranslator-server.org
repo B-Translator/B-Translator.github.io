@@ -1,0 +1,472 @@
+
+Some notes about installing and configuring the B-Translator server.
+These are mostly so that I can remember the steps later. But maybe
+they can help anybody else as well.
+
+* Server details
+
+  | Url          | https://console.developers.google.com/project/btranslator2 |
+  | Tags         | http-server, https-server                                  |
+  | Machine type | g1-small (1 vCPU, 1.7 GB memory)                           |
+  | Zone         | us-central1-a                                              |
+
+
+* Setup
+
+  + Update and upgrade packages:
+    #+BEGIN_EXAMPLE
+    sudo su
+    aptitude update
+    aptitude upgrade
+    #+END_EXAMPLE
+
+  + Install vim:
+    #+BEGIN_EXAMPLE
+    aptitude install vim
+    vim /etc/vim/vimrc
+    # uncomment 'syntax on' etc.
+    #+END_EXAMPLE
+
+  + Bash prompt and colors:
+    #+BEGIN_EXAMPLE
+    vim /etc/bash.bashrc
+    # set a fancy prompt (non-color, overwrite the one in /etc/profile)
+    #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+    vim ~/.bashrc
+    # uncomment lines to have a colorized ls
+    #+END_EXAMPLE
+
+  + Install docker:
+    #+BEGIN_EXAMPLE
+    ### install docker
+    curl -sSL https://get.docker.io/ | sh
+
+    ### install the command docker-enter
+    docker run -v /usr/local/bin:/target jpetazzo/nsenter
+    #+END_EXAMPLE
+
+  + Install =gdrive= for uploading files to Google Drive:
+    #+BEGIN_EXAMPLE
+    ### download gdrive from: https://github.com/prasmussen/gdrive
+    wget -O gdrive https://drive.google.com/uc?id=0B3X9GlR6EmbnTjk4MGNEbEFRRWs
+    chmod +x gdrive
+    mv gdrive /usr/local/sbin/
+
+    gdrive list
+    #+END_EXAMPLE
+
+  + Install =git=:
+    #+BEGIN_EXAMPLE
+    aptitude install git
+    #+END_EXAMPLE
+
+
+* Build chroot environments
+
+  For making tests, it may be better sometimes to work inside a chroot.
+
+** Chroot with wheezy
+
+   #+BEGIN_EXAMPLE
+   aptitude install debootstrap schroot
+   mkdir /var/chroot/
+   cd /var/chroot
+   debootstrap --variant=minbase --arch=amd64 wheezy wheezy/ http://gce_debian_mirror.storage.googleapis.com/
+
+   cp /etc/apt/sources.list wheezy/etc/apt/
+   cp /etc/apt/sources.list.d/backports.list wheezy/etc/apt/sources.list.d/
+
+   cp /etc/resolv.conf wheezy/etc/resolv.conf
+   mount -o bind /proc wheezy/proc
+
+   chroot wheezy/
+   apt-get update
+   apt-get upgrade
+
+   apt-get -y install language-pack-en
+   update-locale
+   apt-get -y install vim aptitude git openssh-server
+
+   echo wheezy >  /etc/debian_chroot
+   #+END_EXAMPLE
+
+
+** Chroot with trusty
+
+   #+BEGIN_EXAMPLE
+   ln -s /usr/share/debootstrap/scripts/{gutsy,trusty}
+
+   cd /var/chroot
+   debootstrap --variant=minbase --arch=amd64 trusty trusty/ http://archive.ubuntu.com/ubuntu
+
+   cat <<EOF > trusty/etc/apt/sources.list
+   deb http://archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
+   deb http://archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
+   deb http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+   EOF
+
+   cp /etc/resolv.conf trusty/etc/resolv.conf
+   mount -o bind /proc trusty/proc
+
+   chroot trusty/
+   apt-get update
+   apt-get -y install ubuntu-minimal
+   apt-get upgrade
+
+   apt-get -y install language-pack-en
+   update-locale
+   apt-get -y install vim aptitude git openssh-server docker.io
+   echo trusty >  /etc/debian_chroot
+   #+END_EXAMPLE
+
+
+** Script for starting and stoping a chroot environment
+
+   File ~chroot.sh~:
+   #+BEGIN_EXAMPLE
+   #!/bin/bash
+
+   if [ $# -ne 2 ]
+   then
+       echo " * Usage: $0 {start|stop} target"
+       exit 0
+   fi
+
+   CHROOT=/var/chroot/$2
+
+   case "$1" in
+       start)
+	   # mount /proc etc. to the CHROOT
+	   for dir in proc dev sys dev/pts
+	   do
+	       mount -o bind /$dir $CHROOT/$dir
+	   done
+	   chroot $CHROOT/ mount -a
+	   ;;
+
+       stop)
+	   # kill any processes that are running on CHROOT
+	   chroot_pids=$(for p in /proc/*/root; do ls -l $p; done | grep $CHROOT | cut -d'/' -f3)
+	   test -z "$chroot_pids" || (kill -9 $chroot_pids; sleep 2)
+
+	   # umount /proc etc. from the CHROOT
+	   chroot $CHROOT/ umount -a
+	   for dir in dev/pts sys dev proc
+	   do
+	       umount $CHROOT/$dir
+	   done
+	   ;;
+       *)
+	   echo " * Usage: $0 {start|stop} target"
+   esac
+   #+END_EXAMPLE
+
+
+* Container for 'bind9'
+
+  I manage my domains with a *hidden*, *master*, *authoritative-only*
+  name-server.
+
+  + Get the code from github:
+    #+BEGIN_EXAMPLE
+    cd /data/
+    git clone  https://github.com/dashohoxha/bind9=
+    #+END_EXAMPLE
+
+  + Change any configurations on ~config/var/cache/bind/~,
+    ~config/etc/bind/~ and ~ufw.sh~.
+
+  + Build the docker image with =build.sh=.
+
+  + Create a container with =run.sh=.
+
+  + In case that configuration needs to be changed, update it and do
+    again: =./rm.sh ; ./build.sh ; ./run.sh=.
+
+  + Backup the configuration of the name server on google drive:
+    #+BEGIN_EXAMPLE
+    tar cfz bind9.tgz bind9/
+    gdrive upload -f bind9.tgz
+    #+END_EXAMPLE
+
+
+* Container 'wsproxy'
+
+  I want to host several domains/subdomains in the same server, in
+  different containers. Usually this is a problem because only one of
+  the containers can use the ports *80/443* of the host.  The
+  container *wsproxy* solves this problem by forwarding HTTPS requests
+  to the other containers, according to the domain, behaving like a
+  kind of HTTP gateway or hub.
+
+  + Get the code from github:
+    #+BEGIN_EXAMPLE
+    cd /data/
+    git clone  https://github.com/dashohoxha/wsproxy=
+    #+END_EXAMPLE
+
+  + Create the container:
+    #+BEGIN_EXAMPLE
+    wsproxy/build.sh
+    wsproxy/run.sh
+    #+END_EXAMPLE
+
+  + Customize the configuration of sites. Create a site for the
+    subdomains =dev= and =test= of each domain.
+    #+BEGIN_EXAMPLE
+    cd wsproxy/
+    cd config/etc/apache2/sites-available/
+
+    vim btr.conf
+    vim btr-ssl.conf
+    vim bcl.conf
+    vim bcl-ssl.conf
+
+    cp btr.conf btr_dev.conf
+    cp btr-ssl.conf btr_dev-ssl.conf
+    vim btr_dev.conf
+    vim btr_dev-ssl.conf
+
+    cp btr.conf btr_test.conf
+    cp btr-ssl.conf btr_test-ssl.conf
+    vim btr_test.conf
+    vim btr_test-ssl.conf
+
+    cp bcl.conf bcl_dev.conf
+    cp bcl-ssl.conf bcl_dev-ssl.conf
+    vim bcl_dev.conf
+    vim bcl_dev-ssl.conf
+
+    cp bcl.conf bcl_test.conf
+    cp bcl-ssl.conf bcl_test-ssl.conf
+    vim bcl_test.conf
+    vim bcl_test-ssl.conf
+
+    cp bcl.conf sq.conf
+    cp bcl-ssl.conf sq-ssl.conf
+    vim sq.conf
+    vim sq-ssl.conf
+
+    cp sq.conf sq_dev.conf
+    cp sq-ssl.conf sq_dev-ssl.conf
+    vim sq_dev.conf
+    vim sq_dev-ssl.conf
+
+    cp sq.conf sq_test.conf
+    cp sq-ssl.conf sq_test-ssl.conf
+    vim sq_test.conf
+    vim sq_test-ssl.conf
+    #+END_EXAMPLE
+
+  + Enable each site:
+    #+BEGIN_EXAMPLE
+    cd ../sites-enabled/
+    for site in btr btr_dev btr_test bcl bcl_dev bcl_test sq sq_dev sq_test
+    do
+	ln -s ../sites-available/$site.conf .
+	ln -s ../sites-available/$site-ssl.conf .
+    done
+    #+END_EXAMPLE
+
+  + Modify hosts and restart:
+    #+BEGIN_EXAMPLE
+    cd /data/
+    vim wsproxy/hosts.txt
+    wsproxy/restart.sh
+    #+END_EXAMPLE
+
+  + Backup the configuration of wsproxy on google drive:
+    #+BEGIN_EXAMPLE
+    cd /data/
+    tar cfz wsproxy.tgz wsproxy/
+    gdrive upload -f wsproxy.tgz
+    #+END_EXAMPLE
+
+
+* Create the other containers
+
+  We need a container for *btr_server* and one or more containers
+  for *btr_client* (one for each language).
+
+  + Get the docker images of btr_server and btr_client:
+    #+BEGIN_EXAMPLE
+    docker pull btranslator/btr_client:v2.2
+    docker pull btranslator/btr_server:v2.2
+    #+END_EXAMPLE
+
+  + Create the containers:
+    #+BEGIN_EXAMPLE
+    docker run -d --name=btr --hostname=btranslator.org \
+	       -v /data:/data btranslator/btr_server:v2.2
+
+    docker run -d --name=sq --hostname=sq.btranslator.org \
+		btranslator/btr_client:v2.2
+    #+END_EXAMPLE
+
+  + Customize the configuration of *btr*:
+    #+BEGIN_EXAMPLE
+    docker-enter btr
+    cd /usr/local/src/btr_server/
+    vim install/setting.sh
+    install/{config.sh,settings.sh}
+    #+END_EXAMPLE
+
+  + Customize the configuration of *sq*:
+    #+BEGIN_EXAMPLE
+    docker-enter sq
+    cd /usr/local/src/btr_client/
+    vim install/setting.sh
+    install/{config.sh,settings.sh}
+    #+END_EXAMPLE
+
+  + Customize the configuration of *wsproxy* and restart it.
+
+  + Make sure that containers start automatically on reboot.  Add this
+    line at ~/etc/rc.local~:
+    #+BEGIN_EXAMPLE
+    docker start bind9 wsproxy btr sq wsproxy
+    #+END_EXAMPLE
+
+
+* Install SSL certificates
+
+  I have installed SSL certificates for the domains =btranslator.org=
+  and =l10n.org.al= both on *wsproxy* and on *btr* containers. They
+  are placed on the directories ~etc/ssl/certs/~ and
+  ~etc/ssl/private/~, like this:
+  #+BEGIN_EXAMPLE
+  cp btranslator_org.crt        wsproxy/config/etc/ssl/certs/
+  cp btranslator_org.ca-bundle  wsproxy/config/etc/ssl/certs/
+  cp btranslator_org.key        wsproxy/config/etc/ssl/private/
+
+  cp l10n_org_al.crt        wsproxy/config/etc/ssl/certs/
+  cp l10n_org_al.ca-bundle  wsproxy/config/etc/ssl/certs/
+  cp l10n_org_al.key        wsproxy/config/etc/ssl/private/
+  #+END_EXAMPLE
+
+  The private keys should not be readable for everyone:
+  #+BEGIN_EXAMPLE
+  chmod 600 wsproxy/config/etc/ssl/private/btranslator_org.key
+  chmod 600 wsproxy/config/etc/ssl/private/l10n_org_al.key
+  #+END_EXAMPLE
+
+  Apache directives on the config file
+  ~wsproxy/config/etc/apache2/sites-available/btr-ssl.conf~:
+  #+BEGIN_EXAMPLE
+  SSLCertificateFile      /etc/ssl/certs/btranslator_org.crt
+  SSLCertificateKeyFile   /etc/ssl/private/btranslator_org.key
+  SSLCertificateChainFile /etc/ssl/certs/btranslator_org.ca-bundle
+  #+END_EXAMPLE
+
+  Apache directives on the config file
+  ~wsproxy/config/etc/apache2/sites-available/bcl-ssl.conf~:
+  #+BEGIN_EXAMPLE
+  SSLCertificateFile      /etc/ssl/certs/l10n_org_al.crt
+  SSLCertificateKeyFile   /etc/ssl/private/l10n_org_al.key
+  SSLCertificateChainFile /etc/ssl/certs/l10n_org_al.ca-bundle
+  #+END_EXAMPLE
+
+  Then restart container wsproxy: =docker restart wsproxy=.
+
+
+* Transfer translation data and users
+
+  #+BEGIN_EXAMPLE
+  drush @btr sql-dump --database=btr_db --result-file=$(pwd)/data.sql --gzip
+  gdrive upload -f data.sql.gz
+
+  gdrive download --pop
+  gunzip data.sql.gz
+  drush @btr sql-query --database=btr_db --file=$(pwd)/data.sql
+  #+END_EXAMPLE
+
+  #+BEGIN_EXAMPLE
+  cd /var/www/data/db/
+  ./users-export-btr.sh
+  ./users-export-bcl.sh
+
+  cd /var/www/data/db/
+  ./users-import.sh @btr $(pwd)/users-btr-20141002.sql.gz
+  ./users-import.sh @bcl $(pwd)/users-bcl-20141002.sql.gz
+  #+END_EXAMPLE
+
+
+* Attach an extra disk for docker
+
+  + Format the disk with XFS:
+    #+BEGIN_EXAMPLE
+    apt-get install xfs xfsprogs
+    mkfs.xfs /dev/sdb
+    #+END_EXAMPLE
+
+  + Stop docker and backup its data:
+    #+BEGIN_EXAMPLE
+    /etc/init.d/docker stop
+    mv /var/lib/docker /docker-backup
+    #+END_EXAMPLE
+
+  + Add a line like this to ~/etc/fstab~ for mounting it automatically
+    on reboot:
+    #+BEGIN_EXAMPLE
+    UUID=be840c0d-91f8-41fa-bb40-82e1c4e2e985 /var/lib/docker xfs defaults 1 1
+    #+END_EXAMPLE
+    The UUID of the disk can be found with: =blkid /dev/sdb=.
+
+  + Copy the backup-ed data to ~/var/lib/docker/~:
+    #+BEGIN_EXAMPLE
+    mkdir /var/lib/docker
+    mount -a
+    cp -a /docker-backup/* /var/lib/docker/
+    #+END_EXAMPLE
+
+  + Start the docker service and check that everything is ok:
+    #+BEGIN_EXAMPLE
+    /etc/init.d/docker start
+    docker images
+    docker ps -a
+    #+END_EXAMPLE
+
+  + Cleanup the backup data:
+    #+BEGIN_EXAMPLE
+    rm -rf /docker-backup/
+    #+END_EXAMPLE
+
+  Referencies:
+  - http://www.projectatomic.io/docs/docker-storage-recommendation/
+
+
+* Misc
+
+** Fix the configuration of sites
+
+   Update the function =btr_get_sites()= on
+   ~modules/custom/btrCore/includes/sites.inc~:
+   #+BEGIN_EXAMPLE
+   cd /var/www/btr/profiles/btr_server/
+   vim modules/custom/btrCore/includes/sites.inc
+   #+END_EXAMPLE
+
+
+** Install fortunes
+
+   #+BEGIN_EXAMPLE
+   aptitude install fortunes
+   ls /usr/share/games/fortunes/
+   vim /var/www/btr/profiles/btr_server/utils/fortune.sh
+   #+END_EXAMPLE
+
+** Transfer the old site to the new one
+
+*** Content
+
+*** Menu items
+
+*** Private variables
+
+*** Users
+
+*** Google files
+
+*** Transfer with backup/restore
