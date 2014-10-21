@@ -1,0 +1,392 @@
+#+TITLE:     Web Application Deployment With Docker
+#+AUTHOR:    Dashamir Hoxha
+#+EMAIL:     dashohoxha@gmail.com
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:info toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
+#+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
+
+* Installation
+
+  - Install Docker:
+    https://docs.docker.com/installation/#installation
+    #+begin_example
+    docker version
+    #+end_example
+
+  - Pull the Docker image =ubuntu:14.04=:
+    #+begin_example
+    docker pull ubuntu:14.04
+    #+end_example
+
+  - Pull the Docker image =ubuntu-upstart:14.04=:
+    #+begin_example
+    docker search ubuntu-upstart
+    docker pull ubuntu-upstart:14.04
+    #+end_example
+
+  - Pull the Docker image =btranslator/btr_client:v2.2=:
+    #+begin_example
+    docker search btranslator
+    docker pull btranslator/btr_client:v2.2
+    #+end_example
+
+  - Install =docker-enter=:
+    #+begin_example
+    docker run -v /usr/local/bin:/target jpetazzo/nsenter
+    #+end_example
+
+
+* About Docker
+
+  - https://docker.com/
+
+  - What is Docker? (https://www.youtube.com/watch?v=ZzQfxoMFH0U)
+
+  - Docker's features and advantages
+
+  - How it is different from a VM?
+
+
+* Basic Concepts
+
+  - What is a docker image.
+
+  - What is the Docker Hub.
+
+  - What is a docker container.
+
+  - Running a command inside docker.
+
+
+* Basic Tutorial
+
+  - https://www.docker.com/tryit/
+
+
+* A real world example
+
+  Let's see how Docker is used by installing a B-Translator Client.
+
+  - Create and start a docker container:
+    #+begin_example
+    docker images
+    docker run -d --name=bcl --hostname=example.org \
+               -p 80:80 -p 443:443 btranslator/btr_client:v2.2
+    #+end_example
+
+  - Add this line on ~/etc/hosts~.
+    #+begin_example
+    127.0.0.1 example.org
+    #+end_example
+ 
+  - Open in browser: https://example.org
+
+  - Stop and start the container:
+    #+begin_example
+    docker ps -a
+    docker stop bcl
+    docker start bcl
+    docker restart bcl
+    #+end_example
+
+
+* Run a command in a docker container
+
+  - Hello world:
+    #+begin_example
+    docker run ubuntu:14.04 /bin/echo 'Hello world'
+    #+end_example
+
+  - An interactive container:
+    #+begin_example
+    docker run -t -i ubuntu:14.04 /bin/bash
+    pwd
+    ls
+    exit
+    #+end_example
+
+  - A daemonized hello world:
+    #+begin_example
+    docker run -d ubuntu:14.04 \
+        /bin/sh -c "while true; do echo hello world; sleep 1; done"
+    docker ps
+    docker logs insane_babbage
+    docker stop insane_babbage
+    docker ps -a
+    #+end_example
+
+
+* Other docker commands
+
+  #+begin_example
+  docker
+  docker inspect
+  docker inspect --help
+  docker inspect ubuntu-upstat:14.04
+  docker inspect bcl
+  docker inspect -f '{{ .NetworkSettings.IPAddress }}' bcl
+  docker top bcl
+  #+end_example
+
+
+* Create a web application container
+ 
+  - Create a new container from *ubuntu-upstart*:
+    #+begin_example
+    docker run -d --name=webapp --hostname=example.org \
+               -p 8000:80 -p 44300:443 ubuntu-upstart:14.04
+    #+end_example
+
+  - Update system packages of the container:
+    #+begin_example
+    docker-enter webapp
+    apt-get update
+    apt-get -y upgrade
+    #+end_example
+
+  - Install apache2 and mysql:
+    #+begin_example
+    apt-get install apache2 mysql-server php5 php5-mysql
+    #+end_example
+
+  - Create a test app:
+    #+begin_example
+    cd /var/www/html/
+    apt-get install vim
+    vim index.php
+    exit
+    #+end_example
+
+  - Try it in browser: http://example.org:8000
+
+
+* Create more web application containers
+
+  - Save the webapp container as a new image (make a snapshot):
+    #+begin_example
+    docker stop webapp
+    docker commit webapp lamp:v1.0
+    docker images
+    #+end_example
+
+  - Create new containers from this image:
+    #+begin_example
+    mkdir app01
+    docker run -d --name=webapp01 --hostname=example.org \
+               -v $(pwd)/app01:/var/www/html \
+               -p 8001:80 -p 44301:443 lamp:v1.0
+    mkdir app02
+    docker run -d --name=webapp02 --hostname=example.org \
+               -v $(pwd)/app02:/var/www/html \
+               -p 8002:80 -p 44302:443 lamp:v1.0
+    #+end_example
+
+  - Modify applications:
+    #+begin_example
+    vim app01/index.php
+    vim app02/index.php
+    #+end_example
+
+  - Test them in browser: 
+    + http://example.org:8001
+    + http://example.org:8002
+
+
+* Upload image to Docker Hub
+
+  - Register on Docker Hub: https://hub.docker.com
+
+  - Set a tag:
+    #+begin_example
+    docker tag lamp:v1.0 username/lamp:v1.0
+    #+end_example
+
+  - Push to Docker Hub:
+    #+begin_example
+    docker login 
+    docker push username/lamp:v1.0
+    #+end_example
+
+  - Edit the information on:
+    https://registry.hub.docker.com/u/username/lamp/
+
+
+* Building images
+
+  - Create ~lamp/Dockerfile~ with a content like this:
+    #+begin_example
+    FROM ubuntu-upstart:14.04
+
+    RUN apt-get update; apt-get -y upgrade
+    RUN apt-get -y purge openssh-server openssh-client ; apt-get -y autoremove
+    RUN apt-get update ; DEBIAN_FRONTEND=noninteractive apt-get -y install \
+        vim apache2 mysql-server php5 php5-mysql
+    #+end_example
+
+  - Build the image:
+    #+begin_example
+    docker build --tag=lamp:v1.1 lamp/
+    docker images
+    #+end_example
+
+  - Rebuild and notice that the cache will be used.
+
+
+* Using container wsproxy
+
+  - See: https://registry.hub.docker.com/u/dashohoxha/wsproxy/
+
+  - Get the code from GitHub:
+    #+begin_example
+    git clone https://github.com/dashohoxha/wsproxy
+    #+end_example
+
+  - Build the image and create a container:
+    #+begin_example
+    wsproxy/build.sh
+    wsproxy/run.sh
+    #+end_example
+
+  - Create containers of webapps:
+    #+begin_example
+    docker stop webapp01 webapp02
+    docker rm webapp01 webapp02
+
+    docker run -d --name=webapp01 --hostname=example1.org \
+               -v $(pwd)/app01:/var/www/html lamp:v1.0
+    docker run -d --name=webapp02 --hostname=example2.org \
+               -v $(pwd)/app02:/var/www/html lamp:v1.0
+    #+end_example
+
+  - Add apache2 virtual domains for =example1.org= and =example2.org=
+    #+begin_example
+    cd wsproxy/config/etc/apache2/sites-available/
+
+    cp bcl.conf xmp1.conf
+    sed -i xmp1.conf -e 's/example.org/example1.org/'
+
+    cp bcl-ssl.conf xmp1-ssl.conf
+    sed -i xmp1-ssl.conf -e 's/example.org/example1.org/'
+
+    cp bcl.conf xmp2.conf
+    sed -i xmp2.conf -e 's/example.org/example2.org/'
+
+    cp bcl-ssl.conf xmp2-ssl.conf
+    sed -i xmp2-ssl.conf -e 's/example.org/example2.org/'
+
+    cd ../sites-enabled/
+    ln -s ../sites-available/xmp1.conf .
+    ln -s ../sites-available/xmp1-ssl.conf .
+    ln -s ../sites-available/xmp2.conf .
+    ln -s ../sites-available/xmp2-ssl.conf .
+
+    cd ../../../../../
+    #+end_example
+
+  - Edit ~wsproxy/hosts.txt~ and add these lines:
+    #+begin_example
+    webapp01: example1.org
+    webapp02: example2.org
+    #+end_example
+
+  - Restart container /wsproxy/:
+    #+begin_example
+    wsproxy/restart.sh
+    #+end_example
+
+  - Add these lines on ~/etc/hosts~:
+    #+begin_example
+    127.0.0.1 example1.org
+    127.0.0.1 example2.org
+    #+end_example
+
+  - Try in browser:
+    + https://example1.org
+    + https://example2.org
+
+
+* Installing a Drupal Application
+
+  - See: https://github.com/dashohoxha/dbox
+
+  - Get the code of DBox from github:
+    #+begin_example
+    git clone --branch openatrium https://github.com/dashohoxha/dbox.git
+    #+end_example
+
+  - Rename the project:
+    #+begin_example
+    dbox/rename-project.sh  # see usage
+    dbox/rename-project.sh labdoo:webapp03 lbd:w03
+    mv dbox webapp03
+    #+end_example
+
+  - Initialize a git repository:
+    #+begin_example
+    cd webapp03/
+    git init .
+    git add $(git ls-files --others)
+    git commit -a -m 'My new project.'
+    cd ..
+    #+end_example
+
+  - Build a docker image:
+    #+begin_example
+    cp webapp03/install/settings.sh cfg.sh
+    vim cfg.sh
+    webapp03/docker-build.sh cfg.sh
+    #+end_example
+
+  - Create a docker container:
+    #+begin_example
+    docker run -d --name=webapp03 --hostname=example3.org webapp03:master
+    #+end_example
+
+  - Add apache2 virtual domain for =example3.org=:
+    #+begin_example
+    cd wsproxy/config/etc/apache2/sites-available/
+
+    cp bcl.conf xmp3.conf
+    sed -i xmp3.conf -e 's/example.org/example3.org/'
+
+    cp bcl-ssl.conf xmp3-ssl.conf
+    sed -i xmp3-ssl.conf -e 's/example.org/example3.org/'
+
+    cp bcl_dev.conf xmp3_dev.conf
+    sed -i xmp3_dev.conf -e 's/example.org/example3.org/'
+
+    cp bcl_dev-ssl.conf xmp3_dev-ssl.conf
+    sed -i xmp3_dev-ssl.conf -e 's/example.org/example3.org/'
+
+    cd ../sites-enabled/
+    ln -s ../sites-available/xmp3.conf .
+    ln -s ../sites-available/xmp3-ssl.conf .
+    ln -s ../sites-available/xmp3_dev.conf .
+    ln -s ../sites-available/xmp3_dev-ssl.conf .
+
+    cd ../../../../../
+    #+end_example
+
+  - Edit ~wsproxy/hosts.txt~ and add these lines:
+    #+begin_example
+    webapp03: example3.org
+    webapp03: dev.example3.org
+    #+end_example
+
+  - Restart container /wsproxy/:
+    #+begin_example
+    wsproxy/restart.sh
+    #+end_example
+
+  - Add these lines on ~/etc/hosts~:
+    #+begin_example
+    127.0.0.1 example3.org
+    127.0.0.1 dev.example3.org
+    #+end_example
+
+  - Try in browser:
+    + https://example3.org
+    + https://dev.example3.org
+
