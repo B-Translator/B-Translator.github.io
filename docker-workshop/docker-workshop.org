@@ -7,6 +7,32 @@
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
 #+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
 
+* Preparations before the workshop
+
+  These are the preparations that should be done before the workshop:
+
+  1. Install docker: https://docs.docker.com/installation/#installation 
+
+     It can be very easy or a bit complicated, depending on the
+     operating system of the participant. So, it is better to take
+     care of it ahead of time.  I have to note here that for the time
+     being Docker supports only *amd64* (64 bit) operating systems.
+
+  2. Pull the *ubuntu-upstart* image, and some other images as well:
+     #+begin_example
+     docker pull ubuntu:14.04
+     docker pull ubuntu-upstart:14.04
+     docker pull btranslator/btr_client:v2.2
+     docker run -v /usr/local/bin:/target jpetazzo/nsenter
+     #+end_example
+
+     These are big files, so it can be time an bandwidth consuming if
+     everyone dowloads them during the workshop.
+
+  However, even if you don't have a laptop at all, you can allways
+  watch my screen which will be projected.
+
+
 * Installation
 
   - Install Docker:
