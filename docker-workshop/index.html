@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="Web Application Deployment With Docker"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2014-10-22T13:59+0200"/>
+<meta name="generated" content="2014-11-02T20:11+0100"/>
 <meta name="author" content="Dashamir Hoxha"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -194,72 +194,26 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Preparations before the workshop</a></li>
-<li><a href="#sec-2">Installation</a></li>
-<li><a href="#sec-3">About Docker</a></li>
-<li><a href="#sec-4">Basic Concepts</a></li>
-<li><a href="#sec-5">Basic Tutorial</a></li>
-<li><a href="#sec-6">A real world example</a></li>
-<li><a href="#sec-7">Run a command in a docker container</a></li>
-<li><a href="#sec-8">Other docker commands</a></li>
-<li><a href="#sec-9">Create a web application container</a></li>
-<li><a href="#sec-10">Create more web application containers</a></li>
-<li><a href="#sec-11">Upload image to Docker Hub</a></li>
-<li><a href="#sec-12">Building images</a></li>
-<li><a href="#sec-13">Using container wsproxy</a></li>
-<li><a href="#sec-14">Installing a Drupal Application</a></li>
+<li><a href="#sec-1">Installation</a></li>
+<li><a href="#sec-2">About Docker</a></li>
+<li><a href="#sec-3">Basic Concepts</a></li>
+<li><a href="#sec-4">Basic Tutorial</a></li>
+<li><a href="#sec-5">A real world example</a></li>
+<li><a href="#sec-6">Run a command in a docker container</a></li>
+<li><a href="#sec-7">Other docker commands</a></li>
+<li><a href="#sec-8">Create a web application container</a></li>
+<li><a href="#sec-9">Create more web application containers</a></li>
+<li><a href="#sec-10">Upload image to Docker Hub</a></li>
+<li><a href="#sec-11">Building images</a></li>
+<li><a href="#sec-12">Using container wsproxy</a></li>
+<li><a href="#sec-13">Installing a Drupal Application</a></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1">Preparations before the workshop</h2>
+<h2 id="sec-1">Installation</h2>
 <div class="outline-text-2" id="text-1">
-
-
-<p>
-  These are the preparations that should be done before the workshop:
-</p>
-<ol>
-<li>Install docker: <a href="https://docs.docker.com/installation/#installation">https://docs.docker.com/installation/#installation</a> 
-
-<p>
-     It can be very easy or a bit complicated, depending on the
-     operating system of the participant. So, it is better to take
-     care of it ahead of time.  I have to note here that for the time
-     being Docker supports only <b>amd64</b> (64 bit) operating systems.
-</p>
-</li>
-<li>Pull the <b>ubuntu-upstart</b> image, and some other images as well:
-
-
-
-<pre class="example">docker pull ubuntu:14.04
-docker pull ubuntu-upstart:14.04
-docker pull btranslator/btr_client:v2.2
-docker run -v /usr/local/bin:/target jpetazzo/nsenter
-</pre>
-
-
-<p>
-     These are big files, so it can be time an bandwidth consuming if
-     everyone dowloads them during the workshop.
-</p></li>
-</ol>
-
-
-<p>
-  However, even if you don't have a laptop at all, you can allways
-  watch my screen which will be projected.
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2">Installation</h2>
-<div class="outline-text-2" id="text-2">
 
 
 <ul>
@@ -318,9 +272,9 @@ docker pull btranslator/btr_client:v2.2
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3">About Docker</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">About Docker</h2>
+<div class="outline-text-2" id="text-2">
 
 
 <ul>
@@ -343,9 +297,9 @@ docker pull btranslator/btr_client:v2.2
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4">Basic Concepts</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Basic Concepts</h2>
+<div class="outline-text-2" id="text-3">
 
 
 <ul>
@@ -368,9 +322,9 @@ docker pull btranslator/btr_client:v2.2
 
 </div>
 
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5">Basic Tutorial</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Basic Tutorial</h2>
+<div class="outline-text-2" id="text-4">
 
 
 <ul>
@@ -384,9 +338,9 @@ docker pull btranslator/btr_client:v2.2
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6">A real world example</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5">A real world example</h2>
+<div class="outline-text-2" id="text-5">
 
 
 <p>
@@ -435,9 +389,9 @@ docker restart bcl
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7">Run a command in a docker container</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6">Run a command in a docker container</h2>
+<div class="outline-text-2" id="text-6">
 
 
 <ul>
@@ -483,9 +437,9 @@ docker ps -a
 
 </div>
 
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8">Other docker commands</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7">Other docker commands</h2>
+<div class="outline-text-2" id="text-7">
 
 
 
@@ -506,9 +460,9 @@ docker top bcl
 
 </div>
 
-<div id="outline-container-9" class="outline-2">
-<h2 id="sec-9">Create a web application container</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8">Create a web application container</h2>
+<div class="outline-text-2" id="text-8">
 
 
 <ul>
@@ -564,9 +518,9 @@ exit
 
 </div>
 
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10">Create more web application containers</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9">Create more web application containers</h2>
+<div class="outline-text-2" id="text-9">
 
 
 <ul>
@@ -624,9 +578,9 @@ vim app02/index.php
 
 </div>
 
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11">Upload image to Docker Hub</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10">Upload image to Docker Hub</h2>
+<div class="outline-text-2" id="text-10">
 
 
 <ul>
@@ -663,9 +617,9 @@ docker push username/lamp:v1.0
 
 </div>
 
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12">Building images</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11">Building images</h2>
+<div class="outline-text-2" id="text-11">
 
 
 <ul>
@@ -703,9 +657,9 @@ docker images
 
 </div>
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13">Using container wsproxy</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12">Using container wsproxy</h2>
+<div class="outline-text-2" id="text-12">
 
 
 <ul>
@@ -821,9 +775,9 @@ webapp02: example2.org
 
 </div>
 
-<div id="outline-container-14" class="outline-2">
-<h2 id="sec-14">Installing a Drupal Application</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13">Installing a Drupal Application</h2>
+<div class="outline-text-2" id="text-13">
 
 
 <ul>
@@ -958,7 +912,7 @@ webapp03: dev.example3.org
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2014-10-22T13:59+0200</p>
+<p class="date">Date: 2014-11-02T20:11+0100</p>
 <p class="author">Author: Dashamir Hoxha</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
