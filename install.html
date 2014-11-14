@@ -20,30 +20,22 @@ architecture. Some basic steps for installation and configuration are here:</p>
 <ol>
   <li>Get the image of the system:
     <pre class="example">docker search btranslator
-docker pull btranslator/btr_client:v2.2</pre>
+docker pull btranslator/btr_server:v2.3</pre>
   </li>
 
-  <p>The images <code>btranslator/btr_client:v2.2-openatrium</code>
-  and <code>btranslator/btr_server:v2.2</code> are available as
-  well.</p>
-  
   <li>Create a container:
-    <pre class="example">docker run -d --name=bcl --hostname=example.org \
-           -p 80:80 -p 443:443 btranslator/btr_client:v2.2</pre>
+    <pre class="example">docker create --name=btr --hostname=example.org \
+    -p 80:80 -p 443:443 btranslator/btr_server:v2.3
+docker start btr</pre>
   </li>
-  <p>You can stop and start the container with <code>docker stop
-  bcl</code> and <code>docker start bcl</code> (or <code>docker
-  restart bcl</code>).</p>
 
   <li>Change the configuration:
-    <pre class="example">docker-enter bcl
-cd /usr/local/src/btr_client/
+    <pre class="example">docker-enter btr
+cd /usr/local/src/btr_server/
 vim install/settings.sh
-install/{config.sh,settings.sh}</pre>
+install/{config.sh,settings.sh}
+install/config/translation_lng.sh</pre>
   </li>
-
-  <p>You can also give the configuration settings interactively
-  with: <code>install/config.sh</code> (without <code>settings.sh</code>).</p>
 
   <p><strong>Note:</strong> The command <code>docker-enter</code> can
   be installed with: <code>docker run -v /usr/local/bin:/target jpetazzo/nsenter</code></p>
@@ -57,49 +49,12 @@ install/{config.sh,settings.sh}</pre>
     application. You will have to confirm the security exception,
     since the SSL certificates of the web server are not real ones.
   </li>
+
+  <li>Download and import PO files:
+    <pre class="example">/var/www/data/get.sh
+/var/www/data/import.sh</pre>
+  </li>
 </ol>
-
-<p>There are more details about working with Docker
-in <a href="docker.html">this page</a>.</p>
-
-
-<h3>Server Installation</h3>
-
-<p>Installing a server is almost the same as installing a client, but
-we use the image <code>btranslator/btr_server:v2.2</code> instead.
-
-Also replace <strong>bcl</strong> with <strong>btr</strong> in the
-instructions above and add another domain for the server
-at <code>/etc/hosts</code>, for example <code>127.0.0.1
-btr.example.org</code>.</p>
-
-<p><strong>Note:</strong>For the server you also have to update
-manually the function <code>btr_get_sites()</code>
-on <code>modules/custom/btrCore/includes/sites.inc</code> whenever a
-new language site is registered:
-<pre class="example">docker-enter btr
-cd /var/www/btr/profiles/btr_server/
-vim modules/custom/btrCore/includes/sites.inc</pre>
-This is something that has not been automated yet.
-</p>
-
-
-<h3>Installation with Chroot</h3>
-
-<p>Installation inside a chroot works well on Ubuntu. For other
-distributions it may need small tweaks. The steps for installation
-inside <em>chroot</em> are described in <a href="chroot.html">this
-page</a>.</p>
-
-
-<a id="module"><h3>Installing btrClient Module</h3></a>
-
-<p>The module btrClient is intended for Drupal developers who want to
-integrate it into their Drupal application. For instructions about it
-see <a href="https://github.com/B-Translator/btrClient"
-target="_blank">https://github.com/B-Translator/btrClient</a>
-or <a href="https://drupal.org/project/btrclient"
-target="_blank">https://drupal.org/project/btrclient</a>.</p>
 
 <a id="iframe"><h3>Vocabulary iFrame</h3></a>
 
