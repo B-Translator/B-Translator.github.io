@@ -11,13 +11,16 @@ $(document).ready(function() {
 
     // Load an example when it is clicked.
     $('.example').click(function(){
-        $('#code').html('');
+        $('#jscode').html('');
         $('#output').html('');
 
         var filename = this.id + '.js';
         $.get(filename, 'script')
             .done(function (file_content) {
-                $('#code').text(file_content);
+                Rainbow.color(file_content, 'javascript',
+			      function(highlighted_code) {
+				  $('#jscode').html(highlighted_code);
+			      });
             });
     });
 });
