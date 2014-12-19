@@ -8,22 +8,22 @@ var example_list = {
     report_statistics_post: {
 	jsfile: 'report/statistics_post.js',
 	apiref: '#sec-1.1',
-	jsbin: null,
+	jsbin: 'juzipa/1/edit?js,output',
     },
     report_topcontrib_get: {
 	jsfile: 'report/topcontrib_get.js',
 	apiref: '#sec-1.2',
-	jsbin: null,
+	jsbin: 'mupuci/1/edit?js,output',
     },
     report_topcontrib_post: {
 	jsfile: 'report/topcontrib_post.js',
 	apiref: '#sec-1.2',
-	jsbin: null,
+	jsbin: 'xekoru/1/edit?js,output',
     },
     translations_get_random_sguid: {
 	jsfile: 'translations/get_random_sguid.js',
 	apiref: '#sec-2.1',
-	jsbin: null,
+	jsbin: 'nibowo/1/edit?js,output',
     },
     translations_retrieve: {
 	jsfile: 'translations/retrieve.js',
