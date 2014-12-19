@@ -4,6 +4,7 @@ var debug = function(msg) {
 };
 
 $(document).ready(function() {
+    // Activate jQuery accordion (on the left of the page).
     $('#examples').accordion({
         active: 1,
         heightStyle: 'content',
@@ -12,7 +13,7 @@ $(document).ready(function() {
     // Load an example when it is clicked.
     $('.example').click(function(){
         // Initialize HTML elements.
-        $('#jscode-title').html('Example Code');
+        $('#jscode-title').text($(this).text());
         $('#jscode').html('');
         $('#output').html('');
 
