@@ -1,12 +1,47 @@
 
 /**
- * Make an HTTP request to the given URL
- * and output debug information about it.
+ * Make an HTTP request to the given URL.
+ *
+ * Similar to $.ajax(url, settings) (in fact it calls it internally).
+ *
+ * @param String url
+ *   A string containing the URL to which the request is sent.
+ *
+ * @param PlainObject settings
+ *   A set of key/value pairs that configure the Ajax request.
+ *
+ *   - method :: (String, default: 'GET')
+ *       The type of request to make ('GET' or 'PUT').
+ *
+ *   - data :: (PlainObject or String or Array)
+ *       Data to be sent to the server. It is converted to a query
+ *       string, if not already a string. It's appended to the url for
+ *       GET-requests. Object must be Key/Value pairs.
+ *
+ *   - headers :: (PlainObject, default: {})
+ *       An object of additional header key/value pairs to send along
+ *       with requests.
+ *
+ *   - beforeSend :: (Function)
+ *       A pre-request callback function.
+ *
+ *   - async :: (Boolean, default: true)
+ *       If you need synchronous requests, set this option to false.
+ *
+ *   - processData :: (Boolean, default: true)
+ *       When uploading files we need to set this to false.
+ *
+ *   - contentType :: (String, default: 'application/x-www-form-urlencoded; charset=UTF-8')
+ *       When uploading files we need to set this to false.
+ *
+ * @return
+ *   jqXHR object, just like $.ajax()
  */
 var http_request = function(url, settings) {
     // If parameter settings is not given, assign a default value.
-    settings = settings || {};
+    var settings = settings || {};
 
+    // Set the parameters of the ajax request.
     var ajax_params = {
         url: url,
         type: settings.method || 'GET',
@@ -14,16 +49,13 @@ var http_request = function(url, settings) {
         headers: settings.headers,
         dataType: 'json',
         async: settings.async,
-        crossDomain: settings.crossDomain || true,
-	processData: settings.processData || true,
-        beforeSend: function() {
-            var str_settings = JSON.stringify(settings, undefined, 4);
-            debug("\n------------ start http_request -----------------"
-                  + "\n===> URL: " + url
-                  + "\n===> SETTINGS:\n" + str_settings);
-            return true;
-        }
     };
+    if (settings.beforeSend) {
+	ajax_params.beforeSend = settings.beforeSend;
+    };
+
+    // The parameters processData and contentType
+    // need to be set to false when uploading files.
     if (settings.processData === false) {
 	ajax_params.processData = false;
     };
@@ -31,16 +63,6 @@ var http_request = function(url, settings) {
 	ajax_params.contentType = false;
     };
 
-    var request = $.ajax(ajax_params);
-    request.done(function(response) {
-        debug("\n===> RESULT:\n" + JSON.stringify(response, undefined, 4));
-    });
-    request.fail(function(jqXHR, textStatus, errorThrown) {
-        debug("\n===> ERROR " + jqXHR.status + ': ' + errorThrown);
-	console.log(errorThrown);
-    });
-    request.always(function(){
-        debug("\n------------ end http_request -----------------\n");
-    });
-    return request;
+    // Make the request and return the result.
+    return $.ajax(ajax_params);
 }
