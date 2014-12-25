@@ -39,7 +39,7 @@ var del_translation = function() {
         data: { tguid: tguid },
         headers: { 'Authorization': 'Bearer ' + access_token },
     });
-}
+};
 
 /******************************************************/
 
