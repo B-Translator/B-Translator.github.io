@@ -14,40 +14,40 @@ $(document).ready(function() {
         $('#output').html('');
 
         // Get the example details.
-	var id = this.id
+        var id = this.id
         if (example_list[id]) {
-	    var example = example_list[id];
-	}
-	else {
-	    alert("Example '" + id + "' not found!");
-	    return;
-	}
+            var example = example_list[id];
+        }
+        else {
+            alert("Example '" + id + "' not found!");
+            return;
+        }
 
         // Add button 'Try on JSBin'.
-	if (example.jsbin) {
-	    $('#jscode-title').append('<a href="http://jsbin.com/' + example.jsbin + '" target="_blank"><button class="btn">Try on JSBin</button></a>');
-	}
+        if (example.jsbin) {
+            $('#jscode-title').append('<a href="http://jsbin.com/' + example.jsbin + '" target="_blank"><button class="btn">Try on JSBin</button></a>');
+        }
 
         // Add button 'API Reference'.
-	if (example.apiref) {
-	    $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + example.apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
-	}
+        if (example.apiref) {
+            $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + example.apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
+        }
 
         // Fetch the JS file then highlight and display the code.
-	$.ajax(example.jsfile, {dataType: 'text'})
+        $.ajax(example.jsfile, {dataType: 'text'})
             .done(function (file_content) {
                 Rainbow.color(file_content, 'javascript',
-			      function(highlighted_code) {
-				  $('#jscode').html(highlighted_code);
-			      });
+                              function(highlighted_code) {
+                                  $('#jscode').html(highlighted_code);
+                              });
             });
 
         // Wait 1sec, then fetch the JS file again and execute it.
-	setTimeout(function() {
-	    $.ajax(example.jsfile, {dataType: 'text'})
-		.done(function (file_content) {
-		    $.globalEval(file_content);
-		});
-	}, 1000)
+        setTimeout(function() {
+            $.ajax(example.jsfile, {dataType: 'text'})
+                .done(function (file_content) {
+                    $.globalEval(file_content);
+                });
+        }, 1000)
     });
 });
