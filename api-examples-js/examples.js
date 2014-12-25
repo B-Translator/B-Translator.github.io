@@ -33,14 +33,21 @@ $(document).ready(function() {
 	    $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + example.apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
 	}
 
-        // Fetch and execute the JS file, 
-        // then highlight and display the code.
-        $.get(example.jsfile, 'script')
+        // Fetch the JS file then highlight and display the code.
+	$.ajax(example.jsfile, {dataType: 'text'})
             .done(function (file_content) {
                 Rainbow.color(file_content, 'javascript',
 			      function(highlighted_code) {
 				  $('#jscode').html(highlighted_code);
 			      });
             });
+
+        // Wait 1sec, then fetch the JS file again and execute it.
+	setTimeout(function() {
+	    $.ajax(example.jsfile, {dataType: 'text'})
+		.done(function (file_content) {
+		    $.globalEval(file_content);
+		});
+	}, 1000)
     });
 });
