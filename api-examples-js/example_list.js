@@ -28,61 +28,61 @@ var example_list = {
     translations_retrieve: {
 	jsfile: 'translations/retrieve.js',
 	apiref: '#sec-2.2',
-	jsbin: null,
+	jsbin: 'cakufa/1/edit?js',
     },
     translations_get: {
 	jsfile: 'translations/get.js',
 	apiref: '#sec-2.2',
-	jsbin: null,
+	jsbin: 'xoqobi/1/edit?js',
     },
     translations_list: {
 	jsfile: 'translations/list.js',
 	apiref: '#sec-2.7',
-	jsbin: null,
+	jsbin: 'worobi/1/edit?js',
     },
     translations_search: {
 	jsfile: 'translations/search.js',
 	apiref: '#sec-2.7',
-	jsbin: null,
+	jsbin: 'hufaxu/1/edit?js',
     },
     translations_add: {
 	jsfile: 'translations/add.js',
 	apiref: '#sec-2.3',
-	jsbin: null,
+	jsbin: 'yacop/1/edit?js',
     },
     translations_vote: {
 	jsfile: 'translations/vote.js',
 	apiref: '#sec-2.4',
-	jsbin: null,
+	jsbin: 'vedogi/1/edit?js',
     },
     translations_submit: {
 	jsfile: 'translations/submit.js',
 	apiref: '#sec-2.8',
-	jsbin: null,
+	jsbin: 'punudo/1/edit?js',
     },
     translations_import: {
 	jsfile: 'translations/import.js',
 	apiref: '#sec-2.9',
-	jsbin: null,
+	jsbin: 'qorone/1/edit?js',
     },
     project_list: {
 	jsfile: 'project/list.js',
 	apiref: '#sec-3.1',
-	jsbin: null,
+	jsbin: 'qirafe/1/edit?js,output',
     },
     project_add_string: {
 	jsfile: 'project/add_string.js',
 	apiref: '#sec-3.4',
-	jsbin: null,
+	jsbin: 'jusebo/1/edit?js',
     },
     project_export: {
 	jsfile: 'project/export.js',
 	apiref: '#sec-3.2',
-	jsbin: null,
+	jsbin: 'tajuvu/2/edit?js,output',
     },
     project_import: {
 	jsfile: 'project/import.js',
 	apiref: '#sec-3.6',
-	jsbin: null,
+	jsbin: 'duraye/1/edit?js',
     },
 };
