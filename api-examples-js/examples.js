@@ -1,7 +1,3 @@
-// Write a debug message on the output area.
-var debug = function(msg) {
-    $('#output').append(msg);
-};
 
 $(document).ready(function() {
     // Activate jQuery accordion (on the left of the page).
