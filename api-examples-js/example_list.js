@@ -3,27 +3,27 @@ var example_list = {
     report_statistics_get: {
         jsfile: 'report/statistics_get.js',
 	apiref: '#sec-1.1',
-	jsbin: 'giweta/6/edit?js',
+	jsbin: 'pixagu/1/edit?js,output',
     },
     report_statistics_post: {
 	jsfile: 'report/statistics_post.js',
 	apiref: '#sec-1.1',
-	jsbin: 'juzipa/1/edit?js,output',
+	jsbin: 'juzipa/2/edit?js,output',
     },
     report_topcontrib_get: {
 	jsfile: 'report/topcontrib_get.js',
 	apiref: '#sec-1.2',
-	jsbin: 'mupuci/1/edit?js,output',
+	jsbin: 'mupuci/2/edit?js,output',
     },
     report_topcontrib_post: {
 	jsfile: 'report/topcontrib_post.js',
 	apiref: '#sec-1.2',
-	jsbin: 'xekoru/1/edit?js,output',
+	jsbin: 'xekoru/2/edit?js,output',
     },
     translations_get_random_sguid: {
 	jsfile: 'translations/get_random_sguid.js',
 	apiref: '#sec-2.1',
-	jsbin: 'nibowo/1/edit?js,output',
+	jsbin: 'nibowo/2/edit?js,output',
     },
     translations_retrieve: {
 	jsfile: 'translations/retrieve.js',
