@@ -1,6 +1,12 @@
 
 $(document).ready(function() {
-    // Activate jQuery accordion (on the left of the page).
+    // Build the HTML for the accordion by filling
+    // the template with the examples data.
+    var tmpl = $('#tmpl-examples').html();
+    $('#examples')
+        .html(Mustache.render(tmpl, example_data));
+
+    // Activate jQuery accordion on #examples.
     $('#examples').accordion({
         active: 1,
         heightStyle: 'content',
@@ -14,27 +20,26 @@ $(document).ready(function() {
         $('#output').html('');
 
         // Get the example details.
-        var id = this.id
-        if (example_list[id]) {
-            var example = example_list[id];
-        }
-        else {
-            alert("Example '" + id + "' not found!");
+        var jsfile = $(this).attr('jsfile');
+        if (!jsfile) {
+            alert("Example '" + jsfile + "' not found!");
             return;
         }
 
         // Add button 'Try on JSBin'.
-        if (example.jsbin) {
-            $('#jscode-title').append('<a href="http://jsbin.com/' + example.jsbin + '" target="_blank"><button class="btn">Try on JSBin</button></a>');
+	var jsbin = $(this).attr('jsbin');
+        if (jsbin) {
+            $('#jscode-title').append('<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn">Try on JSBin</button></a>');
         }
 
         // Add button 'API Reference'.
-        if (example.apiref) {
-            $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + example.apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
+	var apiref = $(this).attr('apiref');
+        if (apiref) {
+            $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
         }
 
         // Fetch the JS file then highlight and display the code.
-        $.ajax(example.jsfile, {dataType: 'text'})
+        $.ajax(jsfile, {dataType: 'text'})
             .done(function (file_content) {
                 Rainbow.color(file_content, 'javascript',
                               function(highlighted_code) {
@@ -44,7 +49,7 @@ $(document).ready(function() {
 
         // Wait 1sec, then fetch the JS file again and execute it.
         setTimeout(function() {
-            $.ajax(example.jsfile, {dataType: 'text'})
+            $.ajax(jsfile, {dataType: 'text'})
                 .done(function (file_content) {
                     $.globalEval(file_content);
                 });
