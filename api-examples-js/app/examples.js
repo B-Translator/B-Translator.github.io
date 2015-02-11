@@ -1,4 +1,9 @@
 
+// Write a debug message on the output area.
+var debug = function(msg) {
+    $('#output').append(msg);
+};
+
 $(document).ready(function() {
     // Build the HTML for the accordion by filling
     // the template with the examples data.

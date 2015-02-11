@@ -1,7 +1,4 @@
 
-// Get an access  token.
-var access_token = get_access_token(oauth2);
-
 // Actions that will be submitted.
 var actions = [
     { 
@@ -34,9 +31,23 @@ var actions = [
     },
 ];
 
-// POST btr/translations/submit
-http_request(base_url + '/btr/translations/submit', {
-    method: 'POST',
-    data: actions,
-    headers: { 'Authorization': 'Bearer ' + access_token }
-});
+var $token = new OAuth2.Token($oauth2_settings);
+
+var submit_actions = function () {
+    // Get an access_token.
+    var access_token = $token.access_token();
+    if (!access_token) {
+        $token.get().done(submit_actions);
+        return;
+    }
+
+    // POST btr/translations/submit
+    http_request('/btr/translations/submit', {
+        type: 'POST',
+        data: actions,
+        headers: { 'Authorization': 'Bearer ' + access_token }
+    });
+}
+
+// Call the function.
+submit_actions();

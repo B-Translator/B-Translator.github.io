@@ -1,6 +1,5 @@
 // POST public/btr/report/statistics
-var url = base_url + '/public/btr/report/statistics';
-http_request(url, {
-    method: 'POST',
+http_request('/public/btr/report/statistics', {
+    type: 'POST',
     data: 'lng=sq',
 });

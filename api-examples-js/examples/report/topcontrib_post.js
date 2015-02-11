@@ -1,7 +1,6 @@
 // POST public/btr/report/topcontrib
-var url = base_url + '/public/btr/report/topcontrib';
-http_request(url, {
-    method: 'POST',
+http_request('/public/btr/report/topcontrib', {
+    type: 'POST',
     data: {
         lng: 'sq',
         period: 'week',

@@ -1,16 +1,26 @@
-// Get an access  token.
-var access_token = get_access_token(oauth2);
+var $token = new OAuth2.Token($oauth2_settings);
 
-// POST btr/project/export
-http_request(base_url + '/btr/project/export', {
-    method: 'POST',
-    data: {
-        origin: 'test',
-        project: 'kturtle',
-        //export_mode: 'preferred_by_me',
-    },
-    headers: {
-        'Authorization': 'Bearer ' + access_token,
-    },
+var export_project = function () {
+    // Get an access_token.
+    var access_token = $token.access_token();
+    if (!access_token) {
+        $token.get().done(export_project);
+        return;
+    }
 
-});
+    // POST btr/project/export
+    http_request('/btr/project/export', {
+        type: 'POST',
+        data: {
+            origin: 'test',
+            project: 'kturtle',
+            export_mode: 'most_voted',  // original | most_voted | preferred
+            //preferred_voters: 'user1,user2,user3',
+        },
+        headers: {
+            'Authorization': 'Bearer ' + access_token,
+        },
+    });
+};
+
+export_project();

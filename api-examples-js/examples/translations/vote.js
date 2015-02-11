@@ -1,31 +1,39 @@
 
-// Get a random translated string an get the tguid of the first translation.
-var sguid, tguid;
-var url = base_url + '/public/btr/translations/translated?lng=sq';
-http_request(url, { async: false })
-    .done(function(result){
-        sguid = result.string.sguid;
-        tguid = result.string.translations[0].tguid;
+var $token = new OAuth2.Token($oauth2_settings);
+
+var add_vote = function (sguid, tguid) {
+    // Get an access_token.
+    var access_token = $token.access_token();
+    if (!access_token) {
+        $token.get().done(function () {
+            add_vote(sguid, tguid);
+        });
+        return;
+    }
+
+    // POST btr/translations/vote
+    http_request('/btr/translations/vote', {
+        type: 'POST',
+        data: { tguid: tguid },
+        headers: { 'Authorization': 'Bearer ' + access_token }
+    }).done(function () {
+        // Retrive the string and check that the translation has been voted.
+        var url = '/public/btr/translations/' + sguid + '?lng=sq';
+        http_request(url).done(function () {
+            // POST btr/translations/del_vote
+            http_request('/btr/translations/del_vote', {
+                type: 'POST',
+                data: { tguid: tguid },
+                headers: { 'Authorization': 'Bearer ' + access_token }
+            });
+        });
     });
+}
 
-// Get an access  token.
-var access_token = get_access_token(oauth2);
-
-// POST btr/translations/vote
-http_request(base_url + '/btr/translations/vote', {
-    async: false,
-    method: 'POST',
-    data: { tguid: tguid },
-    headers: { 'Authorization': 'Bearer ' + access_token }
-});
-
-// Retrive the string and check that the translation has been voted.
-url = base_url + '/public/btr/translations/' + sguid + '?lng=sq';
-http_request(url, { async: false });
-
-// POST btr/translations/del_vote
-http_request(base_url + '/btr/translations/del_vote', {
-    method: 'POST',
-    data: { tguid: tguid },
-    headers: { 'Authorization': 'Bearer ' + access_token }
+// Get a random translated string an add a vote to the first translation.
+var url = '/public/btr/translations/translated?lng=sq';
+http_request(url).done(function(result){
+    var sguid = result.string.sguid;
+    var tguid = result.string.translations[0].tguid;
+    add_vote(sguid, tguid);
 });
