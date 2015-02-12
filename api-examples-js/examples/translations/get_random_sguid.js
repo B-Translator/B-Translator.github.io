@@ -17,8 +17,8 @@ http_request(url, settings).done(function () {
             settings.data = {
                 target: 'next',
                 last_sguid: 'c7ac448a01c566680d8ffb00430a55ffc779f24b',
-            }
+            };
             http_request(url, settings);
-        })
-    })
+        });
+    });
 });

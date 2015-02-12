@@ -28,7 +28,7 @@ var add_vote = function (sguid, tguid) {
             });
         });
     });
-}
+};
 
 // Get a random translated string an add a vote to the first translation.
 var url = '/public/btr/translations/translated?lng=sq';
