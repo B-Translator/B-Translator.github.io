@@ -224,7 +224,8 @@ OAuth2.Token = function (settings) {
         };
         var client_key = btoa(_settings.client_id + ':' 
                               + _settings.client_secret);  // base64_encode
-        var request = $.ajax(_settings.token_endpoint, {
+        //var request = $.ajax(_settings.token_endpoint, {
+        var request = http_request(_settings.token_endpoint, {
             type: 'POST',
             data: post_data,
             headers: {

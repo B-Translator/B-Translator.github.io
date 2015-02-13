@@ -9,7 +9,8 @@ var $base_url = 'http://dev.btranslator.org';
 /** Settings for oauth2 authentication. */
 var $oauth2_settings = {
     app_id: $app_id,
-    token_endpoint: $base_url + '/oauth2/token',
+    //token_endpoint: $base_url + '/oauth2/token',
+    token_endpoint: '/oauth2/token',
     client_id: 'emberjs',
     client_secret: '123456',
     scope: 'user_profile',
