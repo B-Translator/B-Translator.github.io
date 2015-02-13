@@ -186,5 +186,44 @@ var example_data = {
                 },
             ],
         },
+        {
+            group: 'OAuth2',
+            sections: [
+                {
+                    section: 'token',
+                    examples: [
+                        {
+                            title: 'Get a Token',
+                            jsfile: 'oauth2/get_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                        {
+                            title: 'Refresh a Token',
+                            jsfile: 'oauth2/refresh_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                        {
+                            title: 'Verify a Token',
+                            jsfile: 'oauth2/verify_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                    ],
+                },
+                {
+                    section: 'user/profile',
+                    examples: [
+                        {
+                            title: 'Get the User Profile',
+                            jsfile: 'oauth2/get_user_profile.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                    ],
+                },
+            ],
+        },
     ],
 };
