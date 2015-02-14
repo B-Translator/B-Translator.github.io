@@ -40,6 +40,28 @@ var example_data = {
                         },
                     ],
                 },
+                {
+                    section: 'vocabulary',
+                    examples: [
+                        {
+                            title: 'Export Vocabulary',
+                            jsfile: 'misc/vocabulary.js',
+                            apiref: '#sec-4.4',
+                            jsbin: '',
+                        },
+                    ],
+                },
+                {
+                    section: 'autocomplete',
+                    examples: [
+                        {
+                            title: 'Autocomplete',
+                            jsfile: 'misc/autocomplete.js',
+                            apiref: '#sec-4.5',
+                            jsbin: '',
+                        },
+                    ],
+                },
             ],
         },
         {
