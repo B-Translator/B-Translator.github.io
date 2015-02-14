@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     // Activate jQuery accordion on #examples.
     $('#examples').accordion({
-        active: 1,
+        active: 3,
         heightStyle: 'content',
     });
 

@@ -5,6 +5,44 @@
 var example_data = {
     groups: [
         {
+            group: 'Misc',
+            sections: [
+                {
+                    section: 'latest',
+                    examples: [
+                        {
+                            title: 'GET translations/latest/$lng[/$origin[/$project]]',
+                            jsfile: 'misc/latest.js',
+                            apiref: '#sec-4.1',
+                            jsbin: '',
+                        },
+                    ],
+                },
+                {
+                    section: 'rss-feed',
+                    examples: [
+                        {
+                            title: 'GET translations/rss-feed[/$origin[/$project]]',
+                            jsfile: 'misc/rss-feed.js',
+                            apiref: '#sec-4.2',
+                            jsbin: '',
+                        },
+                    ],
+                },
+                {
+                    section: 'twitter',
+                    examples: [
+                        {
+                            title: 'GET translations/twitter[/$origin[/$project]]',
+                            jsfile: 'misc/twitter.js',
+                            apiref: '#sec-4.3',
+                            jsbin: '',
+                        },
+                    ],
+                },
+            ],
+        },
+        {
             group: 'Report',
             sections: [
                 {
@@ -38,6 +76,45 @@ var example_data = {
                             jsfile: 'report/topcontrib_post.js',
                             apiref: '#sec-1.2',
                             jsbin: 'miyonixici/1/edit?js,output',
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            group: 'OAuth2',
+            sections: [
+                {
+                    section: 'token',
+                    examples: [
+                        {
+                            title: 'Get a Token',
+                            jsfile: 'oauth2/get_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                        {
+                            title: 'Refresh a Token',
+                            jsfile: 'oauth2/refresh_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                        {
+                            title: 'Verify a Token',
+                            jsfile: 'oauth2/verify_token.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
+                    ],
+                },
+                {
+                    section: 'user/profile',
+                    examples: [
+                        {
+                            title: 'Get the User Profile',
+                            jsfile: 'oauth2/get_user_profile.js',
+                            apiref: '',
+                            jsbin: '',
                         },
                     ],
                 },
@@ -181,45 +258,6 @@ var example_data = {
                             jsfile: 'project/import.js',
                             apiref: '#sec-3.6',
                             jsbin: 'rirocapaho/1/edit?js',
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            group: 'OAuth2',
-            sections: [
-                {
-                    section: 'token',
-                    examples: [
-                        {
-                            title: 'Get a Token',
-                            jsfile: 'oauth2/get_token.js',
-                            apiref: '',
-                            jsbin: '',
-                        },
-                        {
-                            title: 'Refresh a Token',
-                            jsfile: 'oauth2/refresh_token.js',
-                            apiref: '',
-                            jsbin: '',
-                        },
-                        {
-                            title: 'Verify a Token',
-                            jsfile: 'oauth2/verify_token.js',
-                            apiref: '',
-                            jsbin: '',
-                        },
-                    ],
-                },
-                {
-                    section: 'user/profile',
-                    examples: [
-                        {
-                            title: 'Get the User Profile',
-                            jsfile: 'oauth2/get_user_profile.js',
-                            apiref: '',
-                            jsbin: '',
                         },
                     ],
                 },
