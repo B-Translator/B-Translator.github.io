@@ -7,7 +7,7 @@ var http_request = function(url, settings) {
     var settings = settings || {};
 
     // Set some parameters of the ajax request.
-    settings.url = $base_url + url;
+    settings.url = (url.indexOf('http') == 0) ? url : $base_url + url;
     settings.dataType = 'json';
 
     // Output some debug info before making the request.
