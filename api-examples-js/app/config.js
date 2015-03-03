@@ -1,22 +1,21 @@
 
-/** Used for the local storage, etc. */
-var $app_id = 'api-examples';
+var $config = {
+    //api_url: 'https://btranslator.org',
+    api_url: 'http://dev.btranslator.org',
 
-/** Base URL of the server that offers the API. */
-//var $base_url = 'https://btranslator.org';
-var $base_url = 'http://dev.btranslator.org';
-
-/** Settings for oauth2 authentication. */
-var $oauth2_settings = {
-    app_id: $app_id,
-    //token_endpoint: $base_url + '/oauth2/token',
-    token_endpoint: '/oauth2/token',
-    client_id: 'emberjs',
-    client_secret: '123456',
-    scope: 'user_profile',
-    getPassword: function (callback) {
-	var username = 'user1';
-	var password = 'pass1';
-	callback(username, password);
+    // Settings for oauth2 authentication.
+    oauth2: {
+        app_id: 'api-examples',
+        auth_flow: 'password',     // password | proxy
+        //proxy_endpoint: 'https://l10n.org.al/oauth2/proxy',
+        token_endpoint: 'http://dev.btranslator.org/oauth2/token',
+        client_id: 'emberjs',
+        client_secret: '123456',
+        scope: 'user_profile',
+        getPassword: function (callback) {
+            var username = 'user1';
+            var password = 'pass1';
+            callback(username, password);
+        },
     },
 };

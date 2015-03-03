@@ -1,5 +1,5 @@
 
-var $token = new OAuth2.Token($oauth2_settings);
+var $token = new OAuth2.Token($config.oauth2);
 
 var add_vote = function (sguid, tguid) {
     // Get an access_token.

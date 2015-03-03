@@ -1,5 +1,5 @@
 
-var $token = new OAuth2.Token($oauth2_settings);
+var $token = new OAuth2.Token($config.oauth2);
 
 var import_file = function (fd) {
     // Get an access_token.

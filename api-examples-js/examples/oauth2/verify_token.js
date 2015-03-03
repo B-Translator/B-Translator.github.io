@@ -1,4 +1,4 @@
-var $token = new OAuth2.Token($oauth2_settings);
+var $token = new OAuth2.Token($config.oauth2);
 
 // Verify a fake token.
 http_request('/oauth2/tokens/djfkjruhrngf-fake-token')

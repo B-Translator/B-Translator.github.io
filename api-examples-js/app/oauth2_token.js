@@ -11,7 +11,9 @@ OAuth2.Token = function (settings) {
         app_id: 'app1',
 
         // OAuth2 settings
-        token_endpoint: '/oauth2/token',
+        auth_flow: 'password',                  // password | proxy
+        proxy_endpoint: 'https://example.org/oauth2/proxy',
+        token_endpoint: 'https://example.org/oauth2/token',
         client_id: 'client1',
         client_secret: 'secret1',
         scope: '',
@@ -21,6 +23,13 @@ OAuth2.Token = function (settings) {
             var username = prompt('Please enter your username', '');
             var password = prompt('Please enter your password', '');
             callback(username, password);
+        },
+
+        // Function to call for opening a new window
+        // (used in the case of proxy auth flow).
+        openLoginWindow: function (url, callback) {
+            var win = window.open(url);
+            callback(url, win);
         },
 
         // Function to call after getting an access token.
@@ -61,7 +70,7 @@ OAuth2.Token = function (settings) {
         localStorage.setItem(_key(), JSON.stringify(_token));
     };
 
-    /** Return the key for lcal storage. */
+    /** Return the key for local storage. */
     var _key = function () {
         return (_settings.app_id + '.token.' + _settings.client_id);
     };
@@ -107,6 +116,15 @@ OAuth2.Token = function (settings) {
         return this;
     };
 
+    /**
+     * Set the function that will be called for opening
+     * a new window with the proxy login.
+     */
+    this.openLoginWindow = function (callback) {
+        _settings.openLoginWindow = callback;
+        return this;
+    };
+
     /** Expire the existing token. */
     this.expire = function () {
         var token = _load();
@@ -119,6 +137,16 @@ OAuth2.Token = function (settings) {
     this.erase = function () {
         localStorage.removeItem(_key());
         _token = _nullToken;
+
+        if (_settings.auth_flow == 'proxy') {
+            var logout = window.open(_settings.proxy_endpoint + '/logout');
+            if (logout) {
+                setTimeout(function () {
+                    logout.close();
+                }, 800);
+            }
+        }
+
         return this;
     };
 
@@ -170,13 +198,18 @@ OAuth2.Token = function (settings) {
      *     If true, it will also try to get a new token when refreshing fails.
      */
     var _refreshExisting = function (get_new) {
-        //console.log('refresh_existing_token()'); //debug
+        if (_settings.auth_flow == 'proxy') {
+            // In 'proxy' flow, token cannot be refreshed.
+            get_new ? _getNew() : _settings.fail(this);
+            return;
+        }
+
         _get({
             grant_type: 'refresh_token',
             refresh_token: _token.refresh_token,
         })
             .fail(function () {
-                if (get_new) _getNew();
+                get_new ? _getNew() : _settings.fail(this);
             })
             .done(
                 function (response) {
@@ -185,17 +218,27 @@ OAuth2.Token = function (settings) {
                         _settings.done();
                     }
                     else {
-                        if (get_new) _getNew();
+                        get_new ? _getNew() : _settings.fail(this);
                     }
                 });
     };
 
     /** Get a new token from the oauth2 server. */
-    var _getNew = function (username, password) {
+    var _getNew = function () {
+        if (_settings.auth_flow == 'proxy') {
+            _getFromProxy();
+        }
+        else {
+            _getWithPassword();
+        }
+    };
+
+    /** Get a new token with user credentials. */
+    var _getWithPassword = function (username, password) {
         //console.log('_getNew()'); //debug
 
         if (!username || !password) {
-            _settings.getPassword(_getNew);
+            _settings.getPassword(_getWithPassword);
             return;
         }
 
@@ -217,6 +260,36 @@ OAuth2.Token = function (settings) {
                 });
     };
 
+    /** Get a new token using proxy workflow. */
+    var _getFromProxy = function () {
+        var _getTokenFromProxy = function (url, win) {
+            window.addEventListener("message", function(event) {
+                base_url = url.substring(0, url.indexOf('/', 14));
+                if (event.origin !== base_url) return;
+                var token = event.data;
+                win.close();
+                _save(token);
+                if (_token.access_token) {
+                    _settings.done();
+                }
+                else {
+                    _settings.fail(this);
+                }
+            });
+        };
+
+        if ($.isFunction(_settings.openLoginWindow)) {
+            _settings.openLoginWindow(
+		_settings.proxy_endpoint + '/login',
+		_getTokenFromProxy
+	    );
+        }
+        else {
+            var win = window.open(_settings.proxy_endpoint + '/login');
+            _getTokenFromProxy(_settings.proxy_endpoint + '/login', win);
+        }
+    };
+
     /** Make an http request to the token endpoint. */
     var _get = function (post_data) {
         if (_settings.scope) {
@@ -224,8 +297,7 @@ OAuth2.Token = function (settings) {
         };
         var client_key = btoa(_settings.client_id + ':' 
                               + _settings.client_secret);  // base64_encode
-        //var request = $.ajax(_settings.token_endpoint, {
-        var request = http_request(_settings.token_endpoint, {
+        var request = $.ajax(_settings.token_endpoint, {
             type: 'POST',
             data: post_data,
             headers: {

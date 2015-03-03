@@ -1,4 +1,4 @@
-var $token = new OAuth2.Token($oauth2_settings);
+var $token = new OAuth2.Token($config.oauth2);
 
 var get_user_profile = function () {
     var access_token = $token.access_token();
