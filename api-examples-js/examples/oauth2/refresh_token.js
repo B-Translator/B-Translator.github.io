@@ -1,7 +1,7 @@
 var $token = new OAuth2.Token($oauth2_settings);
 $token.getPassword(function (callback) {
     var username = 'user1';
-    var password = 'pass1'
+    var password = 'pass1';
     callback(username, password);
 });
 
