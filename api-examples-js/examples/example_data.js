@@ -127,6 +127,12 @@ var example_data = {
                             apiref: '',
                             jsbin: '',
                         },
+                        {
+                            title: 'Get Token From Proxy',
+                            jsfile: 'oauth2/get_token_from_proxy.js',
+                            apiref: '',
+                            jsbin: '',
+                        },
                     ],
                 },
                 {
