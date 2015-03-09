@@ -1050,21 +1050,31 @@ For more details and examples see: <a href="https://github.com/dashohoxha/oauth2
 $.ajax(base_url + '/oauth2/token', {
     type: 'POST',
     data: {
-	grant_type: 'password',
-	username: 'user123',
-	password: 'pass123',
-	scope: 'user_profile', 
+        grant_type: 'password',
+        username: 'user123',
+        password: 'pass123',
+        scope: 'user_profile', 
     },
     headers: {
-	'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret'), 
+        'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret'), 
     },
 
 });
 </pre>
 </dd>
 
-<dt> POST oauth2/tokens/&lt;access_token&gt; </dt><dd>Verify the validity of an
+<dt> GET oauth2/tokens/&lt;access_token&gt; </dt><dd>Verify the validity of an
 OAuth2 token.
+
+<pre class="example">
+$.ajax(base_url + '/oauth2/tokens/' + access_token)
+    .fail(function () {
+        console.log('Token is not valid.');
+    })
+    .done(function (response) {
+        console.log(response);
+    });
+</pre>
 </dd>
 
 <dt> POST oauth2/user/profile </dt><dd>Get the profile of the user.
@@ -1073,7 +1083,7 @@ OAuth2 token.
 $.ajax(base_url + '/oauth2/user/profile', {
     type: 'POST',
     headers: {
-	'Authorization': 'Bearer ' + access_token,
+        'Authorization': 'Bearer ' + access_token,
     },
     dataType: 'json',
 });
@@ -1085,7 +1095,7 @@ $.ajax(base_url + '/oauth2/user/profile', {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-03-09 Mon 10:10</p>
+<p class="date">Created: 2015-03-09 Mon 10:35</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
