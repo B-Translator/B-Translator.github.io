@@ -112,25 +112,25 @@ var example_data = {
                         {
                             title: 'Get a Token',
                             jsfile: 'oauth2/get_token.js',
-                            apiref: '',
+                            apiref: '#sec-5',
                             jsbin: 'sutafalabe/1/edit?js',
                         },
                         {
                             title: 'Refresh a Token',
                             jsfile: 'oauth2/refresh_token.js',
-                            apiref: '',
+                            apiref: '#sec-5',
                             jsbin: 'gisifojute/1/edit?js',
                         },
                         {
                             title: 'Verify a Token',
                             jsfile: 'oauth2/verify_token.js',
-                            apiref: '',
+                            apiref: '#sec-5',
                             jsbin: 'bolayeqamu/1/edit?js,output',
                         },
                         {
                             title: 'Get Token From Proxy',
                             jsfile: 'oauth2/get_token_from_proxy.js',
-                            apiref: '',
+                            apiref: '#sec-5',
                             jsbin: 'yaxipapiya/1/edit?js',
                         },
                     ],
@@ -141,7 +141,7 @@ var example_data = {
                         {
                             title: 'Get the User Profile',
                             jsfile: 'oauth2/get_user_profile.js',
-                            apiref: '',
+                            apiref: '#sec-5',
                             jsbin: 'morosifoyu/1/edit?js,output',
                         },
                     ],

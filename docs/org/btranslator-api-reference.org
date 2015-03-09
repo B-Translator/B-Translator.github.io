@@ -1,7 +1,6 @@
 #+TITLE:     B-Translator API Reference
 #+AUTHOR:    Dashamir Hoxha
 #+EMAIL:     dashohoxha@gmail.com
-##+DESCRIPTION:
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
@@ -627,3 +626,41 @@
      #+BEGIN_EXAMPLE
      curl https://btranslator.org/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
      #+END_EXAMPLE
+
+* oauth2
+
+  For more details and examples see: https://github.com/dashohoxha/oauth2-js
+
+  + POST oauth2/token :: Get an OAuth2 token.
+
+    #+BEGIN_EXAMPLE
+    $.ajax(base_url + '/oauth2/token', {
+	type: 'POST',
+	data: {
+	    grant_type: 'password',
+	    username: 'user123',
+	    password: 'pass123',
+	    scope: 'user_profile', 
+	},
+	headers: {
+	    'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret'), 
+	},
+
+    });
+    #+END_EXAMPLE
+
+  + POST oauth2/tokens/<access_token> :: Verify the validity of an
+       OAuth2 token.
+
+  + POST oauth2/user/profile :: Get the profile of the user.
+
+    #+BEGIN_EXAMPLE
+    $.ajax(base_url + '/oauth2/user/profile', {
+	type: 'POST',
+	headers: {
+	    'Authorization': 'Bearer ' + access_token,
+	},
+	dataType: 'json',
+    });
+    #+END_EXAMPLE
+
