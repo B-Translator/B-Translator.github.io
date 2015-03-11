@@ -723,6 +723,11 @@ Delete a string from a project (useful for vocabularies).
 <dt> POST btr/project/del_string </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>         ID of the string to be deleted.
 </dd>
+<dt> project </dt><dd>         The project from which the string will be deleted.
+</dd>
+<dt> origin </dt><dd>(optional)
+The origin of the project (default: 'vocabulary').
+</dd>
 </dl>
 </dd>
 </dl>
@@ -1095,7 +1100,7 @@ $.ajax(base_url + '/oauth2/user/profile', {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-03-09 Mon 10:35</p>
+<p class="date">Created: 2015-03-11 Wed 23:23</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

@@ -32,7 +32,11 @@ var add_string = function () {
             // Delete the string that was added above.
             http_request('/btr/project/del_string', {
                 type: 'POST',
-                data: { sguid: sguid },
+                data: {
+		    sguid: sguid,
+		    project: 'pingus',
+		    origin: 'test',
+		},
                 headers: { 'Authorization': 'Bearer ' + access_token },
             });
         });
