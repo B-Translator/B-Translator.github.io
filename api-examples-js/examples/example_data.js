@@ -263,7 +263,7 @@ var example_data = {
                             title: 'POST btr/project/add_string',
                             jsfile: 'project/add_string.js',
                             apiref: '#sec-3-4',
-                            jsbin: 'zubusidica/1/edit?js',
+                            jsbin: 'wufuvalinu/1/edit?js',
                         },
                     ],
                 },
