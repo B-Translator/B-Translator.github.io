@@ -1,0 +1,126 @@
+#+TITLE:     How to Create and Manage Vocabularies
+#+AUTHOR:    Dashamir Hoxha
+#+EMAIL:     dashohoxha@gmail.com
+# #+DESCRIPTION:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+# #+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
+#+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
+
+* Creating vocabularies on the server
+
+  + Create a vocabulary:
+    #+begin_example
+    drush btrv-add ICT sq $(pwd)/ICT_sq.po
+    #+end_example
+    The name of the vocabulary is *ICT_sq* (having the language code
+    as an appendix). The PO file that is used to initialize the
+    vocabulary must have the same name as the vocabulary. Each entry
+    in the PO file must have the name of the vocabulary as a context,
+    like this:
+    #+begin_example
+    msgctxt "ICT_sq"
+    #+end_example
+    However the PO file is optional and it can be omitted in order to
+    create an empty vocabulary (terms can be added from the
+    application).
+
+  + Get a list of vocabularies:
+    #+begin_example
+    drush btrv-ls
+    #+end_example
+
+  + Delete a vocabulary:
+    #+begin_example
+    drush btrv-del ICT sq
+    #+end_example
+
+  *Note:* If you want to use https://btranslator.org as a server,
+  contact me and I can create a new vocabulary for you.
+
+
+* Installing the mobile application
+
+  - Fork https://github.com/B-Translator/vocabulary-jquery or
+    https://github.com/FreeSoft-AL/vocabulary on GitHub.
+
+  - Make *gh-pages* the default branch on GitHub. GitHub will
+    automatically publish this branch to an address like this:
+    http://freesoft-al.github.io/vocabulary (it may take a few minutes
+    for it to be published).
+
+  - Optionally create a custom domain (as described [[https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages/][here]]) and redirect
+    it to GitHub.
+
+  - Customize the application by editing the file [[https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/config.js][config.js]]. Some of
+    the things that need to be changed are app_url, disqus.shortname,
+    etc. The oauth2 settings can be left untouched.
+
+  - Customize the list of available languages and vocabularies by
+    editing [[https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/options.js][options.js]]. These vocabularies must have been created on
+    the server first.
+  
+
+* Connecting to social networks.
+
+** Disqus
+
+   Create a discussion forum at https://disqus.com/admin/create/ and
+   put its name on ~config.js~.
+
+
+** Twitter
+
+   Try something like this on terminal:
+   #+begin_example
+   curl https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   #+end_example
+   Or open it it browser:
+   https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+
+   Each time it will return a random term from the vocabulary, in a
+   format suitable for twitter. To make the process automatic, you can
+   use a script like [[https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh][twitter.sh]]:
+   #+begin_example
+   #!/bin/bash
+   ### Send tweets from command line.
+
+   t='/usr/local/bin/t'
+   tweet=$(curl https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org)
+   mention=$($t followings | sort -R | tail -1)
+   $t update "$tweet @$mention"
+   #+end_example
+
+   In Linux, calling this script can be automated with a cron job. For
+   example you can create the file ~/etc/cron.d/twitter~ with a
+   content like this:
+   #+begin_example
+   ### first create a user with `adduser twitter`
+   20 */12 * * *  twitter  /home/twitter/twitter.sh > /dev/null 2>&1
+
+   ### uncomment this line only for debugging
+   #*/5 * * * *  twitter  /home/twitter/twitter.sh
+   #+end_example
+
+   For instructions on how to install the *t* twitter client, see:
+   http://xmodulo.com/2013/12/access-twitter-command-line-linux.html
+
+
+** RSS
+
+   Try something like this on terminal:
+   #+begin_example
+   curl https://btranslator.org/translations/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   #+end_example
+   Or open it it browser:
+   https://btranslator.org/translations/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+
+   It return a RSS feed of the latest translations. Latest means
+   yesterday. Results are cached, so last minute translations may not
+   appear on the list.
+
+   There services like https://dlvr.it/ which can connect to rss feeds
+   and share the latest items to social networks (Facebook, LinkedIn,
+   etc.) See this article for some other tools:
+   http://www.twelveskip.com/guide/blogging/1189/best-auto-sharing-tools-social-media
