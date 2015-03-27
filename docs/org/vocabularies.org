@@ -8,38 +8,6 @@
 # #+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
 #+STYLE: <link rel="stylesheet" type="text/css" href="org-info.css" />
 
-* Creating vocabularies on the server
-
-  + Create a vocabulary:
-    #+begin_example
-    drush btrv-add ICT sq $(pwd)/ICT_sq.po
-    #+end_example
-    The name of the vocabulary is *ICT_sq* (having the language code
-    as an appendix). The PO file that is used to initialize the
-    vocabulary must have the same name as the vocabulary. Each entry
-    in the PO file must have the name of the vocabulary as a context,
-    like this:
-    #+begin_example
-    msgctxt "ICT_sq"
-    #+end_example
-    However the PO file is optional and it can be omitted in order to
-    create an empty vocabulary (terms can be added from the
-    application).
-
-  + Get a list of vocabularies:
-    #+begin_example
-    drush btrv-ls
-    #+end_example
-
-  + Delete a vocabulary:
-    #+begin_example
-    drush btrv-del ICT sq
-    #+end_example
-
-  *Note:* If you want to use https://btranslator.org as a server,
-  contact me and I can create a new vocabulary for you.
-
-
 * Installing the mobile application
 
   - Fork https://github.com/B-Translator/vocabulary-jquery or
@@ -58,8 +26,8 @@
     etc. The oauth2 settings can be left untouched.
 
   - Customize the list of available languages and vocabularies by
-    editing [[https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/options.js][options.js]]. These vocabularies must have been created on
-    the server first.
+    editing [[https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/js/options.js][js/options.js]]. These vocabularies must have been created
+    on the server first.
   
 
 * Connecting to social networks.
@@ -124,3 +92,77 @@
    and share the latest items to social networks (Facebook, LinkedIn,
    etc.) See this article for some other tools:
    http://www.twelveskip.com/guide/blogging/1189/best-auto-sharing-tools-social-media
+
+* Creating vocabularies on the server
+
+  *Note:* If you want to use https://btranslator.org as a server,
+  contact me and I can create a new vocabulary for you.
+
+  + Make sure that the language of vocabulary is supported:
+
+    - Go to B-Translator server:
+      #+begin_example
+      docker-enter btr
+      cd /var/www/btr/profiles/btr_server/
+      #+end_example
+
+    - Make sure that there is an entry for this language at the list
+      of languages:
+      #+begin_example
+      nano modules/custom/btrCore/lib/fn/languages/all_langs.php
+      #+end_example
+
+    - Run the configuration script ~install/config/languages.sh~:
+      #+begin_example
+      ==> # install/config/languages.sh
+
+      ===> Languages supported by B-Translator Server
+
+      Do not remove 'fr', because sometimes French translations
+      are used instead of template files (when they are missing).
+
+      Enter language codes [fr]: fr de it es sq bg fi tr mk
+
+      You are about to execute 'vset btr_languages fr de it es sq bg fi tr mk' non-interactively (--yes forced) on all of the following targets:
+	@local_btr.btr
+	@local_btr.btr_dev
+      Continue?  (y/n): y
+      local_btr.btr_dev >> btr_languages was set to "fr de it es sq bg fi tr mk".              [success]
+      local_btr.btr     >> btr_languages was set to "fr de it es sq bg fi tr mk".              [success]
+      You are about to execute 'php-eval module_load_include('inc', 'btrCore', 'btrCore.admin'); btrCore_config_set_languages();' non-interactively (--yes forced) on all of the following targets:
+	@local_btr.btr
+	@local_btr.btr_dev
+      Continue?  (y/n): y
+      You are about to execute 'language-add fr' non-interactively (--yes forced) on all of the following targets:
+	@local_btr.btr
+	@local_btr.btr_dev
+      Continue?  (y/n): y
+      local_btr.btr_dev >> The language with code fr already exists.                           [warning]
+      local_btr.btr     >> The language with code fr already exists.                           [warning]
+
+      [ . . . . . . . . . . . . . . . . . . . . . ]
+      #+end_example
+
+  + Create a vocabulary:
+    #+begin_example
+    drush @btr btrv-add ICT sq $(pwd)/ICT_sq.po
+    #+end_example
+
+    The name of the vocabulary is *ICT_sq* (having the language code
+    as an appendix). The PO file that is used to initialize the
+    vocabulary must have the same name as the vocabulary. Each entry
+    in the PO file must have the name of the vocabulary as a context,
+    like this:
+    #+begin_example
+    msgctxt "ICT_sq"
+    #+end_example
+
+    However the PO file is optional and it can be omitted in order to
+    create an empty vocabulary (terms can be added from the
+    application).
+
+    You can also get a list of vocabularies and delete a vocabulary:
+    #+begin_example
+    drush @btr btrv-ls
+    drush @btr btrv-del ICT sq
+    #+end_example
