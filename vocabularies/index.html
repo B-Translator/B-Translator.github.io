@@ -27,8 +27,8 @@ etc. The oauth2 settings can be left untouched.
 </li>
 
 <li>Customize the list of available languages and vocabularies by
-editing <a href="https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/js/options.js">js/options.js</a>. These vocabularies must have been created on
-the server first.
+editing <a href="https://github.com/FreeSoft-AL/vocabulary/blob/gh-pages/js/options.js">js/options.js</a>. These vocabularies must have been created
+on the server first.
 </li>
 </ul>
 </div>
@@ -36,11 +36,44 @@ the server first.
 
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Connecting to social networks.</h2>
+<h2 id="sec-2">Embedding inside a webpage</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">Disqus</h3>
-<div class="outline-text-3" id="text-2-1">
+
+<!-- HTML generated using hilite.me -->
+<div><pre style="margin-bottom: 10px; line-height: 125%"><span style="color: #6ab825; font-weight: bold">&lt;div</span> <span style="color: #bbbbbb">style=</span><span style="color: #ed9d13">&quot;width:350px; display:inline-block; float:right;</span>
+<span style="color: #ed9d13">            border:1px solid #aaa; padding:0px; margin-left:10px;&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
+  <span style="color: #6ab825; font-weight: bold">&lt;iframe</span> <span style="color: #bbbbbb">src=</span><span style="color: #ed9d13">&quot;http://v.btranslator.org?lng=sq&amp;proj=ICT_sq&quot;</span>
+	  <span style="color: #bbbbbb">width=</span><span style="color: #ed9d13">&quot;100%&quot;</span> <span style="color: #bbbbbb">height=</span><span style="color: #ed9d13">&quot;450px&quot;</span>
+	  <span style="color: #bbbbbb">seamless=</span><span style="color: #ed9d13">&quot;seamless&quot;</span> <span style="color: #bbbbbb">frameborder=</span><span style="color: #ed9d13">&quot;0&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
+  <span style="color: #6ab825; font-weight: bold">&lt;/iframe&gt;</span>
+<span style="color: #6ab825; font-weight: bold">&lt;/div&gt;</span>
+</pre></div>
+<!-- End HTML generated using hilite.me -->
+
+<div style="width:350px; display:inline-block; float:right;
+            border:1px solid #aaa; padding:0px; margin-left:10px;">
+  <iframe src="http://v.btranslator.org?lng=sq&proj=ICT_sq"
+          width="100%" height="450px"
+          seamless="seamless" frameborder="0">
+  </iframe>
+</div>
+
+<p>
+It can also be embedded in a frame inside an HTML page, like the
+example shown here.
+</p>
+
+<p style="clear:both"> </p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Connecting to social networks.</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Disqus</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 Create a discussion forum at <a href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a> and
 put its name on <code>config.js</code>.
@@ -49,9 +82,9 @@ put its name on <code>config.js</code>.
 </div>
 
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">Twitter</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Twitter</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 Try something like this on terminal:
 </p>
@@ -99,9 +132,9 @@ For instructions on how to install the <b>t</b> twitter client, see:
 </div>
 
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3">RSS</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">RSS</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 Try something like this on terminal:
 </p>
@@ -129,9 +162,10 @@ etc.) See this article for some other tools:
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Creating vocabularies on the server</h2>
-<div class="outline-text-2" id="text-3">
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Creating vocabularies on the server</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 <b>Note:</b> If you want to use <a href="https://btranslator.org">https://btranslator.org</a> as a server,
 contact me and I can create a new vocabulary for you.
