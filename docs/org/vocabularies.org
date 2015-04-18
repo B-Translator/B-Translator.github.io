@@ -32,12 +32,15 @@
 
 * Embedding inside a webpage
 
+  It can also be embedded in a frame inside an HTML page, like the
+  example shown here.
+ 
   #+begin_html
   <!-- HTML generated using hilite.me -->
-  <div><pre style="margin-bottom: 10px; line-height: 125%"><span style="color: #6ab825; font-weight: bold">&lt;div</span> <span style="color: #bbbbbb">style=</span><span style="color: #ed9d13">&quot;width:350px; display:inline-block; float:right;</span>
+  <div><pre style="margin-bottom: 10px; line-height: 125%"><span style="color: #6ab825; font-weight: bold">&lt;div</span> <span style="color: #bbbbbb">style=</span><span style="color: #ed9d13">&quot;width:300px; display:inline-block; float:right;</span>
   <span style="color: #ed9d13">            border:1px solid #aaa; padding:0px; margin-left:10px;&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
     <span style="color: #6ab825; font-weight: bold">&lt;iframe</span> <span style="color: #bbbbbb">src=</span><span style="color: #ed9d13">&quot;http://v.btranslator.org?lng=sq&amp;proj=ICT_sq&quot;</span>
-	    <span style="color: #bbbbbb">width=</span><span style="color: #ed9d13">&quot;100%&quot;</span> <span style="color: #bbbbbb">height=</span><span style="color: #ed9d13">&quot;450px&quot;</span>
+	    <span style="color: #bbbbbb">width=</span><span style="color: #ed9d13">&quot;100%&quot;</span> <span style="color: #bbbbbb">height=</span><span style="color: #ed9d13">&quot;395px&quot;</span>
 	    <span style="color: #bbbbbb">seamless=</span><span style="color: #ed9d13">&quot;seamless&quot;</span> <span style="color: #bbbbbb">frameborder=</span><span style="color: #ed9d13">&quot;0&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
     <span style="color: #6ab825; font-weight: bold">&lt;/iframe&gt;</span>
   <span style="color: #6ab825; font-weight: bold">&lt;/div&gt;</span>
@@ -46,18 +49,42 @@
   #+end_html
 
   #+begin_html
-  <div style="width:350px; display:inline-block; float:right;
+  <!-- HTML generated using hilite.me -->
+  <div><pre style="margin-bottom: 10px; line-height: 125%"><span style="color: #6ab825; font-weight: bold">&lt;div</span> <span style="color: #bbbbbb">style=</span><span style="color: #ed9d13">&quot;width:300px; display:inline-block;</span>
+  <span style="color: #ed9d13">	    float:right; border:1px solid #aaa; padding:5px;&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
+    <span style="color: #6ab825; font-weight: bold">&lt;h3</span> <span style="color: #bbbbbb">style=</span><span style="color: #ed9d13">&quot;margin-top:0px; color:#2a2;&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>Vocabulary: ICT_sq<span style="color: #6ab825; font-weight: bold">&lt;/h3&gt;</span>
+
+    <span style="color: #6ab825; font-weight: bold">&lt;iframe</span> <span style="color: #bbbbbb">src=</span><span style="color: #ed9d13">&quot;https://btranslator.org/vocabulary/ICT_sq?display=iframe&quot;</span>
+	    <span style="color: #bbbbbb">width=</span><span style="color: #ed9d13">&quot;100%&quot;</span> <span style="color: #bbbbbb">height=</span><span style="color: #ed9d13">&quot;350px&quot;</span>
+	    <span style="color: #bbbbbb">seamless=</span><span style="color: #ed9d13">&quot;seamless&quot;</span> <span style="color: #bbbbbb">frameborder=</span><span style="color: #ed9d13">&quot;0&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
+    <span style="color: #6ab825; font-weight: bold">&lt;/iframe&gt;</span>
+  <span style="color: #6ab825; font-weight: bold">&lt;/div&gt;</span>
+  </pre></div>
+  <!-- End HTML generated using hilite.me -->
+  #+end_html
+
+  #+begin_html
+  <div style="width:300px; display:inline-block; float:right;
               border:1px solid #aaa; padding:0px; margin-left:10px;">
     <iframe src="http://v.btranslator.org?lng=sq&proj=ICT_sq"
-	    width="100%" height="450px"
+	    width="100%" height="395px"
 	    seamless="seamless" frameborder="0">
     </iframe>
   </div>
   #+end_html
 
-  It can also be embedded in a frame inside an HTML page, like the
-  example shown here.
- 
+  #+begin_html
+  <div style="width:300px; display:inline-block;
+	      float:right; border:1px solid #aaa; padding:5px;">
+    <h3 style="margin-top:0px; color:#2a2;">Vocabulary: ICT_sq</h3>
+
+    <iframe src="https://btranslator.org/vocabulary/ICT_sq?display=iframe"
+	    width="100%" height="350px"
+	    seamless="seamless" frameborder="0">
+    </iframe>
+  </div>
+  #+end_html
+
   #+begin_html
   <p style="clear:both"> </p>
   #+end_html
