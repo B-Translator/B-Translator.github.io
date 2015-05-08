@@ -1,11 +1,66 @@
 ---
 layout: default
 ---
-<div id="content">
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Installing the mobile application</h2>
+<h2 id="sec-1">Installing the FirefoxOS application</h2>
 <div class="outline-text-2" id="text-1">
+<style type="text/css">
+.btn {
+  background: #34d960;
+  background-image: -webkit-linear-gradient(top, #34d960, #42b82b);
+  background-image: -moz-linear-gradient(top, #34d960, #42b82b);
+  background-image: -ms-linear-gradient(top, #34d960, #42b82b);
+  background-image: -o-linear-gradient(top, #34d960, #42b82b);
+  background-image: linear-gradient(to bottom, #34d960, #42b82b);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 3px #666666;
+  -moz-box-shadow: 2px 2px 3px #666666;
+  box-shadow: 2px 2px 3px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #34b81a;
+  background-image: -webkit-linear-gradient(top, #34b81a, #149127);
+  background-image: -moz-linear-gradient(top, #34b81a, #149127);
+  background-image: -ms-linear-gradient(top, #34b81a, #149127);
+  background-image: -o-linear-gradient(top, #34b81a, #149127);
+  background-image: linear-gradient(to bottom, #34b81a, #149127);
+  text-decoration: none;
+}
+</style>
+
+<script type="text/javascript">
+function installVocabularyOnFFOS() {
+    var manifestUrl = 'http://fjalori.fs.al/manifest.webapp';
+    var request = window.navigator.mozApps.install(manifestUrl);
+    request.onsuccess = function () {
+        // Save the App object that is returned
+        var appRecord = this.result;
+        alert('Installation successful!');
+    };
+    request.onerror = function () {
+        // Display the error information from the DOMError object
+        alert('Install failed, error: ' + this.error.name);
+    };
+}
+</script>
+
+<div style="padding: 10px;">
+<a href="javascript:installVocabularyOnFFOS()" class="btn">Install on Firefox OS</a>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Installing the mobile application</h2>
+<div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Fork <a href="https://github.com/B-Translator/vocabulary-jquery">https://github.com/B-Translator/vocabulary-jquery</a> or
 <a href="https://github.com/FreeSoft-AL/vocabulary">https://github.com/FreeSoft-AL/vocabulary</a> on GitHub.
@@ -35,9 +90,9 @@ on the server first.
 </div>
 
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Embedding inside a webpage</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Embedding inside a webpage</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 It can also be embedded in a frame inside an HTML page, like the
 example shown here.
@@ -90,12 +145,12 @@ example shown here.
 </div>
 
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Connecting to social networks.</h2>
-<div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">Disqus</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Connecting to social networks.</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">Disqus</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Create a discussion forum at <a href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a> and
 put its name on <code>config.js</code>.
@@ -104,9 +159,9 @@ put its name on <code>config.js</code>.
 </div>
 
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">Twitter</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">Twitter</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 Try something like this on terminal:
 </p>
@@ -154,9 +209,9 @@ For instructions on how to install the <b>t</b> twitter client, see:
 </div>
 
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">RSS</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">RSS</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 Try something like this on terminal:
 </p>
@@ -185,9 +240,9 @@ etc.) See this article for some other tools:
 </div>
 
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Creating vocabularies on the server</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Creating vocabularies on the server</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 <b>Note:</b> If you want to use <a href="https://btranslator.org">https://btranslator.org</a> as a server,
 contact me and I can create a new vocabulary for you.
