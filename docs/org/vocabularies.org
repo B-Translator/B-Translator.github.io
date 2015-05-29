@@ -224,10 +224,7 @@
       #+end_example
 
     - Make sure that there is an entry for this language at the list
-      of languages:
-      #+begin_example
-      nano modules/custom/btrCore/lib/fn/languages/all_langs.php
-      #+end_example
+      of languages =admin/languages=.
 
     - Run the configuration script ~install/config/languages.sh~:
       #+begin_example
