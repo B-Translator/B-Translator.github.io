@@ -11,7 +11,7 @@ var example_data = {
                     section: 'latest',
                     examples: [
                         {
-                            title: 'GET translations/latest/$lng[/$origin[/$project]]',
+                            title: 'GET latest/$lng[/$origin[/$project]]',
                             jsfile: 'misc/latest.js',
                             apiref: '#sec-4-1',
                             jsbin: 'lofaciyewu/1/edit?js',

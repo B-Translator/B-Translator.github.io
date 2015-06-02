@@ -477,17 +477,17 @@
 
 ** latest
 
-   + GET translations/latest/$lng[/$origin[/$project]] :: Return a
-     JSON array of the latest translations for the given language
-     (origin and project are optional). Latest means yesterday.
-     Results are cached, so last minute translations may not appear on
-     the list.
+   + GET latest/$lng[/$origin[/$project]] :: Return a JSON array of
+        the latest translations for the given language (origin and
+        project are optional). Latest means yesterday.  Results are
+        cached, so last minute translations may not appear on the
+        list.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/latest/sq
-     curl https://btranslator.org/translations/latest/sq/LibreOffice
-     curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
+     curl https://btranslator.org/latest/sq
+     curl https://btranslator.org/latest/sq/vocabulary
+     curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
      #+END_EXAMPLE
 
 

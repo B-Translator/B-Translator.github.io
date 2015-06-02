@@ -803,19 +803,18 @@ strings to them) and certain assumptions are made about them.
 <h3 id="sec-4-1">latest</h3>
 <div class="outline-text-3" id="text-4-1">
 <dl class="org-dl">
-<dt> GET translations/latest/$lng[/$origin[/$project]] </dt><dd>Return a
-JSON array of the latest translations for the given language
-(origin and project are optional). Latest means yesterday.
-Results are cached, so last minute translations may not appear on
-the list.
+<dt> GET latest/$lng[/$origin[/$project]] </dt><dd>Return a JSON array
+of the latest translations for the given language (origin and project
+are optional). Latest means yesterday.  Results are cached, so last
+minute translations may not appear on the list.
 
 <p>
 Examples:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/latest/sq
-curl https://btranslator.org/translations/latest/sq/LibreOffice
-curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
+curl https://btranslator.org/latest/sq
+curl https://btranslator.org/latest/sq/vocabulary
+curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
 </pre>
 </dd>
 </dl>
