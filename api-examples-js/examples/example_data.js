@@ -22,7 +22,7 @@ var example_data = {
                     section: 'rss-feed',
                     examples: [
                         {
-                            title: 'GET translations/rss-feed[/$origin[/$project]]',
+                            title: 'GET rss-feed[/$origin[/$project]]',
                             jsfile: 'misc/rss-feed.js',
                             apiref: '#sec-4-2',
                             jsbin: 'kazamajope/1/edit?js',

@@ -195,10 +195,10 @@
 
    Try something like this on terminal:
    #+begin_example
-   curl https://btranslator.org/translations/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   curl https://btranslator.org/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
    #+end_example
    Or open it it browser:
-   https://btranslator.org/translations/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   https://btranslator.org/rss-feed/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
 
    It return a RSS feed of the latest translations. Latest means
    yesterday. Results are cached, so last minute translations may not

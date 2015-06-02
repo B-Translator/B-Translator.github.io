@@ -827,18 +827,18 @@ curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
 <h3 id="sec-4-2">rss-feed</h3>
 <div class="outline-text-3" id="text-4-2">
 <dl class="org-dl">
-<dt> GET translations/rss-feed[/$origin[/$project]] </dt><dd>Return a RSS
-feed of the latest translations (origin and project are
-optional). Latest means yesterday.  Results are cached, so last
-minute translations may not appear on the list.
+<dt> GET btr/rss-feed[/$origin[/$project]] </dt><dd>Return a RSS feed
+of the latest translations (origin and project are optional). Latest
+means yesterday.  Results are cached, so last minute translations may
+not appear on the list.
 
 <p>
 Examples:
 </p>
 <pre class="example">
-curl https://l10n.org.al/translations/rss-feed
-curl https://l10n.org.al/translations/rss-feed/LibreOffice
-curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
+curl https://l10n.org.al/btr/rss-feed
+curl https://l10n.org.al/btr/rss-feed/vocabulary
+curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
 </pre>
 </dd>
 </dl>
