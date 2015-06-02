@@ -33,7 +33,7 @@ var example_data = {
                     section: 'twitter',
                     examples: [
                         {
-                            title: 'GET translations/twitter[/$origin[/$project]]',
+                            title: 'GET tweet[/$origin[/$project]]',
                             jsfile: 'misc/twitter.js',
                             apiref: '#sec-4-3',
                             jsbin: 'sunuxekefa/1/edit?js',

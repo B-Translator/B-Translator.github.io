@@ -158,10 +158,10 @@
 
    Try something like this on terminal:
    #+begin_example
-   curl https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
    #+end_example
    Or open it it browser:
-   https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
+   https://btranslator.org/tweet/sq/vocabulary/ICT_sq?url=http://v.btranslator.org
 
    Each time it will return a random term from the vocabulary, in a
    format suitable for twitter. To make the process automatic, you can
@@ -171,7 +171,7 @@
    ### Send tweets from command line.
 
    t='/usr/local/bin/t'
-   tweet=$(curl https://btranslator.org/translations/twitter/sq/vocabulary/ICT_sq?url=http://v.btranslator.org)
+   tweet=$(curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq?url=http://v.btranslator.org)
    mention=$($t followings | sort -R | tail -1)
    $t update "$tweet @$mention"
    #+end_example

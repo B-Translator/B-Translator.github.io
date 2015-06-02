@@ -850,7 +850,7 @@ curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
 <h3 id="sec-4-3">twitter</h3>
 <div class="outline-text-3" id="text-4-3">
 <dl class="org-dl">
-<dt> GET translations/twitter[/$origin[/$project]] </dt><dd>Return a random
+<dt> GET btr/tweet[/$origin[/$project]] </dt><dd>Return a random
 string and its translations in a suitable form for the twitter
 (truncated to 100 characters).
 
@@ -858,9 +858,9 @@ string and its translations in a suitable form for the twitter
 Examples:
 </p>
 <pre class="example">
-curl https://l10n.org.al/translations/twitter
-curl https://l10n.org.al/translations/twitter/LibreOffice
-curl https://l10n.org.al/translations/twitter/LibreOffice/sw
+curl https://l10n.org.al/btr/tweet
+curl https://l10n.org.al/btr/tweet/vocabulary
+curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
 </pre>
 
 <p>
@@ -874,9 +874,9 @@ translations.  See this script as an example:
 
 
 <dl class="org-dl">
-<dt> GET translations/twitter/$lng[/$origin[/$project]] </dt><dd>Return a
-random string and its translations in a suitable form for the
-twitter (truncated to 100 characters).
+<dt> GET tweet/$lng[/$origin[/$project]] </dt><dd>Return a random
+string and its translations in a suitable form for the twitter
+(truncated to 100 characters).
 <dl class="org-dl">
 <dt> lng </dt><dd>Language of translations.
 </dd>
@@ -885,9 +885,9 @@ twitter (truncated to 100 characters).
 Examples:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/twitter/sq
-curl https://btranslator.org/translations/twitter/sq/LibreOffice
-curl https://btranslator.org/translations/twitter/sq/LibreOffice/sw
+curl https://btranslator.org/tweet/sq
+curl https://btranslator.org/tweet/sq/vocabulary
+curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
 </pre>
 
 <p>
@@ -1007,14 +1007,14 @@ curl https://btranslator.org/translations/autocomplete/string/*/*/a
 <h3 id="sec-4-6">other</h3>
 <div class="outline-text-3" id="text-4-6">
 <dl class="org-dl">
-<dt> GET translations/languages </dt><dd>Return a json list of languages
-installed on the system and their details.
+<dt> GET langs </dt><dd>Return a json list of languages installed on
+the system and their details.
 
 <p>
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/languages
+curl https://btranslator.org/langs
 </pre>
 </dd>
 </dl>
