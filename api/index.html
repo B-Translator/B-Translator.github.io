@@ -933,7 +933,7 @@ curl https://btranslator.org/translations/vocabulary/export/ICT_sq/org &gt; ICT_
 <h3 id="sec-4-5">autocomplete</h3>
 <div class="outline-text-3" id="text-4-5">
 <dl class="org-dl">
-<dt> GET translations/autocomplete/project/$str </dt><dd>Retrieve a JSON list
+<dt> GET auto/project/$str </dt><dd>Retrieve a JSON list
 of autocomplete suggestions for projects.
 <dl class="org-dl">
 <dt> str </dt><dd>Beginning of a project name.
@@ -943,11 +943,11 @@ of autocomplete suggestions for projects.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/project/kd
+curl https://btranslator.org/auto/project/kd
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/origin/$str </dt><dd>Retrieve a JSON list
+<dt> GET auto/origin/$str </dt><dd>Retrieve a JSON list
 of autocomplete suggestions for origins of projects.
 <dl class="org-dl">
 <dt> str </dt><dd>Beginning of an origin.
@@ -957,11 +957,11 @@ of autocomplete suggestions for origins of projects.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/origin/G
+curl https://btranslator.org/auto/origin/G
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/user/$lng/$str </dt><dd>Retrieve a JSON list of
+<dt> GET auto/user/$lng/$str </dt><dd>Retrieve a JSON list of
 autocomplete suggestions for users.
 <dl class="org-dl">
 <dt> lng </dt><dd>Language of translations.
@@ -973,11 +973,11 @@ autocomplete suggestions for users.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/user/sq/d
+curl https://btranslator.org/auto/user/sq/d
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/string/$origin/$project/$str </dt><dd>     Retrieve a JSON list of autocomplete suggestions for strings.
+<dt> GET auto/string/$origin/$project/$str </dt><dd>     Retrieve a JSON list of autocomplete suggestions for strings.
 <dl class="org-dl">
 <dt> origin </dt><dd>Limit search to this origin. If it is <code>*</code>, then don't
 limit by origin.
@@ -992,10 +992,10 @@ don't limit by project.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/string/vocabulary/ICT_sq/a
-curl https://btranslator.org/translations/autocomplete/string/vocabulary/*/a
-curl https://btranslator.org/translations/autocomplete/string/*/ICT_sq/a
-curl https://btranslator.org/translations/autocomplete/string/*/*/a
+curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
+curl https://btranslator.org/auto/string/vocabulary/*/a
+curl https://btranslator.org/auto/string/*/ICT_sq/a
+curl https://btranslator.org/auto/string/*/*/a
 </pre>
 </dd>
 </dl>

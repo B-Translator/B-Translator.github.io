@@ -565,35 +565,35 @@
 
 ** autocomplete
 
-   + GET translations/autocomplete/project/$str :: Retrieve a JSON list
-     of autocomplete suggestions for projects.
+   + GET auto/project/$str :: Retrieve a JSON list of autocomplete
+        suggestions for projects.
      - str :: Beginning of a project name.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/project/kd
+     curl https://btranslator.org/auto/project/kd
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/origin/$str :: Retrieve a JSON list
-     of autocomplete suggestions for origins of projects.
+   + GET auto/origin/$str :: Retrieve a JSON list of autocomplete
+        suggestions for origins of projects.
      - str :: Beginning of an origin.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/origin/G
+     curl https://btranslator.org/auto/origin/G
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/user/$lng/$str :: Retrieve a JSON list of
-     autocomplete suggestions for users.
+   + GET auto/user/$lng/$str :: Retrieve a JSON list of autocomplete
+        suggestions for users.
      - lng :: Language of translations.
      - str :: Beginning of a user name.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/user/sq/d
+     curl https://btranslator.org/auto/user/sq/d
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/string/$origin/$project/$str ::
+   + GET auto/string/$origin/$project/$str ::
      Retrieve a JSON list of autocomplete suggestions for strings.
      - origin :: Limit search to this origin. If it is =*=, then don't
                  limit by origin.
@@ -603,10 +603,10 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/string/vocabulary/ICT_sq/a
-     curl https://btranslator.org/translations/autocomplete/string/vocabulary/*/a
-     curl https://btranslator.org/translations/autocomplete/string/*/ICT_sq/a
-     curl https://btranslator.org/translations/autocomplete/string/*/*/a
+     curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
+     curl https://btranslator.org/auto/string/vocabulary/*/a
+     curl https://btranslator.org/auto/string/*/ICT_sq/a
+     curl https://btranslator.org/auto/string/*/*/a
      #+END_EXAMPLE
 
 ** other
