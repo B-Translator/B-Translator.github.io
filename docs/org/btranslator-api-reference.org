@@ -611,12 +611,12 @@
 
 ** other
 
-   + GET langs :: Return a json list of languages installed on the
+   + GET languages :: Return a json list of languages installed on the
                   system and their details.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/langs
+     curl https://btranslator.org/languages
      #+END_EXAMPLE
 
 
