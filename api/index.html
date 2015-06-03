@@ -803,19 +803,18 @@ strings to them) and certain assumptions are made about them.
 <h3 id="sec-4-1">latest</h3>
 <div class="outline-text-3" id="text-4-1">
 <dl class="org-dl">
-<dt> GET translations/latest/$lng[/$origin[/$project]] </dt><dd>Return a
-JSON array of the latest translations for the given language
-(origin and project are optional). Latest means yesterday.
-Results are cached, so last minute translations may not appear on
-the list.
+<dt> GET latest/$lng[/$origin[/$project]] </dt><dd>Return a JSON array
+of the latest translations for the given language (origin and project
+are optional). Latest means yesterday.  Results are cached, so last
+minute translations may not appear on the list.
 
 <p>
 Examples:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/latest/sq
-curl https://btranslator.org/translations/latest/sq/LibreOffice
-curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
+curl https://btranslator.org/latest/sq
+curl https://btranslator.org/latest/sq/vocabulary
+curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
 </pre>
 </dd>
 </dl>
@@ -827,18 +826,18 @@ curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
 <h3 id="sec-4-2">rss-feed</h3>
 <div class="outline-text-3" id="text-4-2">
 <dl class="org-dl">
-<dt> GET translations/rss-feed[/$origin[/$project]] </dt><dd>Return a RSS
-feed of the latest translations (origin and project are
-optional). Latest means yesterday.  Results are cached, so last
-minute translations may not appear on the list.
+<dt> GET btr/rss-feed[/$origin[/$project]] </dt><dd>Return a RSS feed
+of the latest translations (origin and project are optional). Latest
+means yesterday.  Results are cached, so last minute translations may
+not appear on the list.
 
 <p>
 Examples:
 </p>
 <pre class="example">
-curl https://l10n.org.al/translations/rss-feed
-curl https://l10n.org.al/translations/rss-feed/LibreOffice
-curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
+curl https://l10n.org.al/btr/rss-feed
+curl https://l10n.org.al/btr/rss-feed/vocabulary
+curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
 </pre>
 </dd>
 </dl>
@@ -850,7 +849,7 @@ curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
 <h3 id="sec-4-3">twitter</h3>
 <div class="outline-text-3" id="text-4-3">
 <dl class="org-dl">
-<dt> GET translations/twitter[/$origin[/$project]] </dt><dd>Return a random
+<dt> GET btr/tweet[/$origin[/$project]] </dt><dd>Return a random
 string and its translations in a suitable form for the twitter
 (truncated to 100 characters).
 
@@ -858,9 +857,9 @@ string and its translations in a suitable form for the twitter
 Examples:
 </p>
 <pre class="example">
-curl https://l10n.org.al/translations/twitter
-curl https://l10n.org.al/translations/twitter/LibreOffice
-curl https://l10n.org.al/translations/twitter/LibreOffice/sw
+curl https://l10n.org.al/btr/tweet
+curl https://l10n.org.al/btr/tweet/vocabulary
+curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
 </pre>
 
 <p>
@@ -874,9 +873,9 @@ translations.  See this script as an example:
 
 
 <dl class="org-dl">
-<dt> GET translations/twitter/$lng[/$origin[/$project]] </dt><dd>Return a
-random string and its translations in a suitable form for the
-twitter (truncated to 100 characters).
+<dt> GET tweet/$lng[/$origin[/$project]] </dt><dd>Return a random
+string and its translations in a suitable form for the twitter
+(truncated to 100 characters).
 <dl class="org-dl">
 <dt> lng </dt><dd>Language of translations.
 </dd>
@@ -885,9 +884,9 @@ twitter (truncated to 100 characters).
 Examples:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/twitter/sq
-curl https://btranslator.org/translations/twitter/sq/LibreOffice
-curl https://btranslator.org/translations/twitter/sq/LibreOffice/sw
+curl https://btranslator.org/tweet/sq
+curl https://btranslator.org/tweet/sq/vocabulary
+curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
 </pre>
 
 <p>
@@ -934,7 +933,7 @@ curl https://btranslator.org/translations/vocabulary/export/ICT_sq/org &gt; ICT_
 <h3 id="sec-4-5">autocomplete</h3>
 <div class="outline-text-3" id="text-4-5">
 <dl class="org-dl">
-<dt> GET translations/autocomplete/project/$str </dt><dd>Retrieve a JSON list
+<dt> GET auto/project/$str </dt><dd>Retrieve a JSON list
 of autocomplete suggestions for projects.
 <dl class="org-dl">
 <dt> str </dt><dd>Beginning of a project name.
@@ -944,11 +943,11 @@ of autocomplete suggestions for projects.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/project/kd
+curl https://btranslator.org/auto/project/kd
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/origin/$str </dt><dd>Retrieve a JSON list
+<dt> GET auto/origin/$str </dt><dd>Retrieve a JSON list
 of autocomplete suggestions for origins of projects.
 <dl class="org-dl">
 <dt> str </dt><dd>Beginning of an origin.
@@ -958,11 +957,11 @@ of autocomplete suggestions for origins of projects.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/origin/G
+curl https://btranslator.org/auto/origin/G
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/user/$lng/$str </dt><dd>Retrieve a JSON list of
+<dt> GET auto/user/$lng/$str </dt><dd>Retrieve a JSON list of
 autocomplete suggestions for users.
 <dl class="org-dl">
 <dt> lng </dt><dd>Language of translations.
@@ -974,11 +973,11 @@ autocomplete suggestions for users.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/user/sq/d
+curl https://btranslator.org/auto/user/sq/d
 </pre>
 </dd>
 
-<dt> GET translations/autocomplete/string/$origin/$project/$str </dt><dd>     Retrieve a JSON list of autocomplete suggestions for strings.
+<dt> GET auto/string/$origin/$project/$str </dt><dd>     Retrieve a JSON list of autocomplete suggestions for strings.
 <dl class="org-dl">
 <dt> origin </dt><dd>Limit search to this origin. If it is <code>*</code>, then don't
 limit by origin.
@@ -993,10 +992,10 @@ don't limit by project.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/autocomplete/string/vocabulary/ICT_sq/a
-curl https://btranslator.org/translations/autocomplete/string/vocabulary/*/a
-curl https://btranslator.org/translations/autocomplete/string/*/ICT_sq/a
-curl https://btranslator.org/translations/autocomplete/string/*/*/a
+curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
+curl https://btranslator.org/auto/string/vocabulary/*/a
+curl https://btranslator.org/auto/string/*/ICT_sq/a
+curl https://btranslator.org/auto/string/*/*/a
 </pre>
 </dd>
 </dl>
@@ -1007,14 +1006,14 @@ curl https://btranslator.org/translations/autocomplete/string/*/*/a
 <h3 id="sec-4-6">other</h3>
 <div class="outline-text-3" id="text-4-6">
 <dl class="org-dl">
-<dt> GET translations/languages </dt><dd>Return a json list of languages
-installed on the system and their details.
+<dt> GET languages </dt><dd>Return a json list of languages installed
+on the system and their details.
 
 <p>
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/translations/languages
+curl https://btranslator.org/languages
 </pre>
 </dd>
 </dl>

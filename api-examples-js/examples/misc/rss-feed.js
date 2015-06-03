@@ -3,6 +3,6 @@ var link_to = function (url) {
 };
 
 // Get a RSS feed of the latest translations.
-link_to('https://l10n.org.al/translations/rss-feed');
-//link_to('https://l10n.org.al/translations/rss-feed/KDE');
-//link_to('https://l10n.org.al/translations/rss-feed/KDE/kdeedu');
+link_to('https://l10n.org.al/btr/rss-feed');
+//link_to('https://l10n.org.al/btr/rss-feed/vocabulary');
+//link_to('https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq');

@@ -477,46 +477,46 @@
 
 ** latest
 
-   + GET translations/latest/$lng[/$origin[/$project]] :: Return a
-     JSON array of the latest translations for the given language
-     (origin and project are optional). Latest means yesterday.
-     Results are cached, so last minute translations may not appear on
-     the list.
+   + GET latest/$lng[/$origin[/$project]] :: Return a JSON array of
+        the latest translations for the given language (origin and
+        project are optional). Latest means yesterday.  Results are
+        cached, so last minute translations may not appear on the
+        list.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/latest/sq
-     curl https://btranslator.org/translations/latest/sq/LibreOffice
-     curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
+     curl https://btranslator.org/latest/sq
+     curl https://btranslator.org/latest/sq/vocabulary
+     curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
      #+END_EXAMPLE
 
 
 ** rss-feed
 
-   + GET translations/rss-feed[/$origin[/$project]] :: Return a RSS
-     feed of the latest translations (origin and project are
-     optional). Latest means yesterday.  Results are cached, so last
-     minute translations may not appear on the list.
+   + GET btr/rss-feed[/$origin[/$project]] :: Return a RSS feed of the
+        latest translations (origin and project are optional). Latest
+        means yesterday.  Results are cached, so last minute
+        translations may not appear on the list.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://l10n.org.al/translations/rss-feed
-     curl https://l10n.org.al/translations/rss-feed/LibreOffice
-     curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
+     curl https://l10n.org.al/btr/rss-feed
+     curl https://l10n.org.al/btr/rss-feed/vocabulary
+     curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
      #+END_EXAMPLE
 
 
 ** twitter
 
-   + GET translations/twitter[/$origin[/$project]] :: Return a random
-     string and its translations in a suitable form for the twitter
-     (truncated to 100 characters).
+   + GET btr/tweet[/$origin[/$project]] :: Return a random string and
+        its translations in a suitable form for the twitter (truncated
+        to 100 characters).
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://l10n.org.al/translations/twitter
-     curl https://l10n.org.al/translations/twitter/LibreOffice
-     curl https://l10n.org.al/translations/twitter/LibreOffice/sw
+     curl https://l10n.org.al/btr/tweet
+     curl https://l10n.org.al/btr/tweet/vocabulary
+     curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
      #+END_EXAMPLE
 
      *Note:* This can be used in combination with /cli twitter
@@ -525,16 +525,16 @@
      https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh
 
 
-   + GET translations/twitter/$lng[/$origin[/$project]] :: Return a
-     random string and its translations in a suitable form for the
-     twitter (truncated to 100 characters).
+   + GET tweet/$lng[/$origin[/$project]] :: Return a random string and
+        its translations in a suitable form for the twitter (truncated
+        to 100 characters).
      - lng :: Language of translations.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/twitter/sq
-     curl https://btranslator.org/translations/twitter/sq/LibreOffice
-     curl https://btranslator.org/translations/twitter/sq/LibreOffice/sw
+     curl https://btranslator.org/tweet/sq
+     curl https://btranslator.org/tweet/sq/vocabulary
+     curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
      #+END_EXAMPLE
 
      *Note:* This can be used in combination with /cli twitter
@@ -565,35 +565,35 @@
 
 ** autocomplete
 
-   + GET translations/autocomplete/project/$str :: Retrieve a JSON list
-     of autocomplete suggestions for projects.
+   + GET auto/project/$str :: Retrieve a JSON list of autocomplete
+        suggestions for projects.
      - str :: Beginning of a project name.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/project/kd
+     curl https://btranslator.org/auto/project/kd
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/origin/$str :: Retrieve a JSON list
-     of autocomplete suggestions for origins of projects.
+   + GET auto/origin/$str :: Retrieve a JSON list of autocomplete
+        suggestions for origins of projects.
      - str :: Beginning of an origin.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/origin/G
+     curl https://btranslator.org/auto/origin/G
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/user/$lng/$str :: Retrieve a JSON list of
-     autocomplete suggestions for users.
+   + GET auto/user/$lng/$str :: Retrieve a JSON list of autocomplete
+        suggestions for users.
      - lng :: Language of translations.
      - str :: Beginning of a user name.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/user/sq/d
+     curl https://btranslator.org/auto/user/sq/d
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/string/$origin/$project/$str ::
+   + GET auto/string/$origin/$project/$str ::
      Retrieve a JSON list of autocomplete suggestions for strings.
      - origin :: Limit search to this origin. If it is =*=, then don't
                  limit by origin.
@@ -603,20 +603,20 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/autocomplete/string/vocabulary/ICT_sq/a
-     curl https://btranslator.org/translations/autocomplete/string/vocabulary/*/a
-     curl https://btranslator.org/translations/autocomplete/string/*/ICT_sq/a
-     curl https://btranslator.org/translations/autocomplete/string/*/*/a
+     curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
+     curl https://btranslator.org/auto/string/vocabulary/*/a
+     curl https://btranslator.org/auto/string/*/ICT_sq/a
+     curl https://btranslator.org/auto/string/*/*/a
      #+END_EXAMPLE
 
 ** other
 
-   + GET translations/languages :: Return a json list of languages
-     installed on the system and their details.
+   + GET languages :: Return a json list of languages installed on the
+                  system and their details.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/languages
+     curl https://btranslator.org/languages
      #+END_EXAMPLE
 
 

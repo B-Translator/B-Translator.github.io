@@ -11,7 +11,7 @@ var example_data = {
                     section: 'latest',
                     examples: [
                         {
-                            title: 'GET translations/latest/$lng[/$origin[/$project]]',
+                            title: 'GET latest/$lng[/$origin[/$project]]',
                             jsfile: 'misc/latest.js',
                             apiref: '#sec-4-1',
                             jsbin: 'lofaciyewu/1/edit?js',
@@ -22,7 +22,7 @@ var example_data = {
                     section: 'rss-feed',
                     examples: [
                         {
-                            title: 'GET translations/rss-feed[/$origin[/$project]]',
+                            title: 'GET rss-feed[/$origin[/$project]]',
                             jsfile: 'misc/rss-feed.js',
                             apiref: '#sec-4-2',
                             jsbin: 'kazamajope/1/edit?js',
@@ -33,7 +33,7 @@ var example_data = {
                     section: 'twitter',
                     examples: [
                         {
-                            title: 'GET translations/twitter[/$origin[/$project]]',
+                            title: 'GET tweet[/$origin[/$project]]',
                             jsfile: 'misc/twitter.js',
                             apiref: '#sec-4-3',
                             jsbin: 'sunuxekefa/1/edit?js',

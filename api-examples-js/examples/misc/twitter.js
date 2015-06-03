@@ -3,5 +3,5 @@ var link_to = function (url) {
 };
 
 // Get a random tweet.
-link_to('https://l10n.org.al/translations/twitter');
-link_to('https://btranslator.org/translations/twitter/sq');
+link_to('https://l10n.org.al/btr/tweet');
+link_to('https://btranslator.org/tweet/sq');
