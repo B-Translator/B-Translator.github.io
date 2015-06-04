@@ -47,8 +47,6 @@
    + POST public/btr/translations/get_random_sguid ::
      - target :: Can be one of: =next | translated | untranslated=
      - lng :: Code of the language (required for translated and untranslated)
-     - last_sguid :: (optional) Restricts the pool of selection to the
-                     project(s) of the last reviewed sguid.
      - scope :: (optional) Restricts the pool of selection to the
          given list of project. It is a space separated list of
          origin/project like this: =origin1/project1 origin2
