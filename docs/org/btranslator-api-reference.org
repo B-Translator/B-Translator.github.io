@@ -29,12 +29,16 @@
    + GET public/btr/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
-     - size :: number of results (top contributers), between 5 and 20
+     - size :: number of results (top contributers), between 5 and 100
+     - origin :: (optional) origin of the project 
+     - project :: (optional) name of the project 	       
 
    + POST public/btr/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
-     - size :: number of results (top contributers), between 5 and 20
+     - size :: number of results (top contributers), between 5 and 100
+     - origin :: (optional) origin of the project 
+     - project :: (optional) name of the project 
 
    Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
 
