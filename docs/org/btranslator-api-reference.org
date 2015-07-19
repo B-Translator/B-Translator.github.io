@@ -16,9 +16,13 @@
 
    + GET public/btr/report/statistics ::
      - lng :: language of translations
+     - origin :: (optional) origin of the project 
+     - project :: (optional) name of the project 	       
 
    + POST public/btr/report/statistics ::
-     - lng: :: language of translations
+     - lng :: language of translations
+     - origin :: (optional) origin of the project 
+     - project :: (optional) name of the project 	       
 
    Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
 
