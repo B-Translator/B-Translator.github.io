@@ -287,7 +287,7 @@
           -d '{"origin": "t*"}'
      #+END_EXAMPLE
 
-   + GET translations/project/list/$origin/$project[/$format] ::
+   + GET project/list/$origin/$project[/$format] ::
      Return a plain-text list of all the imported projects, filtered
      by the given origin/project. Parameters *origin* and *project*
      can contain =*=, which is replaced by =%= (for LIKE matches).  If
@@ -297,13 +297,13 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl 'https://btranslator.org/translations/project/list/*/-'
-     curl 'https://btranslator.org/translations/project/list/*/-/json'
-     curl 'https://btranslator.org/translations/project/list/LibreOffice/s*'
-     curl 'https://btranslator.org/translations/project/list/LibreOffice'
-     curl 'https://btranslator.org/translations/project/list/*/nautil*'
-     curl 'https://btranslator.org/translations/project/list/*/*/json'
-     curl 'https://btranslator.org/translations/project/list'
+     curl 'https://btranslator.org/project/list/*/-'
+     curl 'https://btranslator.org/project/list/*/-/json'
+     curl 'https://btranslator.org/project/list/LibreOffice/s*'
+     curl 'https://btranslator.org/project/list/LibreOffice'
+     curl 'https://btranslator.org/project/list/*/nautil*'
+     curl 'https://btranslator.org/project/list/*/*/json'
+     curl 'https://btranslator.org/project/list'
      #+END_EXAMPLE
 
 
@@ -336,7 +336,7 @@
      Example: [[https://dev.btranslator.org/api-examples/php/project/export.php]]
 
 
-   + GET/POST translations/project/export :: Return an archive of PO
+   + GET/POST project/export :: Return an archive of PO
      files for a given origin/project/lng. Does not allow concurrent
      exports because they may affect the performance of the server.
      Parameters are received from the request (either GET or
@@ -366,10 +366,10 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.btranslator.org/translations/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
-     curl -k https://dev.btranslator.org/translations/project/export \
+     curl -k 'https://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+     curl -k https://dev.btranslator.org/project/export \
           -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-     curl -k https://dev.btranslator.org/translations/project/export \
+     curl -k https://dev.btranslator.org/project/export \
           -d origin=test -d project=kturtle -d lng=sq \
           -d export_mode=preferred \
           -d preferred_voters=user1,user2 > test1.tgz
@@ -377,7 +377,7 @@
 
 ** diff
 
-   + GET translations/project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
+   + GET project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
      Return as plain-text the diff of the PO file for a given
      origin/project/lng, which contains the latest most-voted
      suggestions since the last snapshot. If the parameter *$nr* is
@@ -387,11 +387,11 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq
-     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
-     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
-     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
-     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+     curl https://btranslator.org/project/diff/LibreOffice/sw/sq
+     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2 > 2.diff
+     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4 > 4.diff
+     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
      #+END_EXAMPLE
 
 

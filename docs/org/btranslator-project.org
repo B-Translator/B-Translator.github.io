@@ -917,11 +917,11 @@
     string or suggestion), to submit votes, etc.
 
 
-*** translations/project
-    + translations/project/list ([/origin[/project[/format]]])
-    + translations/project/export (/origin/project/language)
-    + translations/project/export_tgz (/origin/project/language)
-    + translations/project/diff (/origin/project/lng[/nr[/ediff]])
+*** project
+    + project/list ([/origin[/project[/format]]])
+    + project/export (/origin/project/language)
+    + project/export_tgz (/origin/project/language)
+    + project/diff (/origin/project/lng[/nr[/ediff]])
       Return the diff/ediff of the PO files for a given
       origin/project/lng/nr.  If the parameter 'nr' is '-', it returns
       the latest most-voted suggestions since the last snapshot.  If
@@ -1335,7 +1335,7 @@
 
      =make_diff.sh= is separated from =make_snapshot.sh= because it
      needs to be used also by the REST API
-     =translations/project/diff/origin/project/lng/-= to generate the
+     =project/diff/origin/project/lng/-= to generate the
      changes (diffs) since the last snapshot.
 
 

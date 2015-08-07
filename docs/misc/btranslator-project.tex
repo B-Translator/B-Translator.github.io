@@ -1080,14 +1080,14 @@ sudo B-Translator/install/all.sh
     string or suggestion), to submit votes, etc.
 
 
-\subsubsection{translations/project}
+\subsubsection{project}
 \label{sec-8.3.3}
 
 \begin{itemize}
-\item translations/project/list ([/origin[/project[/format]]])
-\item translations/project/export (/origin/project/language)
-\item translations/project/export\_{}tgz (/origin/project/language)
-\item translations/project/diff (/origin/project/lng[/nr[/ediff]])
+\item project/list ([/origin[/project[/format]]])
+\item project/export (/origin/project/language)
+\item project/export\_{}tgz (/origin/project/language)
+\item project/diff (/origin/project/lng[/nr[/ediff]])
       Return the diff/ediff of the PO files for a given
       origin/project/lng/nr.  If the parameter `nr' is `-', it returns
       the latest most-voted suggestions since the last snapshot.  If
@@ -1573,7 +1573,7 @@ Save in DB the current snapshot.
 
      \texttt{make\_diff.sh} is separated from \texttt{make\_snapshot.sh} because it
      needs to be used also by the REST API
-     \texttt{translations/project/diff/origin/project/lng/-} to generate the
+     \texttt{project/diff/origin/project/lng/-} to generate the
      changes (diffs) since the last snapshot.
 
 
