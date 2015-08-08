@@ -26,6 +26,24 @@
 
    Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
 
+** project_stats
+
+   Getting project details and statistics (number of translated and
+   untranslated strings, number of votes and translations, users and
+   contributers, etc.)
+
+   + GET public/btr/report/project_stats ::
+     - origin :: origin of the project 
+     - project :: name of the project 	       
+     - lng :: language of translations
+
+   + POST public/btr/report/project_stats ::
+     - origin :: origin of the project 
+     - project :: name of the project 	       
+     - lng :: language of translations
+
+   Example: [[https://dev.btranslator.org/api-examples/php/report/project_stats.php]]
+
 ** topcontrib
 
    Statistics about top contributors.
