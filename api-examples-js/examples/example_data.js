@@ -85,18 +85,35 @@ var example_data = {
                     ],
                 },
                 {
+                    section: 'project_stats',
+                    examples: [
+                        {
+                            title: 'GET public/btr/report/project_stats',
+                            jsfile: 'report/project_stats_get.js',
+                            apiref: '#sec-1-2',
+                            jsbin: null,
+                        },
+                        {
+                            title: 'POST public/btr/report/project_stats',
+                            jsfile: 'report/project_stats_post.js',
+                            apiref: '#sec-1-2',
+                            jsbin: null,
+                        },
+                    ],
+                },
+                {
                     section: 'topcontrib',
                     examples: [
                         {
                             title: 'GET public/btr/report/topcontrib',
                             jsfile: 'report/topcontrib_get.js',
-                            apiref: '#sec-1-2',
+                            apiref: '#sec-1-3',
                             jsbin: 'kikoxuqero/1/edit?js,output',
                         },
                         {
                             title: 'POST public/btr/report/topcontrib',
                             jsfile: 'report/topcontrib_post.js',
-                            apiref: '#sec-1-2',
+                            apiref: '#sec-1-3',
                             jsbin: 'miyonixici/1/edit?js,output',
                         },
                     ],
