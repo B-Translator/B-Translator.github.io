@@ -24,7 +24,15 @@
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
 
+
    Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
+
+   #+begin_example
+   curl 'https://btranslator.org/public/btr/report/statistics?lng=sq&origin=LibreOffice&project=cui'
+   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/statistics?lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/statistics -d '{"lng": "sq"}'
+   #+end_example
+
 
 ** project_stats
 
@@ -43,6 +51,13 @@
      - lng :: language of translations
 
    Example: [[https://dev.btranslator.org/api-examples/php/report/project_stats.php]]
+
+   #+begin_example
+   curl 'https://btranslator.org/public/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
+   #+end_example
+
 
 ** topcontrib
 
@@ -63,6 +78,12 @@
      - project :: (optional) name of the project 
 
    Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
+
+   #+begin_example
+   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/topcontrib?lng=sq&period=week'
+   curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
+   #+end_example
+
 
 * translations
 
