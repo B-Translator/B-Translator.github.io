@@ -263,6 +263,17 @@ var example_data = {
             group: 'Project',
             sections: [
                 {
+                    section: 'subscribe',
+                    examples: [
+                        {
+                            title: 'POST btr/project/subscribe',
+                            jsfile: 'project/subscribe.js',
+                            apiref: null,
+                            jsbin: null,
+                        },
+                    ],
+                },
+                {
                     section: 'list',
                     examples: [
                         {
