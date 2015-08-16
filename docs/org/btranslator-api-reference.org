@@ -302,6 +302,27 @@
 
 * project
 
+** subscribe
+
+   Subscribe user to a project.
+
+   + POST btr/project/subscribe ::
+     - origin :: Origin of the project.
+     - project :: Name of the project.
+
+   Unsubscribe user from a project.
+
+   + POST btr/project/unsubscribe ::
+     - origin :: Origin of the project.
+     - project :: Name of the project.
+
+   Get user subscriptions.
+
+   + POST btr/project/subscriptions ::
+
+   Example: [[https://dev.btranslator.org/api-examples/php/project/subscribe.php]]
+
+
 ** list
 
    Get a list of existing projects, filtered by origin/project.
