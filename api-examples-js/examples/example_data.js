@@ -263,12 +263,23 @@ var example_data = {
             group: 'Project',
             sections: [
                 {
+                    section: 'subscribe',
+                    examples: [
+                        {
+                            title: 'POST btr/project/subscribe',
+                            jsfile: 'project/subscribe.js',
+                            apiref: '#sec-3-1',
+                            jsbin: null,
+                        },
+                    ],
+                },
+                {
                     section: 'list',
                     examples: [
                         {
                             title: 'POST btr/project/list',
                             jsfile: 'project/list.js',
-                            apiref: '#sec-3-1',
+                            apiref: '#sec-3-2',
                             jsbin: 'hogatomaqa/1/edit?js,output',
                         },
                     ],
@@ -279,7 +290,7 @@ var example_data = {
                         {
                             title: 'POST btr/project/add_string',
                             jsfile: 'project/add_string.js',
-                            apiref: '#sec-3-4',
+                            apiref: '#sec-3-5',
                             jsbin: 'wufuvalinu/1/edit?js',
                         },
                     ],
@@ -290,7 +301,7 @@ var example_data = {
                         {
                             title: 'POST btr/project/export',
                             jsfile: 'project/export.js',
-                            apiref: '#sec-3-2',
+                            apiref: '#sec-3-3',
                             jsbin: 'saqiqezeho/1/edit?js,output',
                         },
                     ],
@@ -301,7 +312,7 @@ var example_data = {
                         {
                             title: 'POST btr/project/import',
                             jsfile: 'project/import.js',
-                            apiref: '#sec-3-6',
+                            apiref: '#sec-3-7',
                             jsbin: 'bocazoqopu/1/edit?js',
                         },
                     ],
