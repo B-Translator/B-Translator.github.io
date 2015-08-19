@@ -206,7 +206,7 @@ Get the sguid of a random string according to the target.
 
 <dl class="org-dl">
 <dt> POST public/btr/translations/get_random_sguid </dt><dd><dl class="org-dl">
-<dt> target </dt><dd>Can be one of: <code>next | translated | untranslated</code>
+<dt> target </dt><dd>Can be one of: <code>random | translated | untranslated</code>
 </dd>
 <dt> lng </dt><dd>Code of the language (required for translated and untranslated)
 </dd>
@@ -237,7 +237,7 @@ Get a string, along with its translations, votes and other details.
 <dt> GET public/btr/translations/$sguid </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>The string (globally unique) id, calculated as:
 <code>$sguid = sha1($string . $context)</code> It can also be:
-<code>next | translated | untranslated</code>.
+<code>random | translated | untranslated</code>.
 </dd>
 <dt> lng </dt><dd>The language of translations, like fr, de, etc.
 </dd>
@@ -247,7 +247,7 @@ Get a string, along with its translations, votes and other details.
 <dt> POST public/btr/translations/get </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>The string (globally unique) id, calculated as:
 <code>$sguid = sha1($string . $context)</code> It can also be:
-<code>next | translated | untranslated</code>.
+<code>random | translated | untranslated</code>.
 </dd>
 <dt> lng </dt><dd>The language of translations, like fr, de, etc.
 </dd>
@@ -261,7 +261,7 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/translations/get.
 and its translations.  If the request header <code>Accept:
      application/json</code> is set, then the output will be in JSON
 (otherwise it will be an HTML page). The parameter <i>$sguid</i> can
-also be one of <code>next | translated | untranslated</code>.
+also be one of <code>random | translated | untranslated</code>.
 
 <p>
 Example:
@@ -269,7 +269,7 @@ Example:
 <pre class="example">
 curl -k -H 'Accept: application/json' \
   'https://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/next
+curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/random
 </pre>
 </dd>
 </dl>

@@ -2,7 +2,7 @@
 var url = '/public/btr/translations/get_random_sguid';
 var settings = {
     type: 'POST',
-    data: { target: 'next' },
+    data: { target: 'random' },
 };
 
 http_request(url, settings).done(function () {

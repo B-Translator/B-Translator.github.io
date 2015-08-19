@@ -92,7 +92,7 @@
    Get the sguid of a random string according to the target.
 
    + POST public/btr/translations/get_random_sguid ::
-     - target :: Can be one of: =next | translated | untranslated=
+     - target :: Can be one of: =random | translated | untranslated=
      - lng :: Code of the language (required for translated and untranslated)
      - scope :: (optional) Restricts the pool of selection to the
          given list of project. It is a space separated list of
@@ -109,13 +109,13 @@
    + GET public/btr/translations/$sguid ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
-                =next | translated | untranslated=.
+                =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
    + POST public/btr/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
-                =next | translated | untranslated=.
+                =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
      Example: [[https://dev.btranslator.org/api-examples/php/translations/get.php]]
@@ -124,13 +124,13 @@
      and its translations.  If the request header =Accept:
      application/json= is set, then the output will be in JSON
      (otherwise it will be an HTML page). The parameter /$sguid/ can
-     also be one of =next | translated | untranslated=.
+     also be one of =random | translated | untranslated=.
 
      Example:
      #+BEGIN_EXAMPLE
      curl -k -H 'Accept: application/json' \
        'https://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-     curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/next
+     curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/random
      #+END_EXAMPLE
 
 

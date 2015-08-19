@@ -9,7 +9,7 @@ var settings = {
 };
 
 http_request(url, settings).done(function () {
-    settings.data.sguid = 'next';
+    settings.data.sguid = 'random';
     http_request(url, settings).done(function () {
         settings.data.sguid = 'translated';
         http_request(url, settings).done(function () {
