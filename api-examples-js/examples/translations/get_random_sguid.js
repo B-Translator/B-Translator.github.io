@@ -1,5 +1,5 @@
-// POST btr/translations/get_random_sguid
-var url = '/btr/translations/get_random_sguid';
+// POST api/translations/get_random_sguid
+var url = '/api/translations/get_random_sguid';
 var settings = {
     type: 'POST',
     data: { target: 'random' },

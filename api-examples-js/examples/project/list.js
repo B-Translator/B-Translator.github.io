@@ -1,5 +1,5 @@
-// POST btr/project/list
-var url = '/btr/project/list';
+// POST api/project/list
+var url = '/api/project/list';
 var settings = { type: 'POST' };
 http_request(url, settings).done(function () {
     // Filter list by origin.

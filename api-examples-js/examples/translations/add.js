@@ -12,8 +12,8 @@ var add_translation = function (sguid, lng, new_translation) {
         return;
     }
 
-    // POST btr/translations/add
-    var request = http_request('/btr/translations/add', {
+    // POST api/translations/add
+    var request = http_request('/api/translations/add', {
         type: 'POST',
         data: {
             sguid: sguid,
@@ -30,12 +30,12 @@ var add_translation = function (sguid, lng, new_translation) {
         // Get the id of the added translation.
         tguid = response.tguid;
 
-        var url = '/btr/translations/' + sguid + '?lng=sq';
+        var url = '/api/translations/' + sguid + '?lng=sq';
         var request = http_request(url);
         
         // Now delete the translation.
         request.done(function () {
-            http_request('/btr/translations/del', {
+            http_request('/api/translations/del', {
                 type: 'POST',
                 data: { tguid: tguid },
                 headers: { 'Authorization': 'Bearer ' + access_token },

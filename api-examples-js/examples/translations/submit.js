@@ -41,8 +41,8 @@ var submit_actions = function () {
         return;
     }
 
-    // POST btr/translations/submit
-    http_request('/btr/translations/submit', {
+    // POST api/translations/submit
+    http_request('/api/translations/submit', {
         type: 'POST',
         data: actions,
         headers: { 'Authorization': 'Bearer ' + access_token }

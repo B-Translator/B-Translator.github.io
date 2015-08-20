@@ -8,8 +8,8 @@ var export_project = function () {
         return;
     }
 
-    // POST btr/project/export
-    http_request('/btr/project/export', {
+    // POST api/project/export
+    http_request('/api/project/export', {
         type: 'POST',
         data: {
             origin: 'test',

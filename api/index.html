@@ -65,7 +65,7 @@ week, month and year.
 </p>
 
 <dl class="org-dl">
-<dt> GET btr/report/statistics </dt><dd><dl class="org-dl">
+<dt> GET api/report/statistics </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>language of translations
 </dd>
 <dt> origin </dt><dd>(optional) origin of the project 
@@ -75,7 +75,7 @@ week, month and year.
 </dl>
 </dd>
 
-<dt> POST btr/report/statistics </dt><dd><dl class="org-dl">
+<dt> POST api/report/statistics </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>language of translations
 </dd>
 <dt> origin </dt><dd>(optional) origin of the project 
@@ -92,9 +92,9 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/report/statistics
 </p>
 
 <pre class="example">
-curl 'https://btranslator.org/btr/report/statistics?lng=sq&amp;origin=LibreOffice&amp;project=cui'
-curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/statistics?lng=sq'
-curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/statistics -d '{"lng": "sq"}'
+curl 'https://btranslator.org/api/report/statistics?lng=sq&amp;origin=LibreOffice&amp;project=cui'
+curl -H 'Accept: application/json' 'https://btranslator.org/api/report/statistics?lng=sq'
+curl -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/statistics -d '{"lng": "sq"}'
 </pre>
 </div>
 </div>
@@ -110,7 +110,7 @@ contributers, etc.)
 </p>
 
 <dl class="org-dl">
-<dt> GET btr/report/project_stats </dt><dd><dl class="org-dl">
+<dt> GET api/report/project_stats </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>origin of the project 
 </dd>
 <dt> project </dt><dd>name of the project                
@@ -120,7 +120,7 @@ contributers, etc.)
 </dl>
 </dd>
 
-<dt> POST btr/report/project_stats </dt><dd><dl class="org-dl">
+<dt> POST api/report/project_stats </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>origin of the project 
 </dd>
 <dt> project </dt><dd>name of the project                
@@ -136,9 +136,9 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/report/project_st
 </p>
 
 <pre class="example">
-curl 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&amp;project=cui&amp;lng=sq'
-curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&amp;project=cui&amp;lng=sq'
-curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
+curl 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&amp;project=cui&amp;lng=sq'
+curl -H 'Accept: application/json' 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&amp;project=cui&amp;lng=sq'
+curl -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
 </pre>
 </div>
 </div>
@@ -152,7 +152,7 @@ Statistics about top contributors.
 </p>
 
 <dl class="org-dl">
-<dt> GET btr/report/topcontrib </dt><dd><dl class="org-dl">
+<dt> GET api/report/topcontrib </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>language of translations
 </dd>
 <dt> period </dt><dd>period of report (last <code>day | week | month | year</code>)
@@ -166,7 +166,7 @@ Statistics about top contributors.
 </dl>
 </dd>
 
-<dt> POST btr/report/topcontrib </dt><dd><dl class="org-dl">
+<dt> POST api/report/topcontrib </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>language of translations
 </dd>
 <dt> period </dt><dd>period of report (last <code>day | week | month | year</code>)
@@ -186,8 +186,8 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/report/topcontrib
 </p>
 
 <pre class="example">
-curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/topcontrib?lng=sq&amp;period=week'
-curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
+curl -H 'Accept: application/json' 'https://btranslator.org/api/report/topcontrib?lng=sq&amp;period=week'
+curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
 </pre>
 </div>
 </div>
@@ -205,7 +205,7 @@ Get the sguid of a random string according to the target.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/get_random_sguid </dt><dd><dl class="org-dl">
+<dt> POST api/translations/get_random_sguid </dt><dd><dl class="org-dl">
 <dt> target </dt><dd>Can be one of: <code>random | translated | untranslated</code>
 </dd>
 <dt> lng </dt><dd>Code of the language (required for translated and untranslated)
@@ -234,7 +234,7 @@ Get a string, along with its translations, votes and other details.
 </p>
 
 <dl class="org-dl">
-<dt> GET btr/translations/$sguid </dt><dd><dl class="org-dl">
+<dt> GET api/translations/$sguid </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>The string (globally unique) id, calculated as:
 <code>$sguid = sha1($string . $context)</code> It can also be:
 <code>random | translated | untranslated</code>.
@@ -244,7 +244,7 @@ Get a string, along with its translations, votes and other details.
 </dl>
 </dd>
 
-<dt> POST btr/translations/get </dt><dd><dl class="org-dl">
+<dt> POST api/translations/get </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>The string (globally unique) id, calculated as:
 <code>$sguid = sha1($string . $context)</code> It can also be:
 <code>random | translated | untranslated</code>.
@@ -285,7 +285,7 @@ Add a new translation to a source string.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/add </dt><dd><dl class="org-dl">
+<dt> POST api/translations/add </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>         The string ID for which a new translation should be added.
 </dd>
 <dt> lng </dt><dd>         The language (code) of the new translation.
@@ -312,7 +312,7 @@ Add a vote for the given translation.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/vote </dt><dd><dl class="org-dl">
+<dt> POST api/translations/vote </dt><dd><dl class="org-dl">
 <dt> tguid </dt><dd>ID of the translation
 </dd>
 </dl>
@@ -334,7 +334,7 @@ Delete a translation
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/del </dt><dd><dl class="org-dl">
+<dt> POST api/translations/del </dt><dd><dl class="org-dl">
 <dt> tguid </dt><dd>ID of the translation
 </dd>
 </dl>
@@ -356,7 +356,7 @@ Delete a vote from the given translation.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/del_vote </dt><dd><dl class="org-dl">
+<dt> POST api/translations/del_vote </dt><dd><dl class="org-dl">
 <dt> tguid </dt><dd>ID of the translation
 </dd>
 </dl>
@@ -378,7 +378,7 @@ Search strings and translations using various filters.
 </p>
 
 <dl class="org-dl">
-<dt> GET btr/translations </dt><dd>This provides the same
+<dt> GET api/translations </dt><dd>This provides the same
 functionality and has the same parameters as the <b>search</b>
 operation.  The only difference is that the parameters are
 provided as a GET request (in the URL), whereas the parameters of
@@ -386,7 +386,7 @@ provided as a GET request (in the URL), whereas the parameters of
 more convenient.
 </dd>
 
-<dt> POST btr/translations/search </dt><dd><dl class="org-dl">
+<dt> POST api/translations/search </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>         The language of translations.
 </dd>
 <dt> limit </dt><dd>         The number of results to be returned (min: 5, max: 50).
@@ -450,7 +450,7 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/translations/sear
 various filters.  If the request header <code>Accept: application/json</code>
 is set, then the output will be in JSON (otherwise it will be an
 HTML page). It gets the same parameters as <code>GET
-    btr/translations</code>
+    api/translations</code>
 
 <p>
 Example:
@@ -475,7 +475,7 @@ Submit multiple actions at once.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/submit </dt><dd>         Array of actions. Each action is an associated array
+<dt> POST api/translations/submit </dt><dd>         Array of actions. Each action is an associated array
 that contains the items:
 <dl class="org-dl">
 <dt> action </dt><dd>             The action to be done: <code>add | vote | del | del_vote</code>
@@ -501,7 +501,7 @@ Import translations from PO files.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/translations/import </dt><dd><dl class="org-dl">
+<dt> POST api/translations/import </dt><dd><dl class="org-dl">
 <dt> lng </dt><dd>         Language of translations.
 </dd>
 <dt> file </dt><dd>         A PO file with translations, or an archive of PO files
@@ -556,7 +556,7 @@ Subscribe user to a project.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/subscribe </dt><dd><dl class="org-dl">
+<dt> POST api/project/subscribe </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>Origin of the project.
 </dd>
 <dt> project </dt><dd>Name of the project.
@@ -570,7 +570,7 @@ Unsubscribe user from a project.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/unsubscribe </dt><dd><dl class="org-dl">
+<dt> POST api/project/unsubscribe </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>Origin of the project.
 </dd>
 <dt> project </dt><dd>Name of the project.
@@ -584,7 +584,7 @@ Get user subscriptions.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/subscriptions </dt><dd></dd>
+<dt> POST api/project/subscriptions </dt><dd></dd>
 </dl>
 
 <p>
@@ -602,7 +602,7 @@ Get a list of existing projects, filtered by origin/project.
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/list </dt><dd><dl class="org-dl">
+<dt> POST api/project/list </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>Filter by origin.
 </dd>
 <dt> project </dt><dd>Filter by project.
@@ -626,8 +626,8 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/project/list.php"
 Examples:
 </p>
 <pre class="example">
-curl -k -X POST https://dev.btranslator.org/btr/project/list
-curl -k -X POST https://dev.btranslator.org/btr/project/list \
+curl -k -X POST https://dev.btranslator.org/api/project/list
+curl -k -X POST https://dev.btranslator.org/api/project/list \
      -H "Content-type: application/json" \
      -d '{"origin": "t*"}'
 </pre>
@@ -662,7 +662,7 @@ curl 'https://btranslator.org/project/list'
 <h3 id="sec-3-3">export</h3>
 <div class="outline-text-3" id="text-3-3">
 <dl class="org-dl">
-<dt> POST btr/project/export </dt><dd>Schedule a project for export. When
+<dt> POST api/project/export </dt><dd>Schedule a project for export. When
 the request is completed, the user will be notified by
 email. Accepts these parameters:
 
@@ -789,7 +789,7 @@ Add a new string to a project (useful for vocabularies).
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/add_string </dt><dd><dl class="org-dl">
+<dt> POST api/project/add_string </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>         Origin (category) of the project.
 </dd>
 <dt> project </dt><dd>         Name of the project.
@@ -842,7 +842,7 @@ Delete a string from a project (useful for vocabularies).
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/del_string </dt><dd><dl class="org-dl">
+<dt> POST api/project/del_string </dt><dd><dl class="org-dl">
 <dt> sguid </dt><dd>         ID of the string to be deleted.
 </dd>
 <dt> project </dt><dd>         The project from which the string will be deleted.
@@ -870,7 +870,7 @@ PO/POT file(s).
 </p>
 
 <dl class="org-dl">
-<dt> POST btr/project/import </dt><dd><dl class="org-dl">
+<dt> POST api/project/import </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>         The origin of the project that will be imported.
 </dd>
 <dt> project </dt><dd>         The name of the project that will be imported.

@@ -12,7 +12,7 @@ var import_file = function (fd) {
     }
 
     // Make an http request for uploading the file.
-    http_request('/btr/project/import', {
+    http_request('/api/project/import', {
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + access_token,

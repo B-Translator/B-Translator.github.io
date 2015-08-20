@@ -1,5 +1,5 @@
-// POST btr/report/topcontrib
-http_request('/btr/report/topcontrib', {
+// POST api/report/topcontrib
+http_request('/api/report/topcontrib', {
     type: 'POST',
     data: {
         lng: 'sq',

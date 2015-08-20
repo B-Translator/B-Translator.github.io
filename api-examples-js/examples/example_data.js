@@ -71,13 +71,13 @@ var example_data = {
                     section: 'statistics',
                     examples: [
                         {
-                            title: 'GET btr/report/statistics',
+                            title: 'GET api/report/statistics',
                             jsfile: 'report/statistics_get.js',
                             apiref: '#sec-1-1',
                             jsbin: 'suranakolo/1/edit?js,output',
                         },
                         {
-                            title: 'POST btr/report/statistics',
+                            title: 'POST api/report/statistics',
                             jsfile: 'report/statistics_post.js',
                             apiref: '#sec-1-1',
                             jsbin: 'pipaqabocu/1/edit?js,output',
@@ -88,13 +88,13 @@ var example_data = {
                     section: 'project_stats',
                     examples: [
                         {
-                            title: 'GET btr/report/project_stats',
+                            title: 'GET api/report/project_stats',
                             jsfile: 'report/project_stats_get.js',
                             apiref: '#sec-1-2',
                             jsbin: null,
                         },
                         {
-                            title: 'POST btr/report/project_stats',
+                            title: 'POST api/report/project_stats',
                             jsfile: 'report/project_stats_post.js',
                             apiref: '#sec-1-2',
                             jsbin: null,
@@ -105,13 +105,13 @@ var example_data = {
                     section: 'topcontrib',
                     examples: [
                         {
-                            title: 'GET btr/report/topcontrib',
+                            title: 'GET api/report/topcontrib',
                             jsfile: 'report/topcontrib_get.js',
                             apiref: '#sec-1-3',
                             jsbin: 'kikoxuqero/1/edit?js,output',
                         },
                         {
-                            title: 'POST btr/report/topcontrib',
+                            title: 'POST api/report/topcontrib',
                             jsfile: 'report/topcontrib_post.js',
                             apiref: '#sec-1-3',
                             jsbin: 'miyonixici/1/edit?js,output',
@@ -172,7 +172,7 @@ var example_data = {
                     section: 'get_random_sguid',
                     examples: [
                         {
-                            title: 'POST btr/translations/get_random_sguid',
+                            title: 'POST api/translations/get_random_sguid',
                             jsfile: 'translations/get_random_sguid.js',
                             apiref: '#sec-2-1',
                             jsbin: 'dekiqehosu/1/edit?js,output',
@@ -183,13 +183,13 @@ var example_data = {
                     section: 'get',
                     examples: [
                         {
-                            title: 'GET btr/translations/string_id',
+                            title: 'GET api/translations/string_id',
                             jsfile: 'translations/retrieve.js',
                             apiref: '#sec-2-2',
                             jsbin: 'kolodenezu/1/edit?js',
                         },
                         {
-                            title: 'POST btr/translations/get',
+                            title: 'POST api/translations/get',
                             jsfile: 'translations/get.js',
                             apiref: '#sec-2-2',
                             jsbin: 'huyirafoxi/1/edit?js',
@@ -200,13 +200,13 @@ var example_data = {
                     section: 'search',
                     examples: [
                         {
-                            title: 'GET btr/translations',
+                            title: 'GET api/translations',
                             jsfile: 'translations/list.js',
                             apiref: '#sec-2-7',
                             jsbin: 'qedegepiqa/1/edit?js',
                         },
                         {
-                            title: 'POST btr/translations/search',
+                            title: 'POST api/translations/search',
                             jsfile: 'translations/search.js',
                             apiref: '#sec-2-7',
                             jsbin: 'jaxawarege/1/edit?js',
@@ -217,7 +217,7 @@ var example_data = {
                     section: 'add',
                     examples: [
                         {
-                            title: 'POST btr/translations/add',
+                            title: 'POST api/translations/add',
                             jsfile: 'translations/add.js',
                             apiref: '#sec-2-3',
                             jsbin: 'lequqohemo/1/edit?js',
@@ -228,7 +228,7 @@ var example_data = {
                     section: 'vote',
                     examples: [
                         {
-                            title: 'POST btr/translations/vote',
+                            title: 'POST api/translations/vote',
                             jsfile: 'translations/vote.js',
                             apiref: '#sec-2-4',
                             jsbin: 'dotapuvice/1/edit?js',
@@ -239,7 +239,7 @@ var example_data = {
                     section: 'submit',
                     examples: [
                         {
-                            title: 'POST btr/translations/submit',
+                            title: 'POST api/translations/submit',
                             jsfile: 'translations/submit.js',
                             apiref: '#sec-2-8',
                             jsbin: 'zimajujebe/1/edit?js',
@@ -250,7 +250,7 @@ var example_data = {
                     section: 'import',
                     examples: [
                         {
-                            title: 'POST btr/translations/import',
+                            title: 'POST api/translations/import',
                             jsfile: 'translations/import.js',
                             apiref: '#sec-2-9',
                             jsbin: 'zewiyacido/1/edit?js',
@@ -266,7 +266,7 @@ var example_data = {
                     section: 'subscribe',
                     examples: [
                         {
-                            title: 'POST btr/project/subscribe',
+                            title: 'POST api/project/subscribe',
                             jsfile: 'project/subscribe.js',
                             apiref: '#sec-3-1',
                             jsbin: null,
@@ -277,7 +277,7 @@ var example_data = {
                     section: 'list',
                     examples: [
                         {
-                            title: 'POST btr/project/list',
+                            title: 'POST api/project/list',
                             jsfile: 'project/list.js',
                             apiref: '#sec-3-2',
                             jsbin: 'hogatomaqa/1/edit?js,output',
@@ -288,7 +288,7 @@ var example_data = {
                     section: 'add_string',
                     examples: [
                         {
-                            title: 'POST btr/project/add_string',
+                            title: 'POST api/project/add_string',
                             jsfile: 'project/add_string.js',
                             apiref: '#sec-3-5',
                             jsbin: 'wufuvalinu/1/edit?js',
@@ -299,7 +299,7 @@ var example_data = {
                     section: 'export',
                     examples: [
                         {
-                            title: 'POST btr/project/export',
+                            title: 'POST api/project/export',
                             jsfile: 'project/export.js',
                             apiref: '#sec-3-3',
                             jsbin: 'saqiqezeho/1/edit?js,output',
@@ -310,7 +310,7 @@ var example_data = {
                     section: 'import',
                     examples: [
                         {
-                            title: 'POST btr/project/import',
+                            title: 'POST api/project/import',
                             jsfile: 'project/import.js',
                             apiref: '#sec-3-7',
                             jsbin: 'bocazoqopu/1/edit?js',

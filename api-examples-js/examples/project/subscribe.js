@@ -12,8 +12,8 @@ var subscribe = function () {
         return;
     }
 
-    // POST btr/project/subscribe
-    var url = '/btr/project/subscribe';
+    // POST api/project/subscribe
+    var url = '/api/project/subscribe';
     var settings = {
         type: 'POST',
         data: {
@@ -35,7 +35,7 @@ var subscribe = function () {
  */
 var subscriptions = function (access_token) {
     // Get the list of subscriptions.
-    var url = '/btr/project/subscriptions';
+    var url = '/api/project/subscriptions';
     var settings = {
         type: 'POST',
         headers: {
@@ -52,8 +52,8 @@ var subscriptions = function (access_token) {
  * Unsubscribe from a project.
  */
 var unsubscribe = function (access_token) {
-    // POST btr/project/unsubscribe
-    var url = '/btr/project/unsubscribe';
+    // POST api/project/unsubscribe
+    var url = '/api/project/unsubscribe';
     var settings = {
         type: 'POST',
         data: {

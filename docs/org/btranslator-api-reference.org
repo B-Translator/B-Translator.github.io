@@ -14,12 +14,12 @@
    General statistics (number of votes and translations) for the last
    week, month and year.
 
-   + GET btr/report/statistics ::
+   + GET api/report/statistics ::
      - lng :: language of translations
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
 
-   + POST btr/report/statistics ::
+   + POST api/report/statistics ::
      - lng :: language of translations
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
@@ -28,9 +28,9 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
 
    #+begin_example
-   curl 'https://btranslator.org/btr/report/statistics?lng=sq&origin=LibreOffice&project=cui'
-   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/statistics?lng=sq'
-   curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/statistics -d '{"lng": "sq"}'
+   curl 'https://btranslator.org/api/report/statistics?lng=sq&origin=LibreOffice&project=cui'
+   curl -H 'Accept: application/json' 'https://btranslator.org/api/report/statistics?lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/statistics -d '{"lng": "sq"}'
    #+end_example
 
 
@@ -40,12 +40,12 @@
    untranslated strings, number of votes and translations, users and
    contributers, etc.)
 
-   + GET btr/report/project_stats ::
+   + GET api/report/project_stats ::
      - origin :: origin of the project 
      - project :: name of the project 	       
      - lng :: language of translations
 
-   + POST btr/report/project_stats ::
+   + POST api/report/project_stats ::
      - origin :: origin of the project 
      - project :: name of the project 	       
      - lng :: language of translations
@@ -53,9 +53,9 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/project_stats.php]]
 
    #+begin_example
-   curl 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
-   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
-   curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
+   curl 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Accept: application/json' 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
    #+end_example
 
 
@@ -63,14 +63,14 @@
 
    Statistics about top contributors.
 
-   + GET btr/report/topcontrib ::
+   + GET api/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 100
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
 
-   + POST btr/report/topcontrib ::
+   + POST api/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 100
@@ -80,8 +80,8 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
 
    #+begin_example
-   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/topcontrib?lng=sq&period=week'
-   curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
+   curl -H 'Accept: application/json' 'https://btranslator.org/api/report/topcontrib?lng=sq&period=week'
+   curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
    #+end_example
 
 
@@ -91,7 +91,7 @@
 
    Get the sguid of a random string according to the target.
 
-   + POST btr/translations/get_random_sguid ::
+   + POST api/translations/get_random_sguid ::
      - target :: Can be one of: =random | translated | untranslated=
      - lng :: Code of the language (required for translated and untranslated)
      - scope :: (optional) Restricts the pool of selection to the
@@ -106,13 +106,13 @@
 
    Get a string, along with its translations, votes and other details.
 
-   + GET btr/translations/$sguid ::
+   + GET api/translations/$sguid ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-   + POST btr/translations/get ::
+   + POST api/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
@@ -138,7 +138,7 @@
 
    Add a new translation to a source string.
 
-   + POST btr/translations/add ::
+   + POST api/translations/add ::
      - sguid ::
          The string ID for which a new translation should be added.
      - lng ::
@@ -155,7 +155,7 @@
 
    Add a vote for the given translation.
 
-   + POST btr/translations/vote ::
+   + POST api/translations/vote ::
      - tguid :: ID of the translation
 
    Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
@@ -165,7 +165,7 @@
 
    Delete a translation
 
-   + POST btr/translations/del ::
+   + POST api/translations/del ::
      - tguid :: ID of the translation
 
    Example: [[https://dev.btranslator.org/api-examples/php/translations/add.php]]
@@ -175,7 +175,7 @@
 
    Delete a vote from the given translation.
 
-   + POST btr/translations/del_vote ::
+   + POST api/translations/del_vote ::
      - tguid :: ID of the translation
 
    Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
@@ -185,14 +185,14 @@
 
    Search strings and translations using various filters.
 
-   + GET btr/translations :: This provides the same
+   + GET api/translations :: This provides the same
      functionality and has the same parameters as the *search*
      operation.  The only difference is that the parameters are
      provided as a GET request (in the URL), whereas the parameters of
      'search' are provided as a POST request. Sometimes this may be
      more convenient.
 
-   + POST btr/translations/search ::
+   + POST api/translations/search ::
      - lng ::
          The language of translations.
      - limit ::
@@ -241,7 +241,7 @@
     various filters.  If the request header =Accept: application/json=
     is set, then the output will be in JSON (otherwise it will be an
     HTML page). It gets the same parameters as =GET
-    btr/translations=
+    api/translations=
 
     Example:
     #+BEGIN_EXAMPLE
@@ -256,7 +256,7 @@
 
    Submit multiple actions at once.
 
-   + POST btr/translations/submit ::
+   + POST api/translations/submit ::
          Array of actions. Each action is an associated array
          that contains the items:
          - action ::
@@ -271,7 +271,7 @@
 
    Import translations from PO files.
 
-   + POST btr/translations/import ::
+   + POST api/translations/import ::
      - lng ::
          Language of translations.
      - file ::
@@ -306,19 +306,19 @@
 
    Subscribe user to a project.
 
-   + POST btr/project/subscribe ::
+   + POST api/project/subscribe ::
      - origin :: Origin of the project.
      - project :: Name of the project.
 
    Unsubscribe user from a project.
 
-   + POST btr/project/unsubscribe ::
+   + POST api/project/unsubscribe ::
      - origin :: Origin of the project.
      - project :: Name of the project.
 
    Get user subscriptions.
 
-   + POST btr/project/subscriptions ::
+   + POST api/project/subscriptions ::
 
    Example: [[https://dev.btranslator.org/api-examples/php/project/subscribe.php]]
 
@@ -327,7 +327,7 @@
 
    Get a list of existing projects, filtered by origin/project.
 
-   + POST btr/project/list ::
+   + POST api/project/list ::
      - origin :: Filter by origin.
      - project :: Filter by project.
 
@@ -341,8 +341,8 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k -X POST https://dev.btranslator.org/btr/project/list
-     curl -k -X POST https://dev.btranslator.org/btr/project/list \
+     curl -k -X POST https://dev.btranslator.org/api/project/list
+     curl -k -X POST https://dev.btranslator.org/api/project/list \
           -H "Content-type: application/json" \
           -d '{"origin": "t*"}'
      #+END_EXAMPLE
@@ -369,7 +369,7 @@
 
 ** export
 
-   + POST btr/project/export :: Schedule a project for export. When
+   + POST api/project/export :: Schedule a project for export. When
      the request is completed, the user will be notified by
      email. Accepts these parameters:
 
@@ -459,7 +459,7 @@
 
    Add a new string to a project (useful for vocabularies).
 
-   + POST btr/project/add_string ::
+   + POST api/project/add_string ::
      - origin ::
          Origin (category) of the project.
      - project ::
@@ -493,7 +493,7 @@
 
    Delete a string from a project (useful for vocabularies).
 
-   + POST btr/project/del_string ::
+   + POST api/project/del_string ::
      - sguid ::
          ID of the string to be deleted.
      - project ::
@@ -509,7 +509,7 @@
    Create a custom project (or update an existing one) by importing
    PO/POT file(s).
 
-   + POST btr/project/import ::
+   + POST api/project/import ::
      - origin ::
          The origin of the project that will be imported.
      - project ::

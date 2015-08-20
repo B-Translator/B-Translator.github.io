@@ -1,5 +1,5 @@
-// POST btr/report/statistics
-http_request('/btr/report/statistics', {
+// POST api/report/statistics
+http_request('/api/report/statistics', {
     type: 'POST',
     data: 'lng=sq',
 });

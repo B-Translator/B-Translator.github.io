@@ -10,8 +10,8 @@ var add_string = function () {
         return;
     }
 
-    // POST btr/project/add_string
-    var url = '/btr/project/add_string';
+    // POST api/project/add_string
+    var url = '/api/project/add_string';
     var settings = {
         type: 'POST',
         data: {
@@ -27,10 +27,10 @@ var add_string = function () {
     http_request(url, settings).done(function (result) {
         // Retrive the string.
         var sguid = result.sguid;
-        var url = '/btr/translations/' + sguid + '?lng=sq';
+        var url = '/api/translations/' + sguid + '?lng=sq';
         http_request(url).done(function () {
             // Delete the string that was added above.
-            http_request('/btr/project/del_string', {
+            http_request('/api/project/del_string', {
                 type: 'POST',
                 data: {
 		    sguid: sguid,
