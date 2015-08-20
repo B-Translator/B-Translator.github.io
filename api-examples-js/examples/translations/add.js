@@ -30,7 +30,7 @@ var add_translation = function (sguid, lng, new_translation) {
         // Get the id of the added translation.
         tguid = response.tguid;
 
-        var url = '/public/btr/translations/' + sguid + '?lng=sq';
+        var url = '/btr/translations/' + sguid + '?lng=sq';
         var request = http_request(url);
         
         // Now delete the translation.

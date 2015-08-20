@@ -1,5 +1,5 @@
-// POST public/btr/translations/get
-var url = '/public/btr/translations/get';
+// POST btr/translations/get
+var url = '/btr/translations/get';
 var settings = {
     type: 'POST',
     data: {

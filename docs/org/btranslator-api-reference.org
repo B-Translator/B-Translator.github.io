@@ -14,12 +14,12 @@
    General statistics (number of votes and translations) for the last
    week, month and year.
 
-   + GET public/btr/report/statistics ::
+   + GET btr/report/statistics ::
      - lng :: language of translations
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
 
-   + POST public/btr/report/statistics ::
+   + POST btr/report/statistics ::
      - lng :: language of translations
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
@@ -28,9 +28,9 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
 
    #+begin_example
-   curl 'https://btranslator.org/public/btr/report/statistics?lng=sq&origin=LibreOffice&project=cui'
-   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/statistics?lng=sq'
-   curl -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/statistics -d '{"lng": "sq"}'
+   curl 'https://btranslator.org/btr/report/statistics?lng=sq&origin=LibreOffice&project=cui'
+   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/statistics?lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/statistics -d '{"lng": "sq"}'
    #+end_example
 
 
@@ -40,12 +40,12 @@
    untranslated strings, number of votes and translations, users and
    contributers, etc.)
 
-   + GET public/btr/report/project_stats ::
+   + GET btr/report/project_stats ::
      - origin :: origin of the project 
      - project :: name of the project 	       
      - lng :: language of translations
 
-   + POST public/btr/report/project_stats ::
+   + POST btr/report/project_stats ::
      - origin :: origin of the project 
      - project :: name of the project 	       
      - lng :: language of translations
@@ -53,9 +53,9 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/project_stats.php]]
 
    #+begin_example
-   curl 'https://btranslator.org/public/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
-   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
-   curl -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
+   curl 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
+   curl -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/project_stats -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
    #+end_example
 
 
@@ -63,14 +63,14 @@
 
    Statistics about top contributors.
 
-   + GET public/btr/report/topcontrib ::
+   + GET btr/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 100
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 	       
 
-   + POST public/btr/report/topcontrib ::
+   + POST btr/report/topcontrib ::
      - lng :: language of translations
      - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 100
@@ -80,8 +80,8 @@
    Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
 
    #+begin_example
-   curl -H 'Accept: application/json' 'https://btranslator.org/public/btr/report/topcontrib?lng=sq&period=week'
-   curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/public/btr/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
+   curl -H 'Accept: application/json' 'https://btranslator.org/btr/report/topcontrib?lng=sq&period=week'
+   curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/btr/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
    #+end_example
 
 
@@ -91,7 +91,7 @@
 
    Get the sguid of a random string according to the target.
 
-   + POST public/btr/translations/get_random_sguid ::
+   + POST btr/translations/get_random_sguid ::
      - target :: Can be one of: =random | translated | untranslated=
      - lng :: Code of the language (required for translated and untranslated)
      - scope :: (optional) Restricts the pool of selection to the
@@ -106,13 +106,13 @@
 
    Get a string, along with its translations, votes and other details.
 
-   + GET public/btr/translations/$sguid ::
+   + GET btr/translations/$sguid ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-   + POST public/btr/translations/get ::
+   + POST btr/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
@@ -185,14 +185,14 @@
 
    Search strings and translations using various filters.
 
-   + GET public/btr/translations :: This provides the same
+   + GET btr/translations :: This provides the same
      functionality and has the same parameters as the *search*
      operation.  The only difference is that the parameters are
      provided as a GET request (in the URL), whereas the parameters of
      'search' are provided as a POST request. Sometimes this may be
      more convenient.
 
-   + POST public/btr/translations/search ::
+   + POST btr/translations/search ::
      - lng ::
          The language of translations.
      - limit ::
@@ -241,7 +241,7 @@
     various filters.  If the request header =Accept: application/json=
     is set, then the output will be in JSON (otherwise it will be an
     HTML page). It gets the same parameters as =GET
-    public/btr/translations=
+    btr/translations=
 
     Example:
     #+BEGIN_EXAMPLE
@@ -327,7 +327,7 @@
 
    Get a list of existing projects, filtered by origin/project.
 
-   + POST public/btr/project/list ::
+   + POST btr/project/list ::
      - origin :: Filter by origin.
      - project :: Filter by project.
 
@@ -341,8 +341,8 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k -X POST https://dev.btranslator.org/public/btr/project/list
-     curl -k -X POST https://dev.btranslator.org/public/btr/project/list \
+     curl -k -X POST https://dev.btranslator.org/btr/project/list
+     curl -k -X POST https://dev.btranslator.org/btr/project/list \
           -H "Content-type: application/json" \
           -d '{"origin": "t*"}'
      #+END_EXAMPLE

@@ -27,7 +27,7 @@ var add_string = function () {
     http_request(url, settings).done(function (result) {
         // Retrive the string.
         var sguid = result.sguid;
-        var url = '/public/btr/translations/' + sguid + '?lng=sq';
+        var url = '/btr/translations/' + sguid + '?lng=sq';
         http_request(url).done(function () {
             // Delete the string that was added above.
             http_request('/btr/project/del_string', {

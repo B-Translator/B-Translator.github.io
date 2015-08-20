@@ -1,2 +1,2 @@
-// GET public/btr/translations
-http_request('/public/btr/translations?lng=sq&words=file&page=2');
+// GET btr/translations
+http_request('/btr/translations?lng=sq&words=file&page=2');
