@@ -367,6 +367,17 @@
      #+END_EXAMPLE
 
 
+** langs
+
+   + GET project/langs/$origin/$project ::
+     Get a list of languages for the given origin/project.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -s https://btranslator.org/project/langs/LibreOffice/cui | python -m json.tool
+     #+END_EXAMPLE
+
+
 ** export
 
    + POST api/project/export :: Schedule a project for export. When
