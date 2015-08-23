@@ -279,7 +279,7 @@ var example_data = {
                         {
                             title: 'POST api/project/list',
                             jsfile: 'project/list.js',
-                            apiref: '#sec-3-2',
+                            apiref: '#sec-3-3',
                             jsbin: 'hogatomaqa/1/edit?js,output',
                         },
                     ],
@@ -290,7 +290,7 @@ var example_data = {
                         {
                             title: 'POST api/project/add_string',
                             jsfile: 'project/add_string.js',
-                            apiref: '#sec-3-6',
+                            apiref: '#sec-3-7',
                             jsbin: 'wufuvalinu/1/edit?js',
                         },
                     ],
@@ -301,7 +301,7 @@ var example_data = {
                         {
                             title: 'POST api/project/export',
                             jsfile: 'project/export.js',
-                            apiref: '#sec-3-4',
+                            apiref: '#sec-3-5',
                             jsbin: 'saqiqezeho/1/edit?js,output',
                         },
                     ],
@@ -312,7 +312,7 @@ var example_data = {
                         {
                             title: 'POST api/project/import',
                             jsfile: 'project/import.js',
-                            apiref: '#sec-3-8',
+                            apiref: '#sec-3-9',
                             jsbin: 'bocazoqopu/1/edit?js',
                         },
                     ],

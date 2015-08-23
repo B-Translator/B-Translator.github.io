@@ -30,13 +30,14 @@ layout: org-info
 <li><a href="#sec-3">project</a>
 <ul>
 <li><a href="#sec-3-1">subscribe</a></li>
-<li><a href="#sec-3-2">list</a></li>
-<li><a href="#sec-3-3">langs</a></li>
-<li><a href="#sec-3-4">export</a></li>
-<li><a href="#sec-3-5">diff</a></li>
-<li><a href="#sec-3-6">add_string</a></li>
-<li><a href="#sec-3-7">del_string</a></li>
-<li><a href="#sec-3-8">import</a></li>
+<li><a href="#sec-3-2">list/all</a></li>
+<li><a href="#sec-3-3">list</a></li>
+<li><a href="#sec-3-4">langs</a></li>
+<li><a href="#sec-3-5">export</a></li>
+<li><a href="#sec-3-6">diff</a></li>
+<li><a href="#sec-3-7">add_string</a></li>
+<li><a href="#sec-3-8">del_string</a></li>
+<li><a href="#sec-3-9">import</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">misc</a>
@@ -596,8 +597,26 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/project/subscribe
 
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">list</h3>
+<h3 id="sec-3-2">list/all</h3>
 <div class="outline-text-3" id="text-3-2">
+<dl class="org-dl">
+<dt> GET project/list/all </dt><dd>     Return a full list of all the imported projects and languages.
+
+<p>
+Example:
+</p>
+<pre class="example">
+curl -s https://btranslator.org/project/list/all | python -m json.tool
+</pre>
+</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">list</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 Get a list of existing projects, filtered by origin/project.
 </p>
@@ -659,9 +678,9 @@ curl 'https://btranslator.org/project/list'
 </div>
 
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">langs</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4">langs</h3>
+<div class="outline-text-3" id="text-3-4">
 <dl class="org-dl">
 <dt> GET project/langs/$origin/$project </dt><dd>     Get a list of languages for the given origin/project.
 
@@ -677,9 +696,9 @@ curl -s https://btranslator.org/project/langs/LibreOffice/cui | python -m json.t
 </div>
 
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4">export</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5">export</h3>
+<div class="outline-text-3" id="text-3-5">
 <dl class="org-dl">
 <dt> POST api/project/export </dt><dd>Schedule a project for export. When
 the request is completed, the user will be notified by
@@ -771,9 +790,9 @@ curl -k https://dev.btranslator.org/project/export \
 </div>
 </div>
 
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5">diff</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6">diff</h3>
+<div class="outline-text-3" id="text-3-6">
 <dl class="org-dl">
 <dt> GET project/diff/$origin/$project/$lng[/$nr[/$ediff]] </dt><dd>     Return as plain-text the diff of the PO file for a given
 origin/project/lng, which contains the latest most-voted
@@ -800,9 +819,9 @@ curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff &gt; 4.ediff
 </div>
 
 
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6">add_string</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7">add_string</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 Add a new string to a project (useful for vocabularies).
 </p>
@@ -853,9 +872,9 @@ across different programs.
 </div>
 
 
-<div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7">del_string</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8">del_string</h3>
+<div class="outline-text-3" id="text-3-8">
 <p>
 Delete a string from a project (useful for vocabularies).
 </p>
@@ -880,9 +899,9 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/project/add_strin
 </div>
 
 
-<div id="outline-container-sec-3-8" class="outline-3">
-<h3 id="sec-3-8">import</h3>
-<div class="outline-text-3" id="text-3-8">
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9">import</h3>
+<div class="outline-text-3" id="text-3-9">
 <p>
 Create a custom project (or update an existing one) by importing
 PO/POT file(s).
@@ -1241,7 +1260,7 @@ $.ajax(base_url + '/oauth2/user/profile', {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-08-22 Sat 07:10</p>
+<p class="date">Created: 2015-08-23 Sun 09:16</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

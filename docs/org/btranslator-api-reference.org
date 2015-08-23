@@ -323,6 +323,16 @@
    Example: [[https://dev.btranslator.org/api-examples/php/project/subscribe.php]]
 
 
+** list/all
+   + GET project/list/all ::
+     Return a full list of all the imported projects and languages.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -s https://btranslator.org/project/list/all | python -m json.tool
+     #+END_EXAMPLE
+
+
 ** list
 
    Get a list of existing projects, filtered by origin/project.
