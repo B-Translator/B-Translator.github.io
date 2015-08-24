@@ -633,9 +633,9 @@
      https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
 
 
-** vocabulary
+** vocabulary/export
 
-   + GET translations/vocabulary/export/$vocabulary[/$format] ::
+   + GET vocabulary/export/$vocabulary[/$format] ::
      Return the list of terms in a vocabulary and all the suggested
      translations.
      - $vocabulary ::
@@ -647,9 +647,9 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/vocabulary/export/ICT_sq
-     curl https://btranslator.org/translations/vocabulary/export/ICT_sq/txt1
-     curl https://btranslator.org/translations/vocabulary/export/ICT_sq/org > ICT_sq.org
+     curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
+     curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
+     curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
      #+END_EXAMPLE
 
 
