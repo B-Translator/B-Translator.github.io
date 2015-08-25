@@ -710,7 +710,7 @@
      #+END_EXAMPLE
 
 
-   + GET translations/string_details/$sguid :: Return string context, a
+   + GET ajax/string_details/$sguid :: Return string context, a
      list of related projects (where the string appears), etc.  This
      callback is invoked from JavaScript and is used as an AJAX
      provider.
@@ -718,7 +718,7 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
+     curl https://btranslator.org/ajax/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
      #+END_EXAMPLE
 
 * oauth2
