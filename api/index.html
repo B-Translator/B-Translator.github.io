@@ -45,7 +45,7 @@ layout: org-info
 <li><a href="#sec-4-1">latest</a></li>
 <li><a href="#sec-4-2">rss-feed</a></li>
 <li><a href="#sec-4-3">twitter</a></li>
-<li><a href="#sec-4-4">vocabulary</a></li>
+<li><a href="#sec-4-4">vocabulary/export</a></li>
 <li><a href="#sec-4-5">autocomplete</a></li>
 <li><a href="#sec-4-6">other</a></li>
 </ul>
@@ -790,6 +790,7 @@ curl -k https://dev.btranslator.org/project/export \
 </div>
 </div>
 
+
 <div id="outline-container-sec-3-6" class="outline-3">
 <h3 id="sec-3-6">diff</h3>
 <div class="outline-text-3" id="text-3-6">
@@ -903,9 +904,10 @@ Example: <a href="https://dev.btranslator.org/api-examples/php/project/add_strin
 <h3 id="sec-3-9">import</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
-Create a custom project (or update an existing one) by importing
-PO/POT file(s).
+Create a project or update an existing one by importing the POT and
+PO files of the project.
 </p>
+
 
 <dl class="org-dl">
 <dt> POST api/project/import </dt><dd><dl class="org-dl">
@@ -913,10 +915,12 @@ PO/POT file(s).
 </dd>
 <dt> project </dt><dd>         The name of the project that will be imported.
 </dd>
-<dt> file </dt><dd>         A PO file, or an archive of PO/POT files (accepted
-extensions: .tar, .gz, .tgz, .bz2, .xz, .7z, .zip).
+<dt> file </dt><dd>         Archive of POT/PO files (tgz, bz2, 7z, zip).
 </dd>
 </dl>
+</dd>
+</dl>
+
 <p>
 Returns associative array containing:
 </p>
@@ -926,30 +930,28 @@ is an array of a message and a type, where type can be one of
 'status', 'warning', 'error'.
 </dd>
 </dl>
-</dd>
-</dl>
+
+<p>
+The structure of the uploaded archive file:
+</p>
+<ul class="org-ul">
+<li>Acceptable archive types: tgz, bz2, 7z, zip
+</li>
+<li>The POT files should be placed in the subfolder <code>pot/</code>, directly
+in the root folder of the archive.
+</li>
+<li>The PO files of a language should be placed in the subfolder
+named after the code of that language (for example: <code>sq/</code>, <code>de/</code>,
+<code>fr/</code>, etc.)
+</li>
+<li>The path and name of each PO file should be the same as the
+corresponding POT file, except for the extension (<code>.po</code> instead
+of <code>.pot</code>).
+</li>
+</ul>
 
 <p>
 Example: <a href="https://dev.btranslator.org/api-examples/php/project/import.php">https://dev.btranslator.org/api-examples/php/project/import.php</a>
-</p>
-
-<p>
-This is useful for creating custom translation projects. The PO/POT
-files that are uploaded will be used for importing strings and
-translations. If there are no POT files, then the PO files will be
-used both for importing strings and for importing translations. If
-there are POT files and PO files, their names have to match (except
-for the extension).
-</p>
-
-<p>
-If you want to create a vocabulary, use <code>vocabulary</code> as the origin
-of the project, and add the suffix <code>_lng</code> to the project name.  Use
-=msgctxt "project_name"= as the context of each string in the PO/POT
-file.  Also the uploaded PO file must have the same name as the
-project, for example <code>ICT_sq.po</code>. These restrictions are needed
-because vocabularies are pseudo-projects (for example you can add
-strings to them) and certain assumptions are made about them.
 </p>
 </div>
 </div>
@@ -1260,7 +1262,7 @@ $.ajax(base_url + '/oauth2/user/profile', {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-08-23 Sun 09:16</p>
+<p class="date">Created: 2015-09-16 Wed 07:18</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
