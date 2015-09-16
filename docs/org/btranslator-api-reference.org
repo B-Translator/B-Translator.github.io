@@ -707,15 +707,14 @@
      #+END_EXAMPLE
 
 
-   + GET ajax/string_details/$sguid :: Return string context, a
-     list of related projects (where the string appears), etc.  This
-     callback is invoked from JavaScript and is used as an AJAX
+   + GET string_details/$sguid :: Return string context, a
+     list of related projects (where the string appears), etc.
      provider.
      - sguid :: Id of the string.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/ajax/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
+     curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
      #+END_EXAMPLE
 
 * oauth2

@@ -1183,9 +1183,8 @@ curl https://btranslator.org/languages
 
 
 <dl class="org-dl">
-<dt> GET ajax/string_details/$sguid </dt><dd>Return string context, a
-list of related projects (where the string appears), etc.  This
-callback is invoked from JavaScript and is used as an AJAX
+<dt> GET string_details/$sguid </dt><dd>Return string context, a
+list of related projects (where the string appears), etc.
 provider.
 <dl class="org-dl">
 <dt> sguid </dt><dd>Id of the string.
@@ -1195,7 +1194,7 @@ provider.
 Example:
 </p>
 <pre class="example">
-curl https://btranslator.org/ajax/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
+curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
 </pre>
 </dd>
 </dl>
@@ -1262,7 +1261,7 @@ $.ajax(base_url + '/oauth2/user/profile', {
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-09-16 Wed 07:18</p>
+<p class="date">Created: 2015-09-16 Wed 08:25</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
