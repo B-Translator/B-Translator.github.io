@@ -1,133 +1,56 @@
 
 body {
-  padding: 5px 20px 20px 15px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #232323;
-  background-color: #FBFAF7;
-  margin: 0;
-  line-height: 1.3em;
-  -webkit-font-smoothing: antialiased;
+  margin-top: 65px;
 }
 
-h1 {
-  display: block;
-  border: 1px dotted #bbbbff;
-  border-radius: 3px;
-  margin: 10px 0 0 0;
-  padding: 15px;
-  font-size: 30px;
-  color: #ff4444;
-  text-align: center;
-  background-color: #bbffff;
-}
-
-h2, h3 {
-  color: #cc3333;
-  margin: 15px 0 10px;
-  font-family: Monaco, serif;
-  font-weight: normal;
-  display: block;
-}
-
-h2 {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #ddffff;
-  padding: 5px;
-  border: 1px dotted #bbbbff;
-  border-radius: 3px;
-}
-
-h3 {
-  font-size: 16px;
-  border: none;
-  margin: 5px 0 0 15px;
-  padding-bottom: 0;
-}
-
-hr {
-  border:0;
-  background:#ccc;
-  height:1px;
-  margin:0 0 20px;
-}
-
-p, ul, ol {
-  margin: 0px;
-}
-
-li {
-  margin: 0 0 0 5px;
-}
-
-a {
-  color: #2323cc;
-  font-weight: 200;
+a, a:hover, a:visited, a:link, a:active {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+#examples .panel-title {
+  color: #cc3333;
+  font-weight: bold;
 }
 
-#examples {
-  float: left;
-  width: 330px;
+.panel-heading {
+  padding: 0px;
+}
+.panel-heading div {
+  padding: 10px;
 }
 
-#div-output {
-  float: left;
-  margin: -1px 10px 5px 15px;
-  width: 60%;
+.section {
+  color: #cc3333;
+  font-size: 16px;
 }
-
 .example {
   color: #228822;
   cursor: pointer;
 }
 
-#jscode-title .btn {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-  background-image: -o-linear-gradient(top, #3498db, #2980b9);
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  border: none;
-  -webkit-border-radius: 3;
-  -moz-border-radius: 3;
-  border-radius: 3px;
-  color: #ffffff;
-  float: right;
-  margin: 0px 0px 5px 5px;
-  padding: 3px 5px 3px 5px;
-  text-decoration: none;
+#try .panel-title {
+  color: #228822;
+  font-weight: bold;
 }
-#jscode-title .btn:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
+#try .panel-body {
+  padding: 0px;
+}
+#try .panel-body pre {
+  border: none;
+  margin: 0px;
 }
 
-#code {
-  padding: 5px;
-  border: 1pt solid #AEBDCC;
-  border-radius: 3px;
+#code, #output {
+  padding: 15px;
   font-family: Ubuntu Mono, monospace, courier;
   font-size: 16px;
 }
 
 #output {
-  padding: 15px;
-  border: 1pt solid #AEBDCC;
-  border-radius: 3px;
   background-color: #000000;
   color: #eeeeee;
-  font-family: Ubuntu Mono, monospace, courier;
-  font-size: 16px;
+}
+
+#jscode-title .btn-info {
+  margin-left: 5px;
 }

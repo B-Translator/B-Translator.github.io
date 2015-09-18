@@ -4,10 +4,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>B-Translator API Examples</title>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- <script src="lib/jquery/jquery.min.js"></script> -->
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <!-- <script src="lib/jquery/jquery-ui.js"></script> -->
+
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
+    <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    -->
 
     <!-- rainbow code highlighting -->
     <script src="lib/highlight/rainbow-custom.min.js"></script>
@@ -25,42 +34,85 @@
   </head>
 
   <body>
-    <h1>B-Translator API Examples</h1>
 
-    <div id="examples">
-      <!-- here comes the code from template #tmpl-examples -->
-    </div>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">B-Translator API Examples</a>
+        </div>
+      </div>
+    </nav>
 
-    <div id="div-output">
-      <h2 id="jscode-title">Example Code</h2>
-      <pre id="jscode">code</pre>
-      <h2>Debug Output</h2>
-      <pre id="output">output</pre>
-    </div>
+    <div class="container">
+
+      <div class="row">
+        <div id="examples" class="col-sm-4 panel-group">
+          <!-- here comes the code from template #tmpl-examples -->
+        </div>
+
+        <div id="try" class="col-sm-8">
+          <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <div id="jscode-title" class="panel-title">Example Code</div>
+            </div>
+            <div class="panel-body">
+              <pre id="jscode">code</pre>
+            </div>
+          </div><!-- panel -->
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">Debug Output</div>
+            </div>
+            <div class="panel-body">
+              <pre id="output">output</pre>
+            </div>
+          </div><!-- panel -->
+        </div>
+      </div> <!-- row -->
+    </div>  <!-- container -->
 
     <!-- mustache template for examples -->
     <script id="tmpl-examples" type="x-tmpl-mustache">
       {{#groups}}
-      <h2>{{group}}</h2>
-      <div>
-	{{#sections}}
-        <h3>{{section}}</h3>
-        <div>
-          <ul>
-	    {{#examples}}
-            <li><span class="example" 
-		      jsfile="{{jsfile}}"
-		      apiref="{{apiref}}"
-		      jsbin="{{jsbin}}">
-		{{title}}
-	    </span></li>
-	    {{/examples}}
-          </ul>
-        </div>
-	{{/sections}}
-      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#examples" href="#{{group}}" class="panel-title">
+	    <div>{{group}}</div>
+	  </a>
+        </div><!-- panel-heading -->
+
+        <div id="{{group}}" class="panel-collapse collapse">
+          <div class="panel-body">
+            {{#sections}}
+            <div class="section">{{section}}</div>
+            <div>
+              <ul>
+                {{#examples}}
+                <li><span class="example" 
+                          jsfile="{{jsfile}}"
+                          apiref="{{apiref}}"
+                          jsbin="{{jsbin}}">
+                    {{title}}
+                </span></li>
+                {{/examples}}
+              </ul>
+            </div>
+            {{/sections}}
+          </div><!-- panel-body -->
+        </div><!-- panel-collapse -->
+
+      </div><!-- panel -->
       {{/groups}}
     </script>
+    <!-- end mustache template for examples -->
 
   </body>
 </html>

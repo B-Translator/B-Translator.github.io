@@ -11,12 +11,6 @@ $(document).ready(function() {
     $('#examples')
         .html(Mustache.render(tmpl, example_data));
 
-    // Activate jQuery accordion on #examples.
-    $('#examples').accordion({
-        active: 3,
-        heightStyle: 'content',
-    });
-
     // Load an example when it is clicked.
     $('.example').click(function(){
         // Initialize HTML elements.
@@ -35,13 +29,13 @@ $(document).ready(function() {
         // Add button 'Try on JSBin'.
 	var jsbin = $(this).attr('jsbin');
         if (jsbin) {
-            $('#jscode-title').append('<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn">Try on JSBin</button></a>');
+            $('#jscode-title').append('<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn btn-info btn-xs pull-right">Try on JSBin</button></a>');
         }
 
         // Add button 'API Reference'.
 	var apiref = $(this).attr('apiref');
         if (apiref) {
-            $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn">API Reference</button></a>');
+            $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API Reference</button></a>');
         }
 
         // Fetch the JS file then highlight and display the code.
