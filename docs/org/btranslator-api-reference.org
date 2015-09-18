@@ -560,6 +560,24 @@
    Example: [[https://dev.btranslator.org/api-examples/php/project/import.php]]
 
 
+** delete
+
+   Delete a project.
+
+   + POST api/project/import ::
+     - origin ::
+         The origin of the project that will be deleted.
+     - project ::
+         The name of the project that will be deleted.
+
+   Returns associative array containing:
+     - message ::
+	 Notification message, which is an array of a message and a
+         type, where type can be one of 'status', 'warning', 'error'.
+
+   Example: [[https://dev.btranslator.org/api-examples/php/project/delete.php]]
+
+
 * misc
 
 ** latest
@@ -716,6 +734,7 @@
      #+BEGIN_EXAMPLE
      curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
      #+END_EXAMPLE
+
 
 * oauth2
 
