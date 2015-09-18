@@ -282,7 +282,7 @@
      - messages ::
          Array of notification messages; each notification message
          is an array of a message and a type, where type can be one of
-         'status', 'warning', 'error'.
+         =status=, =warning=, =error=.
 
    Example: [[https://dev.btranslator.org/api-examples/php/translations/import.php]]
 
@@ -544,7 +544,7 @@
      - messages ::
          Array of notification messages; each notification message
          is an array of a message and a type, where type can be one of
-         'status', 'warning', 'error'.
+         =status=, =warning=, =error=.
 
    The structure of the uploaded archive file:
    - Acceptable archive types: tgz, bz2, 7z, zip
@@ -573,7 +573,7 @@
    Returns associative array containing:
      - message ::
 	 Notification message, which is an array of a message and a
-         type, where type can be one of 'status', 'warning', 'error'.
+         type, where type can be one of =status=, =warning=, =error=.
 
    Example: [[https://dev.btranslator.org/api-examples/php/project/delete.php]]
 
