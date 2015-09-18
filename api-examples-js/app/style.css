@@ -5,10 +5,10 @@ body {
 
 a, a:hover, a:visited, a:link, a:active {
   text-decoration: none;
+  color: #ffffff;
 }
 
-#examples .panel-title {
-  color: #cc3333;
+.navbar-brand, .panel-title {
   font-weight: bold;
 }
 
@@ -23,15 +23,12 @@ a, a:hover, a:visited, a:link, a:active {
   color: #cc3333;
   font-size: 16px;
 }
+
 .example {
   color: #228822;
   cursor: pointer;
 }
 
-#try .panel-title {
-  color: #228822;
-  font-weight: bold;
-}
 #try .panel-body {
   padding: 0px;
 }

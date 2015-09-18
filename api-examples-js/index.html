@@ -10,10 +10,12 @@
 
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/simplex/bootstrap.min.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!--
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/simplex/bootstrap.min.css">
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
     <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     -->
@@ -58,7 +60,7 @@
         </div>
 
         <div id="try" class="col-sm-8">
-          <div class="panel panel-default">
+          <div class="panel panel-success">
             <div class="panel-heading clearfix">
               <div id="jscode-title" class="panel-title">Example Code</div>
             </div>
@@ -67,7 +69,7 @@
             </div>
           </div><!-- panel -->
 
-          <div class="panel panel-default">
+          <div class="panel panel-success">
             <div class="panel-heading">
               <div class="panel-title">Debug Output</div>
             </div>
@@ -82,7 +84,7 @@
     <!-- mustache template for examples -->
     <script id="tmpl-examples" type="x-tmpl-mustache">
       {{#groups}}
-      <div class="panel panel-default">
+      <div class="panel panel-info">
         <div class="panel-heading">
           <a data-toggle="collapse" data-parent="#examples" href="#{{group}}" class="panel-title">
 	    <div>{{group}}</div>
