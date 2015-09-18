@@ -25,7 +25,7 @@
      - project :: (optional) name of the project 	       
 
 
-   Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/report/statistics.php]]
 
    #+begin_example
    curl 'https://btranslator.org/api/report/statistics?lng=sq&origin=LibreOffice&project=cui'
@@ -50,7 +50,7 @@
      - project :: name of the project 	       
      - lng :: language of translations
 
-   Example: [[https://dev.btranslator.org/api-examples/php/report/project_stats.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/report/project_stats.php]]
 
    #+begin_example
    curl 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
@@ -77,13 +77,13 @@
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 
 
-   Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/report/topcontrib.php]]
 
    #+begin_example
    curl -H 'Accept: application/json' 'https://btranslator.org/api/report/topcontrib?lng=sq&period=week'
    curl -H 'Accept: application/json' -H 'Content-type: application/json' -X POST https://btranslator.org/api/report/topcontrib -d '{"lng": "sq", "period": "week", "size": 10}' -H 'Accept: application/json'
    #+end_example
-
+   
 
 * translations
 
@@ -99,7 +99,7 @@
          origin/project like this: =origin1/project1 origin2
          origin1/project2=
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/sguid.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/sguid.php]]
 
 
 ** get
@@ -118,7 +118,7 @@
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-     Example: [[https://dev.btranslator.org/api-examples/php/translations/get.php]]
+     Example: [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
 
    + GET translations/$lng/$sguid :: Returns the details of a string
      and its translations.  If the request header =Accept:
@@ -129,8 +129,8 @@
      Example:
      #+BEGIN_EXAMPLE
      curl -k -H 'Accept: application/json' \
-       'https://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-     curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/random
+       'http://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+     curl -k -H 'Accept: application/json' http://dev.btranslator.org/translations/sq/random
      #+END_EXAMPLE
 
 
@@ -148,7 +148,7 @@
          version(s) as well, they are concatenated with NULL bytes ("\0")
          between them.
 
-     Example: [[https://dev.btranslator.org/api-examples/php/translations/add.php]]
+     Example: [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
 
 
 ** vote
@@ -158,7 +158,7 @@
    + POST api/translations/vote ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
 
 
 ** del
@@ -168,7 +168,7 @@
    + POST api/translations/del ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/add.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
 
 
 ** del_vote
@@ -178,7 +178,7 @@
    + POST api/translations/del_vote ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
 
 
 ** search
@@ -235,7 +235,7 @@
          Used when listing the strings of a project.
          Can be one of: /all/, /translated/, /untranslated/
 
-     Example: [[https://dev.btranslator.org/api-examples/php/translations/search.php]]
+     Example: [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
 
   + GET translations/search :: Search strings and translations using
     various filters.  If the request header =Accept: application/json=
@@ -246,7 +246,7 @@
     Example:
     #+BEGIN_EXAMPLE
     curl -k -H 'Accept: application/json' \
-         'https://dev.btranslator.org/translations/search?lng=sq&words=space'
+         'http://dev.btranslator.org/translations/search?lng=sq&words=space'
     curl -k -H 'Accept: application/json' \
          'https://l10n.org.al/translations/search?lng=sq&words=space'
     #+END_EXAMPLE
@@ -264,7 +264,7 @@
          - params ::
              Associative array of the needed parameters for this action.
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/submit.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/submit.php]]
 
 
 ** import
@@ -284,7 +284,7 @@
          is an array of a message and a type, where type can be one of
          =status=, =warning=, =error=.
 
-   Example: [[https://dev.btranslator.org/api-examples/php/translations/import.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
 
    This is like a bulk translation and voting service. For any
    translation in the PO files, it will be added as a suggestion if
@@ -320,7 +320,7 @@
 
    + POST api/project/subscriptions ::
 
-   Example: [[https://dev.btranslator.org/api-examples/php/project/subscribe.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/project/subscribe.php]]
 
 
 ** list/all
@@ -347,12 +347,12 @@
      If *project* is =-= then only a list of 'origin' is outputed,
      otherwise a list of 'origin/project'.
 
-     Example: [[https://dev.btranslator.org/api-examples/php/project/list.php]]
+     Example: [[http://dev.btranslator.org/api-examples-php/project/list.php]]
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k -X POST https://dev.btranslator.org/api/project/list
-     curl -k -X POST https://dev.btranslator.org/api/project/list \
+     curl -k -X POST http://dev.btranslator.org/api/project/list
+     curl -k -X POST http://dev.btranslator.org/api/project/list \
           -H "Content-type: application/json" \
           -d '{"origin": "t*"}'
      #+END_EXAMPLE
@@ -414,7 +414,7 @@
          Comma separated list of usernames. Used only when /export_mode/
          is =preferred=.
 
-     Example: [[https://dev.btranslator.org/api-examples/php/project/export.php]]
+     Example: [[http://dev.btranslator.org/api-examples-php/project/export.php]]
 
 
    + GET/POST project/export :: Return an archive of PO
@@ -447,10 +447,10 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
-     curl -k https://dev.btranslator.org/project/export \
+     curl -k 'http://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+     curl -k http://dev.btranslator.org/project/export \
           -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-     curl -k https://dev.btranslator.org/project/export \
+     curl -k http://dev.btranslator.org/project/export \
           -d origin=test -d project=kturtle -d lng=sq \
           -d export_mode=preferred \
           -d preferred_voters=user1,user2 > test1.tgz
@@ -500,7 +500,7 @@
          The sguid of the new string, or NULL if such a string
          already exists.
 
-   Example: [[https://dev.btranslator.org/api-examples/php/project/add_string.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
 
    Vocabularies are fake translation projects, in the sense that they
    are not strings extracted from a program. Their strings are added
@@ -523,7 +523,7 @@
      - origin :: (optional)
          The origin of the project (default: 'vocabulary').
 
-   Example: [[https://dev.btranslator.org/api-examples/php/project/add_string.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
 
 
 ** import
@@ -557,7 +557,7 @@
      corresponding POT file, except for the extension (=.po= instead
      of =.pot=).
 
-   Example: [[https://dev.btranslator.org/api-examples/php/project/import.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/project/import.php]]
 
 
 ** delete
@@ -575,7 +575,7 @@
 	 Notification message, which is an array of a message and a
          type, where type can be one of =status=, =warning=, =error=.
 
-   Example: [[https://dev.btranslator.org/api-examples/php/project/delete.php]]
+   Example: [[http://dev.btranslator.org/api-examples-php/project/delete.php]]
 
 
 * misc
