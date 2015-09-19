@@ -12,8 +12,14 @@ $(document).ready(function() {
     // If an example is given in the url as hash, load it automatically.
     var example_file = window.location.hash.slice(1);
     if (example_file) {
-	$('[jsfile="' + example_file + '"]').click();
+        $('[jsfile="' + example_file + '"]').click();
     }
+
+    // Scroll to the top when the "up" button is clicked.
+    $("a[href='#top']").click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        return false;
+    });
 });
 
 // Write a debug message on the output area.
@@ -35,23 +41,18 @@ var load_example = function(){
     }
     jsfile = 'examples/' + jsfile;
 
-    // Scroll to the section that display and runs the examples.
-    setTimeout(function () {
-	$('html, body').animate({
-            scrollTop: $("#try").offset().top - 50
-	}, 1000);
-    }, 1000);
-
     // Add button 'Try on JSBin'.
     var jsbin = $(this).attr('jsbin');
     if (jsbin) {
-        $('#jscode-title').append('<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn btn-info btn-xs pull-right">Try on JSBin</button></a>');
+        var button_try = '<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn btn-info btn-xs pull-right">JSBin</button></a>';
+        $('#jscode-title').append(button_try);
     }
 
     // Add button 'API Reference'.
     var apiref = $(this).attr('apiref');
     if (apiref) {
-        $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API Reference</button></a>');
+        var button_api = '<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API</button></a>';
+        $('#jscode-title').append(button_api);
     }
 
     // Fetch the JS file then highlight and display the code.
@@ -69,5 +70,12 @@ var load_example = function(){
             .done(function (file_content) {
                 $.globalEval(file_content);
             });
-    }, 1000)
+
+        // Scroll to the section that display and runs the examples.
+        setTimeout(function() {
+            $('html, body').animate({
+                scrollTop: $('#try').offset().top - 50
+            }, 500);
+        }, 500);
+    }, 500)
 };

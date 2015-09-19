@@ -72,14 +72,28 @@
           </div><!-- panel -->
 
           <!-- Panel: Debug Output -->
-          <div class="panel panel-success">
+          <div class="panel panel-success clearfix">
             <div class="panel-heading">
-              <div class="panel-title">Debug Output</div>
+              <div class="panel-title">Debug Output
+                <a href="#top">
+                  <button type="button" class="btn btn-info btn-xs pull-right">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                  </button>
+                </a>
+              </div>
             </div>
             <div class="panel-body">
               <pre id="output">output</pre>
             </div>
           </div><!-- panel -->
+
+          <!-- Scroll up to the top -->
+          <a href="#top">
+            <button type="button" class="btn btn-info btn-block" style="margin-bottom: 50px;">
+              <span class="glyphicon glyphicon-arrow-up"> Go to the Top </span>
+            </button>
+          </a>
+
         </div>
       </div> <!-- row -->
     </div>  <!-- container -->
@@ -92,8 +106,8 @@
         <!-- panel-heading -->
         <div class="panel-heading">
           <a data-toggle="collapse" data-parent="#examples" href="#{{group}}" class="panel-title">
-	    <div>{{group}}</div>
-	  </a>
+            <div>{{group}}</div>
+          </a>
         </div><!-- panel-heading -->
 
         <!-- panel-collapse -->
