@@ -317,6 +317,17 @@ var example_data = {
                         },
                     ],
                 },
+                {
+                    section: 'delete',
+                    examples: [
+                        {
+                            title: 'POST api/project/delete',
+                            jsfile: 'project/delete.js',
+                            apiref: '#sec-3-10',
+                            jsbin: null,
+                        },
+                    ],
+                },
             ],
         },
     ],
