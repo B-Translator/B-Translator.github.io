@@ -35,6 +35,13 @@ var load_example = function(){
     }
     jsfile = 'examples/' + jsfile;
 
+    // Scroll to the section that display and runs the examples.
+    setTimeout(function () {
+	$('html, body').animate({
+            scrollTop: $("#try").offset().top - 50
+	}, 1000);
+    }, 1000);
+
     // Add button 'Try on JSBin'.
     var jsbin = $(this).attr('jsbin');
     if (jsbin) {
@@ -63,9 +70,4 @@ var load_example = function(){
                 $.globalEval(file_content);
             });
     }, 1000)
-
-    // Scroll to the section that tries examples.
-    $('html, body').animate({
-        scrollTop: $("#try").offset().top
-    }, 1000);
 };
