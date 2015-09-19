@@ -24,16 +24,16 @@ $(document).ready(function() {
             alert("Example '" + jsfile + "' not found!");
             return;
         }
-	jsfile = 'examples/' + jsfile;
+        jsfile = 'examples/' + jsfile;
 
         // Add button 'Try on JSBin'.
-	var jsbin = $(this).attr('jsbin');
+        var jsbin = $(this).attr('jsbin');
         if (jsbin) {
             $('#jscode-title').append('<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn btn-info btn-xs pull-right">Try on JSBin</button></a>');
         }
 
         // Add button 'API Reference'.
-	var apiref = $(this).attr('apiref');
+        var apiref = $(this).attr('apiref');
         if (apiref) {
             $('#jscode-title').append('<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API Reference</button></a>');
         }
@@ -54,5 +54,10 @@ $(document).ready(function() {
                     $.globalEval(file_content);
                 });
         }, 1000)
+
+        // Scroll to the section that tries the example.
+        $('html, body').animate({
+            scrollTop: $("#try").offset().top
+        }, 1000);
     });
 });
