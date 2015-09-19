@@ -8,6 +8,12 @@ $(document).ready(function() {
 
     // Load an example when it is clicked.
     $('.example').click(load_example);
+
+    // If an example is given in the url as hash, load it automatically.
+    var example_file = window.location.hash.slice(1);
+    if (example_file) {
+	$('[jsfile="' + example_file + '"]').click();
+    }
 });
 
 // Write a debug message on the output area.
