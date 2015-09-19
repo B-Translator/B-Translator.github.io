@@ -53,13 +53,15 @@
     </nav>
 
     <div class="container">
-
       <div class="row">
+        <!-- List of examples -->
         <div id="examples" class="col-sm-4 panel-group">
           <!-- here comes the code from template #tmpl-examples -->
         </div>
 
+        <!-- Trying an example -->
         <div id="try" class="col-sm-8">
+          <!-- Panel: Example Code -->
           <div class="panel panel-success">
             <div class="panel-heading clearfix">
               <div id="jscode-title" class="panel-title">Example Code</div>
@@ -69,6 +71,7 @@
             </div>
           </div><!-- panel -->
 
+          <!-- Panel: Debug Output -->
           <div class="panel panel-success">
             <div class="panel-heading">
               <div class="panel-title">Debug Output</div>
@@ -84,13 +87,16 @@
     <!-- mustache template for examples -->
     <script id="tmpl-examples" type="x-tmpl-mustache">
       {{#groups}}
+      <!-- panel -->
       <div class="panel panel-info">
+        <!-- panel-heading -->
         <div class="panel-heading">
           <a data-toggle="collapse" data-parent="#examples" href="#{{group}}" class="panel-title">
 	    <div>{{group}}</div>
 	  </a>
         </div><!-- panel-heading -->
 
+        <!-- panel-collapse -->
         <div id="{{group}}" class="panel-collapse collapse">
           <div class="panel-body">
             {{#sections}}
