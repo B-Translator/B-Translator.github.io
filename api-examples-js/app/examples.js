@@ -30,7 +30,6 @@ var debug = function(msg) {
 var load_example = function(){
     // Initialize HTML elements.
     $('#jscode-title').text($(this).text());
-    $('#jscode').html('');
     $('#output').html('');
 
     // Get the example details.
@@ -58,10 +57,7 @@ var load_example = function(){
     // Fetch the JS file then highlight and display the code.
     $.ajax(jsfile, {dataType: 'text'})
         .done(function (file_content) {
-            Rainbow.color(file_content, 'javascript',
-                          function(highlighted_code) {
-                              $('#jscode').html(highlighted_code);
-                          });
+	    editor.getSession().setValue(file_content);
         });
 
     // Wait 1sec, then fetch the JS file again and execute it.

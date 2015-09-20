@@ -37,10 +37,13 @@ a, a:hover, a:visited, a:link, a:active {
   margin: 0px;
 }
 
-#code, #output {
+#jscode, #output {
   padding: 15px;
   font-family: Ubuntu Mono, monospace, courier;
   font-size: 16px;
+}
+#jscode {
+  line-height: 1.2em;
 }
 
 #output {
