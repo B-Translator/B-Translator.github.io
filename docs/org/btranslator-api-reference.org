@@ -25,7 +25,10 @@
      - project :: (optional) name of the project 	       
 
 
-   Example: [[http://dev.btranslator.org/api-examples-php/report/statistics.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/report/statistics.php]]
+   - [[http://info.btranslator.org/api-examples-js/#report/statistics_get.js]]
+   - [[http://info.btranslator.org/api-examples-js/#report/statistics_post.js]]
 
    #+begin_example
    curl 'https://btranslator.org/api/report/statistics?lng=sq&origin=LibreOffice&project=cui'
@@ -50,7 +53,10 @@
      - project :: name of the project 	       
      - lng :: language of translations
 
-   Example: [[http://dev.btranslator.org/api-examples-php/report/project_stats.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/report/project_stats.php]]
+   - [[http://info.btranslator.org/api-examples-js/#report/project_stats_get.js]]
+   - [[http://info.btranslator.org/api-examples-js/#report/project_stats_post.js]]
 
    #+begin_example
    curl 'https://btranslator.org/api/report/project_stats?origin=LibreOffice&project=cui&lng=sq'
@@ -77,7 +83,10 @@
      - origin :: (optional) origin of the project 
      - project :: (optional) name of the project 
 
-   Example: [[http://dev.btranslator.org/api-examples-php/report/topcontrib.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/report/topcontrib.php]]
+   - [[http://info.btranslator.org/api-examples-js/#report/topcontrib_get.js]]
+   - [[http://info.btranslator.org/api-examples-js/#report/topcontrib_post.js]]
 
    #+begin_example
    curl -H 'Accept: application/json' 'https://btranslator.org/api/report/topcontrib?lng=sq&period=week'
@@ -99,7 +108,9 @@
          origin/project like this: =origin1/project1 origin2
          origin1/project2=
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/sguid.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/sguid.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/get_random_sguid.js]]
 
 
 ** get
@@ -112,13 +123,18 @@
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
+     Examples:
+     - [[http://info.btranslator.org/api-examples-js/#translations/retrieve.js]]
+
    + POST api/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-     Example: [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
+     Examples:
+     - [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
+     - [[http://info.btranslator.org/api-examples-js/#translations/get.js]]
 
    + GET translations/$lng/$sguid :: Returns the details of a string
      and its translations.  If the request header =Accept:
@@ -148,7 +164,9 @@
          version(s) as well, they are concatenated with NULL bytes ("\0")
          between them.
 
-     Example: [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+     Examples:
+     - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+     - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
 
 
 ** vote
@@ -158,7 +176,9 @@
    + POST api/translations/vote ::
      - tguid :: ID of the translation
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/vote.js]]
 
 
 ** del
@@ -168,7 +188,9 @@
    + POST api/translations/del ::
      - tguid :: ID of the translation
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
 
 
 ** del_vote
@@ -178,7 +200,9 @@
    + POST api/translations/del_vote ::
      - tguid :: ID of the translation
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/vote.js]]
 
 
 ** search
@@ -235,7 +259,10 @@
          Used when listing the strings of a project.
          Can be one of: /all/, /translated/, /untranslated/
 
-     Example: [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
+     Examples:
+     - [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
+     - [[http://info.btranslator.org/api-examples-js/#translations/list.js]]
+     - [[http://info.btranslator.org/api-examples-js/#translations/search.js]]
 
   + GET translations/search :: Search strings and translations using
     various filters.  If the request header =Accept: application/json=
@@ -264,7 +291,9 @@
          - params ::
              Associative array of the needed parameters for this action.
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/submit.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/submit.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/submit.js]]
 
 
 ** import
@@ -284,7 +313,9 @@
          is an array of a message and a type, where type can be one of
          =status=, =warning=, =error=.
 
-   Example: [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/import.js]]
 
    This is like a bulk translation and voting service. For any
    translation in the PO files, it will be added as a suggestion if
@@ -320,7 +351,9 @@
 
    + POST api/project/subscriptions ::
 
-   Example: [[http://dev.btranslator.org/api-examples-php/project/subscribe.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/subscribe.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/subscribe.js]]
 
 
 ** list/all
@@ -347,7 +380,9 @@
      If *project* is =-= then only a list of 'origin' is outputed,
      otherwise a list of 'origin/project'.
 
-     Example: [[http://dev.btranslator.org/api-examples-php/project/list.php]]
+     Examples:
+     - [[http://dev.btranslator.org/api-examples-php/project/list.php]]
+     - [[http://info.btranslator.org/api-examples-js/#project/list.js]]
 
      Examples:
      #+BEGIN_EXAMPLE
@@ -414,7 +449,9 @@
          Comma separated list of usernames. Used only when /export_mode/
          is =preferred=.
 
-     Example: [[http://dev.btranslator.org/api-examples-php/project/export.php]]
+     Examples:
+     - [[http://dev.btranslator.org/api-examples-php/project/export.php]]
+     - [[http://info.btranslator.org/api-examples-js/#project/export.js]]
 
 
    + GET/POST project/export :: Return an archive of PO
@@ -500,7 +537,9 @@
          The sguid of the new string, or NULL if such a string
          already exists.
 
-   Example: [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/add_string.js]]
 
    Vocabularies are fake translation projects, in the sense that they
    are not strings extracted from a program. Their strings are added
@@ -523,7 +562,9 @@
      - origin :: (optional)
          The origin of the project (default: 'vocabulary').
 
-   Example: [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/add_string.js]]
 
 
 ** import
@@ -557,7 +598,9 @@
      corresponding POT file, except for the extension (=.po= instead
      of =.pot=).
 
-   Example: [[http://dev.btranslator.org/api-examples-php/project/import.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/import.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/import.js]]
 
 
 ** delete
@@ -575,7 +618,9 @@
 	 Notification message, which is an array of a message and a
          type, where type can be one of =status=, =warning=, =error=.
 
-   Example: [[http://dev.btranslator.org/api-examples-php/project/delete.php]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/delete.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/delete.js]]
 
 
 * misc
@@ -595,6 +640,8 @@
      curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
      #+END_EXAMPLE
 
+     - [[http://info.btranslator.org/api-examples-js/#misc/latest.js]]
+
 
 ** rss-feed
 
@@ -610,6 +657,8 @@
      curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
      #+END_EXAMPLE
 
+     - [[http://info.btranslator.org/api-examples-js/#misc/rss-feed.js]]
+
 
 ** twitter
 
@@ -623,6 +672,8 @@
      curl https://l10n.org.al/btr/tweet/vocabulary
      curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
      #+END_EXAMPLE
+
+     - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
 
      *Note:* This can be used in combination with /cli twitter
      clients/ and with *cron* to post random tweets about
@@ -666,6 +717,8 @@
      curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
      curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
      #+END_EXAMPLE
+
+     - [[http://info.btranslator.org/api-examples-js/#misc/vocabulary.js]]
 
 
 ** autocomplete
@@ -758,6 +811,10 @@
     });
     #+END_EXAMPLE
 
+    Examples:
+    - [[http://info.btranslator.org/api-examples-js/#oauth2/get_token.js]]
+
+
   + GET oauth2/tokens/<access_token> :: Verify the validity of an
        OAuth2 token.
 
@@ -771,6 +828,9 @@
         });
     #+END_EXAMPLE
 
+    Examples:
+    - [[http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js]]
+
   + POST oauth2/user/profile :: Get the profile of the user.
 
     #+BEGIN_EXAMPLE
@@ -783,3 +843,5 @@
     });
     #+END_EXAMPLE
 
+    Examples:
+    - [[http://info.btranslator.org/api-examples-js/#oauth2/get_user_profile.js]]
