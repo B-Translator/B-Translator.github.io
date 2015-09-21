@@ -6,12 +6,6 @@ $(document).ready(function() {
     var examples_html = Mustache.render(tmpl, example_data);
     $('#examples').html(examples_html);
 
-    // If an example is given in the url as hash, load it automatically.
-    var example_file = window.location.hash.slice(1);
-    if (example_file) {
-        $('[jsfile="' + example_file + '"]').click();
-    }
-
     // Load an example when it is clicked.
     $('.example').click(load_example);
 
@@ -35,6 +29,12 @@ $(document).ready(function() {
         $('#output').html('');
         $.globalEval(jscode);
     });
+
+    // If an example is given in the url as hash, load it automatically.
+    var jsfile = window.location.hash.slice(1);
+    if (jsfile) {
+        $('[jsfile="' + jsfile + '"]').click();
+    }
 });
 
 // Write a debug message on the output area.
