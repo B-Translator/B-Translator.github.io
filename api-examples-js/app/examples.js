@@ -32,46 +32,54 @@ var load_example = function(){
     $('#jscode-title').text($(this).text());
     $('#output').html('');
 
-    // Get the example details.
+    // Fetch the JS file of the example and then display it and try it.
     var jsfile = $(this).attr('jsfile');
     if (!jsfile) {
         alert("Example '" + jsfile + "' not found!");
         return;
     }
     jsfile = 'examples/' + jsfile;
-
-    // Add button 'Try on JSBin'.
-    var jsbin = $(this).attr('jsbin');
-    if (jsbin) {
-        var button_try = '<a href="http://jsbin.com/' + jsbin + '" target="_blank"><button class="btn btn-info btn-xs pull-right">JSBin</button></a>';
-        $('#jscode-title').append(button_try);
-    }
+    fetch_jsfile(jsfile);
 
     // Add button 'API Reference'.
     var apiref = $(this).attr('apiref');
     if (apiref) {
-        var button_api = '<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API</button></a>';
-        $('#jscode-title').append(button_api);
+        var button = '<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API</button></a>';
+        $('#jscode-title').append(button);
     }
+};
 
-    // Fetch the JS file then highlight and display the code.
+/**
+ * Fetch the JS file then display it and run it.
+ */
+var fetch_jsfile = function(jsfile){
     $.ajax(jsfile, {dataType: 'text'})
         .done(function (file_content) {
-	    editor.getSession().setValue(file_content);
-        });
+            // Display the example file on the editor.
+            editor.getSession().setValue(file_content);
+            set_jscode_height();
 
-    // Wait 1sec, then fetch the JS file again and execute it.
-    setTimeout(function() {
-        $.ajax(jsfile, {dataType: 'text'})
-            .done(function (file_content) {
-                $.globalEval(file_content);
-            });
+            // Run the example file.
+            $.globalEval(file_content);
 
-        // Scroll to the section that display and runs the examples.
-        setTimeout(function() {
+            // Scroll "try" up to the top.
             $('html, body').animate({
                 scrollTop: $('#try').offset().top - 50
             }, 500);
-        }, 500);
-    }, 500)
+        });
+}
+
+/**
+ * Set the height of the jscode div so that the content inside it fits
+ * without scrolling.
+ */
+var set_jscode_height = function() {
+    var new_height =
+        editor.getSession().getScreenLength()
+        * editor.renderer.lineHeight;
+    $('#jscode').height(new_height.toString() + 'px');
+
+    // This call is required for the editor to fix all of
+    // its inner structure for adapting to a change in size
+    editor.resize();
 };
