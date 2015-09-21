@@ -6,19 +6,31 @@ $(document).ready(function() {
     var examples_html = Mustache.render(tmpl, example_data);
     $('#examples').html(examples_html);
 
-    // Load an example when it is clicked.
-    $('.example').click(load_example);
-
     // If an example is given in the url as hash, load it automatically.
     var example_file = window.location.hash.slice(1);
     if (example_file) {
         $('[jsfile="' + example_file + '"]').click();
     }
 
+    // Load an example when it is clicked.
+    $('.example').click(load_example);
+
     // Scroll to the top when the "up" button is clicked.
     $("a[href='#top']").click(function() {
         $('html, body').animate({ scrollTop: 0 }, 'fast');
         return false;
+    });
+
+    // Initialize the ace code editor.
+    window.editor = ace.edit("jscode");
+    editor.setTheme("ace/theme/github");
+    editor.getSession().setMode("ace/mode/javascript");
+    editor.$blockScrolling = Infinity;
+
+    // Run the code of the editor when the RUN button is clicked.
+    $('#jscode-run').click(function(){
+        var jscode = editor.getSession().getValue();
+        $.globalEval(jscode);
     });
 });
 
@@ -41,11 +53,11 @@ var load_example = function(){
     jsfile = 'examples/' + jsfile;
     fetch_jsfile(jsfile);
 
-    // Add button 'API Reference'.
+    // Set the href of the button 'API'.
     var apiref = $(this).attr('apiref');
     if (apiref) {
-        var button = '<a href="http://info.btranslator.org/api/' + apiref + '" target="_blank"><button class="btn btn-info btn-xs pull-right">API</button></a>';
-        $('#jscode-title').append(button);
+        var href = 'http://info.btranslator.org/api/' + apiref;
+        $('#jscode-api').attr('href', href);
     }
 };
 

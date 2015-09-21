@@ -15,6 +15,10 @@
     <!-- mustache js templates -->
     <script src="lib/mustache/mustache.min.js"></script>
 
+    <!-- ace editor -->
+    <script src="lib/ace-1.2.0/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- app -->
     <link rel="stylesheet" href="app/style.css" type="text/css" />
     <script src="app/http_request.js"></script>
     <script src="app/config.js"></script>
@@ -44,14 +48,14 @@
 
         </div>
       </div>
-    </div>
+    </div><!-- End navbar -->
 
     <div class="container">
       <div class="row">
 
         <!-- List of examples -->
         <div id="examples" class="col-sm-4 panel-group">
-          <!-- here comes the code from template #tmpl-examples -->
+          <!-- here comes the code from the mustache template #tmpl-examples -->
         </div>
 
         <!-- Trying an example -->
@@ -59,7 +63,13 @@
           <!-- Panel: Example Code -->
           <div class="panel panel-success">
             <div class="panel-heading clearfix">
-              <div id="jscode-title" class="panel-title">Example Code</div>
+              <div class="panel-title">
+                <span id="jscode-title">Example Code</span>
+                <button id="jscode-run" class="btn btn-info btn-xs pull-right">RUN</button>
+                <a id="jscode-api" href="http://info.btranslator.org/api/" target="_blank">
+                  <button class="btn btn-info btn-xs pull-right">API</button>
+                </a>
+              </div>
             </div>
             <div class="panel-body">
               <div id="jscode"></div>
@@ -130,14 +140,6 @@
       {{/groups}}
     </script>
     <!-- end mustache template for examples -->
-
-    <script src="lib/ace-1.2.0/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-	var editor = ace.edit("jscode");
-	editor.setTheme("ace/theme/github");
-	editor.getSession().setMode("ace/mode/javascript");
-	editor.$blockScrolling = Infinity;
-    </script>
 
   </body>
 </html>
