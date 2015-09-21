@@ -30,6 +30,7 @@ $(document).ready(function() {
     // Run the code of the editor when the RUN button is clicked.
     $('#jscode-run').click(function(){
         var jscode = editor.getSession().getValue();
+        $('#output').html('');
         $.globalEval(jscode);
     });
 });
