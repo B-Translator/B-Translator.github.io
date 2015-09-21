@@ -26,6 +26,8 @@ $(document).ready(function() {
     editor.setTheme("ace/theme/github");
     editor.getSession().setMode("ace/mode/javascript");
     editor.$blockScrolling = Infinity;
+    //editor.renderer.setOption('showLineNumbers', false);
+    //editor.renderer.setShowGutter(false);
 
     // Run the code of the editor when the RUN button is clicked.
     $('#jscode-run').click(function(){
