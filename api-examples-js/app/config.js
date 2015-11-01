@@ -9,8 +9,8 @@ var $config = {
         auth_flow: 'password',     // password | proxy
         //proxy_endpoint: 'https://l10n.org.al/oauth2/proxy',
         token_endpoint: 'http://dev.btranslator.org/oauth2/token',
-        client_id: 'emberjs',
-        client_secret: '123456',
+        client_id: 'test1',
+        client_secret: '12345',
         scope: 'user_profile',
         getPassword: function (callback) {
             var username = 'user1';
