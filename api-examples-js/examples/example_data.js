@@ -258,16 +258,6 @@ var example_data = {
                     ],
                 },
                 {
-                    section: 'add_string',
-                    examples: [
-                        {
-                            title: 'POST api/project/add_string',
-                            jsfile: 'project/add_string.js',
-                            apiref: '#sec-3-7',
-                        },
-                    ],
-                },
-                {
                     section: 'export',
                     examples: [
                         {
@@ -299,5 +289,20 @@ var example_data = {
                 },
             ],
         },
+        {
+            group: 'Vocabulary',
+            sections: [
+                {
+                    section: 'add_string',
+                    examples: [
+                        {
+                            title: 'POST api/vocabulary/add_string',
+                            jsfile: 'vocabulary/add_string.js',
+                            apiref: '#sec-4-1',
+                        },
+                    ],
+                },
+	    ],
+	},
     ],
 };

@@ -514,59 +514,6 @@
      #+END_EXAMPLE
 
 
-** add_string
-
-   Add a new string to a project (useful for vocabularies).
-
-   + POST api/project/add_string ::
-     - origin ::
-         Origin (category) of the project.
-     - project ::
-         Name of the project.
-     - tplname :: (optional)
-         Name of the template (POT) file.
-     - string ::
-         String to be added.
-     - context :: (optional)
-         The context of the string.
-     - notify :: (optional)
-         It TRUE, notify translators about the new string.
-
-     Returns associative array containing:
-     - sguid ::
-         The sguid of the new string, or NULL if such a string
-         already exists.
-
-   Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
-   - [[http://info.btranslator.org/api-examples-js/#project/add_string.js]]
-
-   Vocabularies are fake translation projects, in the sense that they
-   are not strings extracted from a program. Their strings are added
-   manually. They serve as a collection/dictionary of interesting,
-   important and frequently used terms and their suggested
-   translations. They can be useful for translators on their everyday
-   job and also can help to discuss and unify the terminology used
-   across different programs.
-
-
-** del_string
-
-   Delete a string from a project (useful for vocabularies).
-
-   + POST api/project/del_string ::
-     - sguid ::
-         ID of the string to be deleted.
-     - project ::
-         The project from which the string will be deleted.
-     - origin :: (optional)
-         The origin of the project (default: 'vocabulary').
-
-   Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/add_string.php]]
-   - [[http://info.btranslator.org/api-examples-js/#project/add_string.js]]
-
-
 ** import
 
    Create a project or update an existing one by importing the POT and
@@ -621,6 +568,55 @@
    Examples:
    - [[http://dev.btranslator.org/api-examples-php/project/delete.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/delete.js]]
+
+
+* vocabulary
+
+** add_string
+
+   Add a new string to a vocabulary.
+
+   + POST api/vocabulary/add_string ::
+     - name ::
+         The name of the vocabulary.
+     - lng ::
+         The language of the vocabulary.
+     - string ::
+         String to be added.
+     - notify :: (optional)
+         It TRUE, notify subscribers about the new string. Default is TRUE.
+ 
+     Returns associative array containing:
+     - sguid :: The sguid of the new string, or NULL if such a string
+                already exists.
+     - messages :: Array of notification messages; each notification
+                   message is an array of a message and a type, where
+                   type can be one of /status/, /warning/, /error/
+
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js]]
+
+
+** del_string
+
+   Delete a string from a vocabulary.
+
+   + POST api/project/del_string ::
+     - name ::
+         The name of the vocabulary.
+     - lng ::
+         The language of the vocabulary.
+     - sguid ::
+         ID of the string to be deleted.
+
+     Returns associative array containing:
+     - messages :: Array of notification messages; each notification
+                   message is an array of a message and a type, where
+                   type can be one of /status/, /warning/, /error/
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js]]
 
 
 * misc
@@ -766,6 +762,7 @@
      curl https://btranslator.org/auto/string/*/ICT_sq/a
      curl https://btranslator.org/auto/string/*/*/a
      #+END_EXAMPLE
+
 
 ** other
 

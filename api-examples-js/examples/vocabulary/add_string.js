@@ -10,13 +10,13 @@ var add_string = function () {
         return;
     }
 
-    // POST api/project/add_string
-    var url = '/api/project/add_string';
+    // POST api/vocabulary/add_string
+    var url = '/api/vocabulary/add_string';
     var settings = {
         type: 'POST',
         data: {
-            origin: 'test',
-            project: 'pingus',
+            name: 'ICT',
+            lng: 'sq',
             string: 'Test string ' + Math.floor(Math.random() * 10),
         },
         headers: {
@@ -30,12 +30,12 @@ var add_string = function () {
         var url = '/api/translations/' + sguid + '?lng=sq';
         http_request(url).done(function () {
             // Delete the string that was added above.
-            http_request('/api/project/del_string', {
+            http_request('/api/vocabulary/del_string', {
                 type: 'POST',
                 data: {
+		    name: 'ICT',
+		    lng: 'sq',
 		    sguid: sguid,
-		    project: 'pingus',
-		    origin: 'test',
 		},
                 headers: { 'Authorization': 'Bearer ' + access_token },
             });
