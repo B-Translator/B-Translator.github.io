@@ -293,11 +293,51 @@ var example_data = {
             group: 'Vocabulary',
             sections: [
                 {
+                    section: 'list',
+                    examples: [
+                        {
+                            title: 'GET vocabulary/list',
+                            jsfile: 'vocabulary/list.js',
+                            apiref: '#sec-4-1',
+                        },
+                    ],
+                },
+                {
+                    section: 'export',
+                    examples: [
+                        {
+                            title: 'GET vocabulary/export',
+                            jsfile: 'vocabulary/export.js',
+                            apiref: '#sec-4-1',
+                        },
+                    ],
+                },
+                {
                     section: 'add_string',
                     examples: [
                         {
                             title: 'POST api/vocabulary/add_string',
                             jsfile: 'vocabulary/add_string.js',
+                            apiref: '#sec-4-1',
+                        },
+                    ],
+                },
+                {
+                    section: 'import',
+                    examples: [
+                        {
+                            title: 'POST api/vocabulary/import',
+                            jsfile: 'vocabulary/import.js',
+                            apiref: '#sec-4-1',
+                        },
+                    ],
+                },
+                {
+                    section: 'delete',
+                    examples: [
+                        {
+                            title: 'POST api/vocabulary/delete',
+                            jsfile: 'vocabulary/delete.js',
                             apiref: '#sec-4-1',
                         },
                     ],

@@ -554,7 +554,7 @@
 
    Delete a project.
 
-   + POST api/project/import ::
+   + POST api/project/delete ::
      - origin ::
          The origin of the project that will be deleted.
      - project ::
@@ -571,6 +571,78 @@
 
 
 * vocabulary
+
+  Vocabularies are a special kind of projects. So all the functions
+  that work for projects can be used for vocabularies as well. For
+  example, if we have the vocabulary named =test1= of language =sq=,
+  then project functions can be used with =origin = 'vocabulary'= and
+  =project = 'test1_sq'=. Also, the context of each string will be
+  =test1_sq=.
+
+** list
+   + GET vocabulary/list ::
+     Return a list of vocabularies in JSON format.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -s https://btranslator.org/vocabulary/list | python -m json.tool
+     curl -s http://dev.btranslator.org/vocabulary/list | python -m json.tool
+     #+END_EXAMPLE
+
+     - [[http://dev.btranslator.org/api-examples-php/vocabulary/list.php]]
+     - [[http://info.btranslator.org/api-examples-js/#vocabulary/list.js]]
+
+
+** export
+
+   + GET vocabulary/export/$vocabulary[/$format] ::
+     Return the list of terms and translations of a vocabulary.
+     - $vocabulary ::
+         The name of the vocabulary project (which ends in =_lng=).
+     - $format ::
+         The output format: =json | txt1 | txt2 | org=.
+         Default is =json=.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
+     curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
+     curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
+     #+END_EXAMPLE
+
+     - [[http://dev.btranslator.org/api-examples-php/vocabulary/export.php]]
+     - [[http://info.btranslator.org/api-examples-js/#vocabulary/export.js]]
+
+
+** import
+
+   Create a vocabulary or update an existing one.
+
+
+   + POST api/vocabulary/import ::
+     - name ::
+         The name of the vocabulary.
+     - lng ::
+         The language of the vocabulary.
+     - file ::
+         File of terms and translations.
+
+   Returns associative array containing:
+     - messages ::
+         Array of notification messages; each notification message
+         is an array of a message and a type, where type can be one of
+         =status=, =warning=, =error=.
+
+   The format of the uploaded text file is the same as the exported
+   TXT1 file, where each line is like this:
+   #+BEGIN_EXAMPLE
+   term <==> translation1 / translation2 / translation3
+   #+END_EXAMPLE
+
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/import.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/import.js]]
+
 
 ** add_string
 
@@ -617,6 +689,26 @@
    Examples:
    - [[http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js]]
+
+
+** delete
+
+   Delete a vocabulary.
+
+   + POST api/vocabulary/delete ::
+     - name ::
+         The name of the vocabulary.
+     - lng ::
+         The language of the vocabulary.
+
+   Returns associative array containing:
+     - message ::
+	 Notification message, which is an array of a message and a
+         type, where type can be one of =status=, =warning=, =error=.
+
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/delete.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/delete.js]]
 
 
 * misc
@@ -693,28 +785,6 @@
      clients/ and with *cron* to post random tweets about
      translations.  See this script as an example:
      https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
-
-
-** vocabulary/export
-
-   + GET vocabulary/export/$vocabulary[/$format] ::
-     Return the list of terms in a vocabulary and all the suggested
-     translations.
-     - $vocabulary ::
-         The name of the vocabulary project (which ends in =_lng=).
-
-     - $format ::
-         The output format: =json | txt1 | txt2 | org=.
-         Default is =json=.
-
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
-     curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
-     curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
-     #+END_EXAMPLE
-
-     - [[http://info.btranslator.org/api-examples-js/#misc/vocabulary.js]]
 
 
 ** autocomplete
