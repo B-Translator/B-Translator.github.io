@@ -13,7 +13,7 @@ var example_data = {
                         {
                             title: 'GET latest/$lng[/$origin[/$project]]',
                             jsfile: 'misc/latest.js',
-                            apiref: '#sec-4-1',
+                            apiref: '#sec-5-1',
                         },
                     ],
                 },
@@ -23,7 +23,7 @@ var example_data = {
                         {
                             title: 'GET rss-feed[/$origin[/$project]]',
                             jsfile: 'misc/rss-feed.js',
-                            apiref: '#sec-4-2',
+                            apiref: '#sec-5-2',
                         },
                     ],
                 },
@@ -33,7 +33,7 @@ var example_data = {
                         {
                             title: 'GET tweet[/$origin[/$project]]',
                             jsfile: 'misc/twitter.js',
-                            apiref: '#sec-4-3',
+                            apiref: '#sec-5-3',
                         },
                     ],
                 },
@@ -43,7 +43,7 @@ var example_data = {
                         {
                             title: 'Autocomplete',
                             jsfile: 'misc/autocomplete.js',
-                            apiref: '#sec-4-5',
+                            apiref: '#sec-5-4',
                         },
                     ],
                 },
@@ -108,22 +108,22 @@ var example_data = {
                         {
                             title: 'Get a Token',
                             jsfile: 'oauth2/get_token.js',
-                            apiref: '#sec-5',
+                            apiref: '#sec-6',
                         },
                         {
                             title: 'Refresh a Token',
                             jsfile: 'oauth2/refresh_token.js',
-                            apiref: '#sec-5',
+                            apiref: '#sec-6',
                         },
                         {
                             title: 'Verify a Token',
                             jsfile: 'oauth2/verify_token.js',
-                            apiref: '#sec-5',
+                            apiref: '#sec-6',
                         },
                         {
                             title: 'Get Token From Proxy',
                             jsfile: 'oauth2/get_token_from_proxy.js',
-                            apiref: '#sec-5',
+                            apiref: '#sec-6',
                         },
                     ],
                 },
@@ -133,7 +133,7 @@ var example_data = {
                         {
                             title: 'Get the User Profile',
                             jsfile: 'oauth2/get_user_profile.js',
-                            apiref: '#sec-5',
+                            apiref: '#sec-6',
                         },
                     ],
                 },
@@ -273,7 +273,7 @@ var example_data = {
                         {
                             title: 'POST api/project/import',
                             jsfile: 'project/import.js',
-                            apiref: '#sec-3-9',
+                            apiref: '#sec-3-7',
                         },
                     ],
                 },
@@ -283,7 +283,7 @@ var example_data = {
                         {
                             title: 'POST api/project/delete',
                             jsfile: 'project/delete.js',
-                            apiref: '#sec-3-10',
+                            apiref: '#sec-3-8',
                         },
                     ],
                 },
@@ -308,7 +308,7 @@ var example_data = {
                         {
                             title: 'GET vocabulary/export',
                             jsfile: 'vocabulary/export.js',
-                            apiref: '#sec-4-1',
+                            apiref: '#sec-4-2',
                         },
                     ],
                 },
@@ -318,7 +318,7 @@ var example_data = {
                         {
                             title: 'POST api/vocabulary/add_string',
                             jsfile: 'vocabulary/add_string.js',
-                            apiref: '#sec-4-1',
+                            apiref: '#sec-4-4',
                         },
                     ],
                 },
@@ -328,7 +328,7 @@ var example_data = {
                         {
                             title: 'POST api/vocabulary/import',
                             jsfile: 'vocabulary/import.js',
-                            apiref: '#sec-4-1',
+                            apiref: '#sec-4-3',
                         },
                     ],
                 },
@@ -338,7 +338,7 @@ var example_data = {
                         {
                             title: 'POST api/vocabulary/delete',
                             jsfile: 'vocabulary/delete.js',
-                            apiref: '#sec-4-1',
+                            apiref: '#sec-4-6',
                         },
                     ],
                 },
