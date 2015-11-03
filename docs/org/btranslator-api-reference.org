@@ -360,10 +360,13 @@
    + GET project/list/all ::
      Return a full list of all the imported projects and languages.
 
-     Example:
+     Examples:
      #+BEGIN_EXAMPLE
      curl -s https://btranslator.org/project/list/all | python -m json.tool
      #+END_EXAMPLE
+
+     - [[http://dev.btranslator.org/api-examples-php/project/list_all.php]]
+     - [[http://info.btranslator.org/api-examples-js/#project/list_all.js]]
 
 
 ** list
@@ -511,6 +514,25 @@
      curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
      curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4 > 4.diff
      curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+     #+END_EXAMPLE
+
+   + GET project/diff-dl/$origin/$project/$lng[/$nr[/$ediff]] ::
+     Similar to project_diff, but return a file for download (not plain text).
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2
+     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2/ediff
+     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/diff
+     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/ediff
+     #+END_EXAMPLE
+
+   + GET project/diff-latest/$origin/$project/$lng?format=...&export_mode=...&friends=... ::
+     Export the latest most voted translations and make the diffs with the last snapshot.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl 'https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff&export_mode=preferred_by_me&friends='
      #+END_EXAMPLE
 
 
@@ -728,6 +750,7 @@
      curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
      #+END_EXAMPLE
 
+     - [[http://dev.btranslator.org/api-examples-php/misc/latest.php]]
      - [[http://info.btranslator.org/api-examples-js/#misc/latest.js]]
 
 
@@ -743,8 +766,16 @@
      curl https://l10n.org.al/btr/rss-feed
      curl https://l10n.org.al/btr/rss-feed/vocabulary
      curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
+
+     curl https://btranslator.net/btr/rss-feed/LibreOffice/cui/sq
+     curl https://btranslator.net/btr/rss-feed/LibreOffice/cui
+
+     curl https://btranslator.org/rss-feed/sq
+     curl https://btranslator.org/rss-feed/sq/LibreOffice
+     curl https://btranslator.org/rss-feed/sq/LibreOffice/cui
      #+END_EXAMPLE
 
+     - [[http://dev.btranslator.org/api-examples-php/misc/rss-feed.php]]
      - [[http://info.btranslator.org/api-examples-js/#misc/rss-feed.js]]
 
 
@@ -759,8 +790,11 @@
      curl https://l10n.org.al/btr/tweet
      curl https://l10n.org.al/btr/tweet/vocabulary
      curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
+
+     curl https://btranslator.net/btr/tweet/vocabulary/ICT_sq/sq
      #+END_EXAMPLE
 
+     - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
      - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
 
      *Note:* This can be used in combination with /cli twitter
@@ -779,7 +813,13 @@
      curl https://btranslator.org/tweet/sq
      curl https://btranslator.org/tweet/sq/vocabulary
      curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
+
+     curl -H 'Accept: application/json' \
+          https://btranslator.org/tweet/sq | python -m json.tool
      #+END_EXAMPLE
+
+     - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
+     - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
 
      *Note:* This can be used in combination with /cli twitter
      clients/ and with *cron* to post random tweets about
@@ -788,6 +828,10 @@
 
 
 ** autocomplete
+
+   Examples:
+     - [[http://dev.btranslator.org/api-examples-php/misc/autocomplete.php]]
+     - [[http://info.btranslator.org/api-examples-js/#misc/autocomplete.js]]
 
    + GET auto/project/$str :: Retrieve a JSON list of autocomplete
         suggestions for projects.
@@ -841,7 +885,7 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl https://btranslator.org/languages
+     curl https://btranslator.org/languages | python -m json.tool
      #+END_EXAMPLE
 
 
@@ -860,6 +904,11 @@
 
   For more details and examples see: https://github.com/dashohoxha/oauth2-js
 
+  For PHP examples see:
+  - https://btranslator.org/api-examples-php/config.php
+  - https://btranslator.org/api-examples-php/get_access_token.php
+  - https://btranslator.org/api-examples-php/translations/add.php
+
   + POST oauth2/token :: Get an OAuth2 token.
 
     #+BEGIN_EXAMPLE
@@ -867,8 +916,8 @@
         type: 'POST',
         data: {
             grant_type: 'password',
-            username: 'user123',
-            password: 'pass123',
+            username: 'user1',
+            password: 'pass1',
             scope: 'user_profile', 
         },
         headers: {
