@@ -47,6 +47,9 @@ org_html_manager.set("MOUSE_HINT", "#aadddd");
 org_html_manager.set("FIXED_TOC", "0");
 org_html_manager.set("TOC", "1");
 org_html_manager.set("VIEW", "overview");
+if (window.location.hash) {
+    org_html_manager.set("VIEW", "info");
+}
 org_html_manager.setup();  // activate after the parameters are set
 /*]]>*///-->
 </script>
