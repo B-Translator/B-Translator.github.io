@@ -35,23 +35,30 @@ layout: org-info
 <li><a href="#sec-3-4">langs</a></li>
 <li><a href="#sec-3-5">export</a></li>
 <li><a href="#sec-3-6">diff</a></li>
-<li><a href="#sec-3-7">add_string</a></li>
-<li><a href="#sec-3-8">del_string</a></li>
-<li><a href="#sec-3-9">import</a></li>
-<li><a href="#sec-3-10">delete</a></li>
+<li><a href="#sec-3-7">import</a></li>
+<li><a href="#sec-3-8">delete</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">misc</a>
+<li><a href="#sec-4">vocabulary</a>
 <ul>
-<li><a href="#sec-4-1">latest</a></li>
-<li><a href="#sec-4-2">rss-feed</a></li>
-<li><a href="#sec-4-3">twitter</a></li>
-<li><a href="#sec-4-4">vocabulary/export</a></li>
-<li><a href="#sec-4-5">autocomplete</a></li>
-<li><a href="#sec-4-6">other</a></li>
+<li><a href="#sec-4-1">list</a></li>
+<li><a href="#sec-4-2">export</a></li>
+<li><a href="#sec-4-3">import</a></li>
+<li><a href="#sec-4-4">add_string</a></li>
+<li><a href="#sec-4-5">del_string</a></li>
+<li><a href="#sec-4-6">delete</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">oauth2</a></li>
+<li><a href="#sec-5">misc</a>
+<ul>
+<li><a href="#sec-5-1">latest</a></li>
+<li><a href="#sec-5-2">rss-feed</a></li>
+<li><a href="#sec-5-3">twitter</a></li>
+<li><a href="#sec-5-4">autocomplete</a></li>
+<li><a href="#sec-5-5">other</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">oauth2</a></li>
 </ul>
 </div>
 </div>
@@ -275,13 +282,6 @@ Get a string, along with its translations, votes and other details.
 <dt> lng </dt><dd>The language of translations, like fr, de, etc.
 </dd>
 </dl>
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#translations/retrieve.js">http://info.btranslator.org/api-examples-js/#translations/retrieve.js</a>
-</li>
-</ul>
 </dd>
 
 <dt> POST api/translations/get </dt><dd><dl class="org-dl">
@@ -292,15 +292,6 @@ Examples:
 <dt> lng </dt><dd>The language of translations, like fr, de, etc.
 </dd>
 </dl>
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://dev.btranslator.org/api-examples-php/translations/get.php">http://dev.btranslator.org/api-examples-php/translations/get.php</a>
-</li>
-<li><a href="http://info.btranslator.org/api-examples-js/#translations/get.js">http://info.btranslator.org/api-examples-js/#translations/get.js</a>
-</li>
-</ul>
 </dd>
 
 <dt> GET translations/$lng/$sguid </dt><dd>Returns the details of a string
@@ -308,17 +299,26 @@ and its translations.  If the request header <code>Accept:
      application/json</code> is set, then the output will be in JSON
 (otherwise it will be an HTML page). The parameter <i>$sguid</i> can
 also be one of <code>random | translated | untranslated</code>.
+</dd>
+</dl>
 
 <p>
-Example:
+Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://info.btranslator.org/api-examples-js/#translations/retrieve.js">http://info.btranslator.org/api-examples-js/#translations/retrieve.js</a>
+</li>
+<li><a href="http://dev.btranslator.org/api-examples-php/translations/get.php">http://dev.btranslator.org/api-examples-php/translations/get.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#translations/get.js">http://info.btranslator.org/api-examples-js/#translations/get.js</a>
+</li>
+</ul>
+
 <pre class="example">
 curl -k -H 'Accept: application/json' \
   'http://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
 curl -k -H 'Accept: application/json' http://dev.btranslator.org/translations/sq/random
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -341,6 +341,9 @@ version(s) as well, they are concatenated with NULL bytes ("\0")
 between them.
 </dd>
 </dl>
+</dd>
+</dl>
+
 <p>
 Examples:
 </p>
@@ -350,8 +353,6 @@ Examples:
 <li><a href="http://info.btranslator.org/api-examples-js/#translations/add.js">http://info.btranslator.org/api-examples-js/#translations/add.js</a>
 </li>
 </ul>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -511,6 +512,16 @@ by the current user.
 Can be one of: <i>all</i>, <i>translated</i>, <i>untranslated</i>
 </dd>
 </dl>
+</dd>
+
+<dt> GET translations/search </dt><dd>Search strings and translations using
+various filters.  If the request header <code>Accept: application/json</code>
+is set, then the output will be in JSON (otherwise it will be an
+HTML page). It gets the same parameters as <code>GET
+    api/translations</code>
+</dd>
+</dl>
+
 <p>
 Examples:
 </p>
@@ -522,25 +533,13 @@ Examples:
 <li><a href="http://info.btranslator.org/api-examples-js/#translations/search.js">http://info.btranslator.org/api-examples-js/#translations/search.js</a>
 </li>
 </ul>
-</dd>
 
-<dt> GET translations/search </dt><dd>Search strings and translations using
-various filters.  If the request header <code>Accept: application/json</code>
-is set, then the output will be in JSON (otherwise it will be an
-HTML page). It gets the same parameters as <code>GET
-    api/translations</code>
-
-<p>
-Example:
-</p>
 <pre class="example">
 curl -k -H 'Accept: application/json' \
      'http://dev.btranslator.org/translations/search?lng=sq&amp;words=space'
 curl -k -H 'Accept: application/json' \
      'https://l10n.org.al/translations/search?lng=sq&amp;words=space'
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -605,16 +604,6 @@ is an array of a message and a type, where type can be one of
 </dl>
 
 <p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://dev.btranslator.org/api-examples-php/translations/import.php">http://dev.btranslator.org/api-examples-php/translations/import.php</a>
-</li>
-<li><a href="http://info.btranslator.org/api-examples-js/#translations/import.js">http://info.btranslator.org/api-examples-js/#translations/import.js</a>
-</li>
-</ul>
-
-<p>
 This is like a bulk translation and voting service. For any
 translation in the PO files, it will be added as a suggestion if
 such a translation does not exist, or it will just be voted if such
@@ -630,6 +619,16 @@ them with desktop tools (like Lokalize) to translate or correct
 exported translations, and then import back to B-Translator the
 translated/corrected PO files.
 </p>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/translations/import.php">http://dev.btranslator.org/api-examples-php/translations/import.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#translations/import.js">http://info.btranslator.org/api-examples-js/#translations/import.js</a>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -695,15 +694,22 @@ Examples:
 <div class="outline-text-3" id="text-3-2">
 <dl class="org-dl">
 <dt> GET project/list/all </dt><dd>     Return a full list of all the imported projects and languages.
+</dd>
+</dl>
 
 <p>
-Example:
+Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/project/list_all.php">http://dev.btranslator.org/api-examples-php/project/list_all.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#project/list_all.js">http://info.btranslator.org/api-examples-js/#project/list_all.js</a>
+</li>
+</ul>
+
 <pre class="example">
 curl -s https://btranslator.org/project/list/all | python -m json.tool
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -731,6 +737,16 @@ replaced by <code>%</code> (for LIKE matches).
 If <b>project</b> is <code>-</code> then only a list of 'origin' is outputed,
 otherwise a list of 'origin/project'.
 </p>
+</dd>
+
+<dt> GET project/list/$origin/$project[/$format] </dt><dd>     Return a plain-text list of all the imported projects, filtered
+by the given origin/project. Parameters <b>origin</b> and <b>project</b>
+can contain <code>*</code>, which is replaced by <code>%</code> (for LIKE matches).  If
+<b>project</b> is <code>-</code> then only a list of 'origin' is outputed,
+otherwise a list of 'origin/project'.  The third variable can be
+JSON or TEXT (default).
+</dd>
+</dl>
 
 <p>
 Examples:
@@ -741,27 +757,14 @@ Examples:
 <li><a href="http://info.btranslator.org/api-examples-js/#project/list.js">http://info.btranslator.org/api-examples-js/#project/list.js</a>
 </li>
 </ul>
-<p>
-Examples:
-</p>
+
 <pre class="example">
 curl -k -X POST http://dev.btranslator.org/api/project/list
 curl -k -X POST http://dev.btranslator.org/api/project/list \
      -H "Content-type: application/json" \
      -d '{"origin": "t*"}'
 </pre>
-</dd>
 
-<dt> GET project/list/$origin/$project[/$format] </dt><dd>     Return a plain-text list of all the imported projects, filtered
-by the given origin/project. Parameters <b>origin</b> and <b>project</b>
-can contain <code>*</code>, which is replaced by <code>%</code> (for LIKE matches).  If
-<b>project</b> is <code>-</code> then only a list of 'origin' is outputed,
-otherwise a list of 'origin/project'.  The third variable can be
-JSON or TEXT (default).
-
-<p>
-Example:
-</p>
 <pre class="example">
 curl 'https://btranslator.org/project/list/*/-'
 curl 'https://btranslator.org/project/list/*/-/json'
@@ -771,8 +774,6 @@ curl 'https://btranslator.org/project/list/*/nautil*'
 curl 'https://btranslator.org/project/list/*/*/json'
 curl 'https://btranslator.org/project/list'
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -782,15 +783,15 @@ curl 'https://btranslator.org/project/list'
 <div class="outline-text-3" id="text-3-4">
 <dl class="org-dl">
 <dt> GET project/langs/$origin/$project </dt><dd>     Get a list of languages for the given origin/project.
+</dd>
+</dl>
 
 <p>
-Example:
+Examples:
 </p>
 <pre class="example">
 curl -s https://btranslator.org/project/langs/LibreOffice/cui | python -m json.tool
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -829,20 +830,8 @@ votes.
          is <code>preferred</code>.
 </dd>
 </dl>
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://dev.btranslator.org/api-examples-php/project/export.php">http://dev.btranslator.org/api-examples-php/project/export.php</a>
-</li>
-<li><a href="http://info.btranslator.org/api-examples-js/#project/export.js">http://info.btranslator.org/api-examples-js/#project/export.js</a>
-</li>
-</ul>
 </dd>
-</dl>
 
-
-<dl class="org-dl">
 <dt> GET/POST project/export </dt><dd>Return an archive of PO
 files for a given origin/project/lng. Does not allow concurrent
 exports because they may affect the performance of the server.
@@ -878,9 +867,19 @@ preferred.
 <dt> preferred_voters </dt><dd>         Comma separated list of usernames of the preferred voters.
 </dd>
 </dl>
+</dd>
+</dl>
+
 <p>
 Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/project/export.php">http://dev.btranslator.org/api-examples-php/project/export.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#project/export.js">http://info.btranslator.org/api-examples-js/#project/export.js</a>
+</li>
+</ul>
+
 <pre class="example">
 curl -k 'http://dev.btranslator.org/project/export?origin=test&amp;project=kturtle&amp;lng=sq' &gt; test1.tgz
 curl -k http://dev.btranslator.org/project/export \
@@ -890,8 +889,6 @@ curl -k http://dev.btranslator.org/project/export \
      -d export_mode=preferred \
      -d preferred_voters=user1,user2 &gt; test1.tgz
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
@@ -899,15 +896,23 @@ curl -k http://dev.btranslator.org/project/export \
 <div id="outline-container-sec-3-6" class="outline-3">
 <h3 id="sec-3-6">diff</h3>
 <div class="outline-text-3" id="text-3-6">
+<p>
+For more details about diffs see: <a href="https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs">README.org#snapshots-and-diffs</a>
+</p>
+
 <dl class="org-dl">
 <dt> GET project/diff/$origin/$project/$lng[/$nr[/$ediff]] </dt><dd>     Return as plain-text the diff of the PO file for a given
 origin/project/lng, which contains the latest most-voted
 suggestions since the last snapshot. If the parameter <b>$nr</b> is
 missing, it returns a list of the saved diffs instead.
+</dd>
 
-<p>
-For more details about diffs see: <a href="https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs">README.org#snapshots-and-diffs</a>
-</p>
+<dt> GET project/diff-dl/$origin/$project/$lng[/$nr[/$ediff]] </dt><dd>     Similar to project_diff, but return a file for download (not plain text).
+</dd>
+
+<dt> GET project/diff-latest/$origin/$project/$lng?format=&#x2026;&amp;export_mode=&#x2026;&amp;friends=&#x2026; </dt><dd>     Export the latest most voted translations and make the diffs with the last snapshot.
+</dd>
+</dl>
 
 <p>
 Examples:
@@ -919,107 +924,24 @@ curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff &gt; 2.ediff
 curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4 &gt; 4.diff
 curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff &gt; 4.ediff
 </pre>
-</dd>
-</dl>
+
+<pre class="example">
+curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2
+curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2/ediff
+curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/diff
+curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/ediff
+</pre>
+
+<pre class="example">
+curl 'https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff&amp;export_mode=preferred_by_me&amp;friends='
+</pre>
 </div>
 </div>
 
 
 <div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7">add_string</h3>
+<h3 id="sec-3-7">import</h3>
 <div class="outline-text-3" id="text-3-7">
-<p>
-Add a new string to a project (useful for vocabularies).
-</p>
-
-<dl class="org-dl">
-<dt> POST api/project/add_string </dt><dd><dl class="org-dl">
-<dt> origin </dt><dd>         Origin (category) of the project.
-</dd>
-<dt> project </dt><dd>         Name of the project.
-</dd>
-<dt> tplname </dt><dd>(optional)
-Name of the template (POT) file.
-</dd>
-<dt> string </dt><dd>         String to be added.
-</dd>
-<dt> context </dt><dd>(optional)
-The context of the string.
-</dd>
-<dt> notify </dt><dd>(optional)
-It TRUE, notify translators about the new string.
-</dd>
-</dl>
-<p>
-Returns associative array containing:
-</p>
-<dl class="org-dl">
-<dt> sguid </dt><dd>         The sguid of the new string, or NULL if such a string
-already exists.
-</dd>
-</dl>
-</dd>
-</dl>
-
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://dev.btranslator.org/api-examples-php/project/add_string.php">http://dev.btranslator.org/api-examples-php/project/add_string.php</a>
-</li>
-<li><a href="http://info.btranslator.org/api-examples-js/#project/add_string.js">http://info.btranslator.org/api-examples-js/#project/add_string.js</a>
-</li>
-</ul>
-
-<p>
-Vocabularies are fake translation projects, in the sense that they
-are not strings extracted from a program. Their strings are added
-manually. They serve as a collection/dictionary of interesting,
-important and frequently used terms and their suggested
-translations. They can be useful for translators on their everyday
-job and also can help to discuss and unify the terminology used
-across different programs.
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-sec-3-8" class="outline-3">
-<h3 id="sec-3-8">del_string</h3>
-<div class="outline-text-3" id="text-3-8">
-<p>
-Delete a string from a project (useful for vocabularies).
-</p>
-
-<dl class="org-dl">
-<dt> POST api/project/del_string </dt><dd><dl class="org-dl">
-<dt> sguid </dt><dd>         ID of the string to be deleted.
-</dd>
-<dt> project </dt><dd>         The project from which the string will be deleted.
-</dd>
-<dt> origin </dt><dd>(optional)
-The origin of the project (default: 'vocabulary').
-</dd>
-</dl>
-</dd>
-</dl>
-
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://dev.btranslator.org/api-examples-php/project/add_string.php">http://dev.btranslator.org/api-examples-php/project/add_string.php</a>
-</li>
-<li><a href="http://info.btranslator.org/api-examples-js/#project/add_string.js">http://info.btranslator.org/api-examples-js/#project/add_string.js</a>
-</li>
-</ul>
-</div>
-</div>
-
-
-<div id="outline-container-sec-3-9" class="outline-3">
-<h3 id="sec-3-9">import</h3>
-<div class="outline-text-3" id="text-3-9">
 <p>
 Create a project or update an existing one by importing the POT and
 PO files of the project.
@@ -1080,15 +1002,15 @@ Examples:
 </div>
 
 
-<div id="outline-container-sec-3-10" class="outline-3">
-<h3 id="sec-3-10">delete</h3>
-<div class="outline-text-3" id="text-3-10">
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8">delete</h3>
+<div class="outline-text-3" id="text-3-8">
 <p>
 Delete a project.
 </p>
 
 <dl class="org-dl">
-<dt> POST api/project/import </dt><dd><dl class="org-dl">
+<dt> POST api/project/delete </dt><dd><dl class="org-dl">
 <dt> origin </dt><dd>         The origin of the project that will be deleted.
 </dd>
 <dt> project </dt><dd>         The name of the project that will be deleted.
@@ -1121,97 +1043,336 @@ Examples:
 
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">misc</h2>
+<h2 id="sec-4">vocabulary</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1">latest</h3>
+<p>
+Vocabularies are a special kind of projects. So all the functions
+that work for projects can be used for vocabularies as well. For
+example, if we have the vocabulary named <code>test1</code> of language <code>sq</code>,
+then project functions can be used with =origin = 'vocabulary'= and
+<code>project = 'test1_sq'=. Also, the context of each string will be
+  =test1_sq</code>.
+</p>
+</div>
+
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">list</h3>
 <div class="outline-text-3" id="text-4-1">
+<dl class="org-dl">
+<dt> GET vocabulary/list </dt><dd>     Return a list of vocabularies in JSON format.
+</dd>
+</dl>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/list.php">http://dev.btranslator.org/api-examples-php/vocabulary/list.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/list.js">http://info.btranslator.org/api-examples-js/#vocabulary/list.js</a>
+</li>
+</ul>
+
+<pre class="example">
+curl -s https://btranslator.org/vocabulary/list | python -m json.tool
+curl -s http://dev.btranslator.org/vocabulary/list | python -m json.tool
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">export</h3>
+<div class="outline-text-3" id="text-4-2">
+<dl class="org-dl">
+<dt> GET vocabulary/export/$vocabulary[/$format] </dt><dd>     Return the list of terms and translations of a vocabulary.
+<dl class="org-dl">
+<dt> $vocabulary </dt><dd>         The name of the vocabulary project (which ends in <code>_lng</code>).
+</dd>
+<dt> $format </dt><dd>         The output format: <code>json | txt1 | txt2 | org</code>.
+Default is <code>json</code>.
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/export.php">http://dev.btranslator.org/api-examples-php/vocabulary/export.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/export.js">http://info.btranslator.org/api-examples-js/#vocabulary/export.js</a>
+</li>
+</ul>
+
+<pre class="example">
+curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
+curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
+curl https://btranslator.org/vocabulary/export/ICT_sq/org &gt; ICT_sq.org
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">import</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Create a vocabulary or update an existing one.
+</p>
+
+<dl class="org-dl">
+<dt> POST api/vocabulary/import </dt><dd><dl class="org-dl">
+<dt> name </dt><dd>         The name of the vocabulary.
+</dd>
+<dt> lng </dt><dd>         The language of the vocabulary.
+</dd>
+<dt> file </dt><dd>         File of terms and translations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>
+Returns associative array containing:
+</p>
+<dl class="org-dl">
+<dt> messages </dt><dd>         Array of notification messages; each notification message
+is an array of a message and a type, where type can be one of
+<code>status</code>, <code>warning</code>, <code>error</code>.
+</dd>
+</dl>
+
+<p>
+The format of the uploaded text file is the same as the exported
+TXT1 file, where each line is like this:
+</p>
+<pre class="example">
+term &lt;==&gt; translation1 / translation2 / translation3
+</pre>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/import.php">http://dev.btranslator.org/api-examples-php/vocabulary/import.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/import.js">http://info.btranslator.org/api-examples-js/#vocabulary/import.js</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4">add_string</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Add a new string to a vocabulary.
+</p>
+
+<dl class="org-dl">
+<dt> POST api/vocabulary/add_string </dt><dd><dl class="org-dl">
+<dt> name </dt><dd>         The name of the vocabulary.
+</dd>
+<dt> lng </dt><dd>         The language of the vocabulary.
+</dd>
+<dt> string </dt><dd>         String to be added.
+</dd>
+<dt> notify </dt><dd>(optional)
+It TRUE, notify subscribers about the new string. Default is TRUE.
+</dd>
+</dl>
+<p>
+Returns associative array containing:
+</p>
+<dl class="org-dl">
+<dt> sguid </dt><dd>The sguid of the new string, or NULL if such a string
+already exists.
+</dd>
+<dt> messages </dt><dd>Array of notification messages; each notification
+message is an array of a message and a type, where
+type can be one of <i>status</i>, <i>warning</i>, <i>error</i>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php">http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js">http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5">del_string</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Delete a string from a vocabulary.
+</p>
+
+<dl class="org-dl">
+<dt> POST api/project/del_string </dt><dd><dl class="org-dl">
+<dt> name </dt><dd>         The name of the vocabulary.
+</dd>
+<dt> lng </dt><dd>         The language of the vocabulary.
+</dd>
+<dt> sguid </dt><dd>         ID of the string to be deleted.
+</dd>
+</dl>
+<p>
+Returns associative array containing:
+</p>
+<dl class="org-dl">
+<dt> messages </dt><dd>Array of notification messages; each notification
+message is an array of a message and a type, where
+type can be one of <i>status</i>, <i>warning</i>, <i>error</i>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php">http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js">http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6">delete</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+Delete a vocabulary.
+</p>
+
+<dl class="org-dl">
+<dt> POST api/vocabulary/delete </dt><dd><dl class="org-dl">
+<dt> name </dt><dd>         The name of the vocabulary.
+</dd>
+<dt> lng </dt><dd>         The language of the vocabulary.
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>
+Returns associative array containing:
+</p>
+<dl class="org-dl">
+<dt> message </dt><dd>         Notification message, which is an array of a message and a
+type, where type can be one of <code>status</code>, <code>warning</code>, <code>error</code>.
+</dd>
+</dl>
+
+<p>
+Examples:
+</p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/vocabulary/delete.php">http://dev.btranslator.org/api-examples-php/vocabulary/delete.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#vocabulary/delete.js">http://info.btranslator.org/api-examples-js/#vocabulary/delete.js</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">misc</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">latest</h3>
+<div class="outline-text-3" id="text-5-1">
 <dl class="org-dl">
 <dt> GET latest/$lng[/$origin[/$project]] </dt><dd>Return a JSON array of
 the latest translations for the given language (origin and
 project are optional). Latest means yesterday.  Results are
 cached, so last minute translations may not appear on the
 list.
+</dd>
+</dl>
 
 <p>
 Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/misc/latest.php">http://dev.btranslator.org/api-examples-php/misc/latest.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#misc/latest.js">http://info.btranslator.org/api-examples-js/#misc/latest.js</a>
+</li>
+</ul>
+
 <pre class="example">
 curl https://btranslator.org/latest/sq
 curl https://btranslator.org/latest/sq/vocabulary
 curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
 </pre>
-
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#misc/latest.js">http://info.btranslator.org/api-examples-js/#misc/latest.js</a>
-</li>
-</ul>
-</dd>
-</dl>
 </div>
 </div>
 
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2">rss-feed</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">rss-feed</h3>
+<div class="outline-text-3" id="text-5-2">
 <dl class="org-dl">
 <dt> GET btr/rss-feed[/$origin[/$project]] </dt><dd>Return a RSS feed of the
 latest translations (origin and project are optional). Latest
 means yesterday.  Results are cached, so last minute
 translations may not appear on the list.
+</dd>
+</dl>
 
 <p>
 Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/misc/rss-feed.php">http://dev.btranslator.org/api-examples-php/misc/rss-feed.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#misc/rss-feed.js">http://info.btranslator.org/api-examples-js/#misc/rss-feed.js</a>
+</li>
+</ul>
+
 <pre class="example">
 curl https://l10n.org.al/btr/rss-feed
 curl https://l10n.org.al/btr/rss-feed/vocabulary
 curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
+
+curl https://btranslator.net/btr/rss-feed/LibreOffice/cui/sq
+curl https://btranslator.net/btr/rss-feed/LibreOffice/cui
+
+curl https://btranslator.org/rss-feed/sq
+curl https://btranslator.org/rss-feed/sq/LibreOffice
+curl https://btranslator.org/rss-feed/sq/LibreOffice/cui
 </pre>
-
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#misc/rss-feed.js">http://info.btranslator.org/api-examples-js/#misc/rss-feed.js</a>
-</li>
-</ul>
-</dd>
-</dl>
 </div>
 </div>
 
 
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3">twitter</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">twitter</h3>
+<div class="outline-text-3" id="text-5-3">
 <dl class="org-dl">
 <dt> GET btr/tweet[/$origin[/$project]] </dt><dd>Return a random string and
 its translations in a suitable form for the twitter (truncated
 to 100 characters).
-
-<p>
-Examples:
-</p>
-<pre class="example">
-curl https://l10n.org.al/btr/tweet
-curl https://l10n.org.al/btr/tweet/vocabulary
-curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
-</pre>
-
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#misc/twitter.js">http://info.btranslator.org/api-examples-js/#misc/twitter.js</a>
-</li>
-</ul>
-<p>
-<b>Note:</b> This can be used in combination with <i>cli twitter
-clients</i> and with <b>cron</b> to post random tweets about
-translations.  See this script as an example:
-<a href="https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh">https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh</a>
-</p>
 </dd>
-</dl>
 
-
-<dl class="org-dl">
 <dt> GET tweet/$lng[/$origin[/$project]] </dt><dd>Return a random string and
 its translations in a suitable form for the twitter (truncated
 to 100 characters).
@@ -1219,14 +1380,8 @@ to 100 characters).
 <dt> lng </dt><dd>Language of translations.
 </dd>
 </dl>
-<p>
-Examples:
-</p>
-<pre class="example">
-curl https://btranslator.org/tweet/sq
-curl https://btranslator.org/tweet/sq/vocabulary
-curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
-</pre>
+</dd>
+</dl>
 
 <p>
 <b>Note:</b> This can be used in combination with <i>cli twitter
@@ -1234,48 +1389,38 @@ clients</i> and with <b>cron</b> to post random tweets about
 translations.  See this script as an example:
 <a href="https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh">https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh</a>
 </p>
-</dd>
-</dl>
-</div>
-</div>
 
-
-<div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4">vocabulary/export</h3>
-<div class="outline-text-3" id="text-4-4">
-<dl class="org-dl">
-<dt> GET vocabulary/export/$vocabulary[/$format] </dt><dd>     Return the list of terms in a vocabulary and all the suggested
-translations.
-<dl class="org-dl">
-<dt> $vocabulary </dt><dd>         The name of the vocabulary project (which ends in <code>_lng</code>).
-</dd>
-
-<dt> $format </dt><dd>         The output format: <code>json | txt1 | txt2 | org</code>.
-Default is <code>json</code>.
-</dd>
-</dl>
 <p>
 Examples:
 </p>
-<pre class="example">
-curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
-curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
-curl https://btranslator.org/vocabulary/export/ICT_sq/org &gt; ICT_sq.org
-</pre>
-
 <ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#misc/vocabulary.js">http://info.btranslator.org/api-examples-js/#misc/vocabulary.js</a>
+<li><a href="http://dev.btranslator.org/api-examples-php/misc/twitter.php">http://dev.btranslator.org/api-examples-php/misc/twitter.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#misc/twitter.js">http://info.btranslator.org/api-examples-js/#misc/twitter.js</a>
 </li>
 </ul>
-</dd>
-</dl>
+
+<pre class="example">
+curl https://l10n.org.al/btr/tweet
+curl https://l10n.org.al/btr/tweet/vocabulary
+curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
+
+curl https://btranslator.net/btr/tweet/vocabulary/ICT_sq/sq
+
+curl https://btranslator.org/tweet/sq
+curl https://btranslator.org/tweet/sq/vocabulary
+curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
+
+curl -H 'Accept: application/json' \
+     https://btranslator.org/tweet/sq | python -m json.tool
+</pre>
 </div>
 </div>
 
 
-<div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5">autocomplete</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4">autocomplete</h3>
+<div class="outline-text-3" id="text-5-4">
 <dl class="org-dl">
 <dt> GET auto/project/$str </dt><dd>Retrieve a JSON list of autocomplete
 suggestions for projects.
@@ -1283,12 +1428,6 @@ suggestions for projects.
 <dt> str </dt><dd>Beginning of a project name.
 </dd>
 </dl>
-<p>
-Example:
-</p>
-<pre class="example">
-curl https://btranslator.org/auto/project/kd
-</pre>
 </dd>
 
 <dt> GET auto/origin/$str </dt><dd>Retrieve a JSON list of autocomplete
@@ -1297,12 +1436,6 @@ suggestions for origins of projects.
 <dt> str </dt><dd>Beginning of an origin.
 </dd>
 </dl>
-<p>
-Example:
-</p>
-<pre class="example">
-curl https://btranslator.org/auto/origin/G
-</pre>
 </dd>
 
 <dt> GET auto/user/$lng/$str </dt><dd>Retrieve a JSON list of autocomplete
@@ -1313,12 +1446,6 @@ suggestions for users.
 <dt> str </dt><dd>Beginning of a user name.
 </dd>
 </dl>
-<p>
-Example:
-</p>
-<pre class="example">
-curl https://btranslator.org/auto/user/sq/d
-</pre>
 </dd>
 
 <dt> GET auto/string/$origin/$project/$str </dt><dd>     Retrieve a JSON list of autocomplete suggestions for strings.
@@ -1332,38 +1459,41 @@ don't limit by project.
 <dt> str </dt><dd>Beginning of a string.
 </dd>
 </dl>
+</dd>
+</dl>
+
 <p>
-Example:
+Examples:
 </p>
+<ul class="org-ul">
+<li><a href="http://dev.btranslator.org/api-examples-php/misc/autocomplete.php">http://dev.btranslator.org/api-examples-php/misc/autocomplete.php</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#misc/autocomplete.js">http://info.btranslator.org/api-examples-js/#misc/autocomplete.js</a>
+</li>
+</ul>
+
 <pre class="example">
+curl https://btranslator.org/auto/project/kd
+curl https://btranslator.org/auto/origin/G
+curl https://btranslator.org/auto/user/sq/d
+
 curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
 curl https://btranslator.org/auto/string/vocabulary/*/a
 curl https://btranslator.org/auto/string/*/ICT_sq/a
 curl https://btranslator.org/auto/string/*/*/a
 </pre>
-</dd>
-</dl>
 </div>
 </div>
 
-<div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6">other</h3>
-<div class="outline-text-3" id="text-4-6">
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5">other</h3>
+<div class="outline-text-3" id="text-5-5">
 <dl class="org-dl">
 <dt> GET languages </dt><dd>Return a json list of languages installed on the
 system and their details.
-
-<p>
-Example:
-</p>
-<pre class="example">
-curl https://btranslator.org/languages
-</pre>
 </dd>
-</dl>
 
-
-<dl class="org-dl">
 <dt> GET string_details/$sguid </dt><dd>Return string context, a
 list of related projects (where the string appears), etc.
 provider.
@@ -1371,36 +1501,33 @@ provider.
 <dt> sguid </dt><dd>Id of the string.
 </dd>
 </dl>
-<p>
-Example:
-</p>
-<pre class="example">
-curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
-</pre>
 </dd>
 </dl>
-</div>
-</div>
-</div>
 
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">oauth2</h2>
-<div class="outline-text-2" id="text-5">
 <p>
-For more details and examples see: <a href="https://github.com/dashohoxha/oauth2-js">https://github.com/dashohoxha/oauth2-js</a>
+Examples:
 </p>
+<pre class="example">
+curl https://btranslator.org/languages | python -m json.tool
+curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
+</pre>
+</div>
+</div>
+</div>
 
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">oauth2</h2>
+<div class="outline-text-2" id="text-6">
 <dl class="org-dl">
 <dt> POST oauth2/token </dt><dd>Get an OAuth2 token.
-
 <pre class="example">
 $.ajax(base_url + '/oauth2/token', {
     type: 'POST',
     data: {
         grant_type: 'password',
-        username: 'user123',
-        password: 'pass123',
+        username: 'user1',
+        password: 'pass1',
         scope: 'user_profile', 
     },
     headers: {
@@ -1409,22 +1536,10 @@ $.ajax(base_url + '/oauth2/token', {
 
 });
 </pre>
-
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#oauth2/get_token.js">http://info.btranslator.org/api-examples-js/#oauth2/get_token.js</a>
-</li>
-</ul>
 </dd>
-</dl>
 
-
-<dl class="org-dl">
 <dt> GET oauth2/tokens/&lt;access_token&gt; </dt><dd>Verify the validity of an
 OAuth2 token.
-
 <pre class="example">
 $.ajax(base_url + '/oauth2/tokens/' + access_token)
     .fail(function () {
@@ -1434,18 +1549,9 @@ $.ajax(base_url + '/oauth2/tokens/' + access_token)
         console.log(response);
     });
 </pre>
-
-<p>
-Examples:
-</p>
-<ul class="org-ul">
-<li><a href="http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js">http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js</a>
-</li>
-</ul>
 </dd>
 
 <dt> POST oauth2/user/profile </dt><dd>Get the profile of the user.
-
 <pre class="example">
 $.ajax(base_url + '/oauth2/user/profile', {
     type: 'POST',
@@ -1455,22 +1561,42 @@ $.ajax(base_url + '/oauth2/user/profile', {
     dataType: 'json',
 });
 </pre>
+</dd>
+</dl>
 
 <p>
 Examples:
 </p>
 <ul class="org-ul">
+<li><a href="http://info.btranslator.org/api-examples-js/#oauth2/get_token.js">http://info.btranslator.org/api-examples-js/#oauth2/get_token.js</a>
+</li>
+<li><a href="http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js">http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js</a>
+</li>
 <li><a href="http://info.btranslator.org/api-examples-js/#oauth2/get_user_profile.js">http://info.btranslator.org/api-examples-js/#oauth2/get_user_profile.js</a>
 </li>
 </ul>
-</dd>
-</dl>
+
+<p>
+For more details and examples see: <a href="https://github.com/dashohoxha/oauth2-js">https://github.com/dashohoxha/oauth2-js</a>
+</p>
+
+<p>
+For PHP examples see:
+</p>
+<ul class="org-ul">
+<li><a href="https://btranslator.org/api-examples-php/config.php">https://btranslator.org/api-examples-php/config.php</a>
+</li>
+<li><a href="https://btranslator.org/api-examples-php/get_access_token.php">https://btranslator.org/api-examples-php/get_access_token.php</a>
+</li>
+<li><a href="https://btranslator.org/api-examples-php/translations/add.php">https://btranslator.org/api-examples-php/translations/add.php</a>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dashamir Hoxha</p>
-<p class="date">Created: 2015-09-19 Sat 22:28</p>
+<p class="date">Created: 2015-11-03 Tue 10:17</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
