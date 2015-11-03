@@ -9,6 +9,7 @@
 
 * report
 
+
 ** statistics
 
    General statistics (number of votes and translations) for the last
@@ -96,6 +97,7 @@
 
 * translations
 
+
 ** get_random_sguid
 
    Get the sguid of a random string according to the target.
@@ -123,18 +125,11 @@
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-     Examples:
-     - [[http://info.btranslator.org/api-examples-js/#translations/retrieve.js]]
-
    + POST api/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =random | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
-
-     Examples:
-     - [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
-     - [[http://info.btranslator.org/api-examples-js/#translations/get.js]]
 
    + GET translations/$lng/$sguid :: Returns the details of a string
      and its translations.  If the request header =Accept:
@@ -142,12 +137,16 @@
      (otherwise it will be an HTML page). The parameter /$sguid/ can
      also be one of =random | translated | untranslated=.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl -k -H 'Accept: application/json' \
-       'http://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-     curl -k -H 'Accept: application/json' http://dev.btranslator.org/translations/sq/random
-     #+END_EXAMPLE
+   Examples:
+   - [[http://info.btranslator.org/api-examples-js/#translations/retrieve.js]]
+   - [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/get.js]]
+
+   #+BEGIN_EXAMPLE
+   curl -k -H 'Accept: application/json' \
+     'http://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+   curl -k -H 'Accept: application/json' http://dev.btranslator.org/translations/sq/random
+   #+END_EXAMPLE
 
 
 ** add
@@ -164,9 +163,9 @@
          version(s) as well, they are concatenated with NULL bytes ("\0")
          between them.
 
-     Examples:
-     - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
-     - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
 
 
 ** vote
@@ -259,24 +258,23 @@
          Used when listing the strings of a project.
          Can be one of: /all/, /translated/, /untranslated/
 
-     Examples:
-     - [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
-     - [[http://info.btranslator.org/api-examples-js/#translations/list.js]]
-     - [[http://info.btranslator.org/api-examples-js/#translations/search.js]]
-
   + GET translations/search :: Search strings and translations using
     various filters.  If the request header =Accept: application/json=
     is set, then the output will be in JSON (otherwise it will be an
     HTML page). It gets the same parameters as =GET
     api/translations=
 
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k -H 'Accept: application/json' \
-         'http://dev.btranslator.org/translations/search?lng=sq&words=space'
-    curl -k -H 'Accept: application/json' \
-         'https://l10n.org.al/translations/search?lng=sq&words=space'
-    #+END_EXAMPLE
+  Examples:
+  - [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
+  - [[http://info.btranslator.org/api-examples-js/#translations/list.js]]
+  - [[http://info.btranslator.org/api-examples-js/#translations/search.js]]
+
+  #+BEGIN_EXAMPLE
+  curl -k -H 'Accept: application/json' \
+       'http://dev.btranslator.org/translations/search?lng=sq&words=space'
+  curl -k -H 'Accept: application/json' \
+       'https://l10n.org.al/translations/search?lng=sq&words=space'
+  #+END_EXAMPLE
 
 
 ** submit
@@ -313,10 +311,6 @@
          is an array of a message and a type, where type can be one of
          =status=, =warning=, =error=.
 
-   Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
-   - [[http://info.btranslator.org/api-examples-js/#translations/import.js]]
-
    This is like a bulk translation and voting service. For any
    translation in the PO files, it will be added as a suggestion if
    such a translation does not exist, or it will just be voted if such
@@ -330,8 +324,13 @@
    exported translations, and then import back to B-Translator the
    translated/corrected PO files.
 
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
+   - [[http://info.btranslator.org/api-examples-js/#translations/import.js]]
+
 
 * project
+
 
 ** subscribe
 
@@ -357,16 +356,17 @@
 
 
 ** list/all
+
    + GET project/list/all ::
      Return a full list of all the imported projects and languages.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -s https://btranslator.org/project/list/all | python -m json.tool
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/list_all.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/list_all.js]]
 
-     - [[http://dev.btranslator.org/api-examples-php/project/list_all.php]]
-     - [[http://info.btranslator.org/api-examples-js/#project/list_all.js]]
+   #+BEGIN_EXAMPLE
+   curl -s https://btranslator.org/project/list/all | python -m json.tool
+   #+END_EXAMPLE
 
 
 ** list
@@ -383,18 +383,6 @@
      If *project* is =-= then only a list of 'origin' is outputed,
      otherwise a list of 'origin/project'.
 
-     Examples:
-     - [[http://dev.btranslator.org/api-examples-php/project/list.php]]
-     - [[http://info.btranslator.org/api-examples-js/#project/list.js]]
-
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -k -X POST http://dev.btranslator.org/api/project/list
-     curl -k -X POST http://dev.btranslator.org/api/project/list \
-          -H "Content-type: application/json" \
-          -d '{"origin": "t*"}'
-     #+END_EXAMPLE
-
    + GET project/list/$origin/$project[/$format] ::
      Return a plain-text list of all the imported projects, filtered
      by the given origin/project. Parameters *origin* and *project*
@@ -403,16 +391,26 @@
      otherwise a list of 'origin/project'.  The third variable can be
      JSON or TEXT (default).
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl 'https://btranslator.org/project/list/*/-'
-     curl 'https://btranslator.org/project/list/*/-/json'
-     curl 'https://btranslator.org/project/list/LibreOffice/s*'
-     curl 'https://btranslator.org/project/list/LibreOffice'
-     curl 'https://btranslator.org/project/list/*/nautil*'
-     curl 'https://btranslator.org/project/list/*/*/json'
-     curl 'https://btranslator.org/project/list'
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/list.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/list.js]]
+
+   #+BEGIN_EXAMPLE
+   curl -k -X POST http://dev.btranslator.org/api/project/list
+   curl -k -X POST http://dev.btranslator.org/api/project/list \
+	-H "Content-type: application/json" \
+	-d '{"origin": "t*"}'
+   #+END_EXAMPLE
+
+   #+BEGIN_EXAMPLE
+   curl 'https://btranslator.org/project/list/*/-'
+   curl 'https://btranslator.org/project/list/*/-/json'
+   curl 'https://btranslator.org/project/list/LibreOffice/s*'
+   curl 'https://btranslator.org/project/list/LibreOffice'
+   curl 'https://btranslator.org/project/list/*/nautil*'
+   curl 'https://btranslator.org/project/list/*/*/json'
+   curl 'https://btranslator.org/project/list'
+   #+END_EXAMPLE
 
 
 ** langs
@@ -420,10 +418,10 @@
    + GET project/langs/$origin/$project ::
      Get a list of languages for the given origin/project.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl -s https://btranslator.org/project/langs/LibreOffice/cui | python -m json.tool
-     #+END_EXAMPLE
+   Examples:
+   #+BEGIN_EXAMPLE
+   curl -s https://btranslator.org/project/langs/LibreOffice/cui | python -m json.tool
+   #+END_EXAMPLE
 
 
 ** export
@@ -451,11 +449,6 @@
      - preferred_voters ::
          Comma separated list of usernames. Used only when /export_mode/
          is =preferred=.
-
-     Examples:
-     - [[http://dev.btranslator.org/api-examples-php/project/export.php]]
-     - [[http://info.btranslator.org/api-examples-js/#project/export.js]]
-
 
    + GET/POST project/export :: Return an archive of PO
      files for a given origin/project/lng. Does not allow concurrent
@@ -485,19 +478,24 @@
      - preferred_voters ::
          Comma separated list of usernames of the preferred voters.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -k 'http://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
-     curl -k http://dev.btranslator.org/project/export \
-          -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-     curl -k http://dev.btranslator.org/project/export \
-          -d origin=test -d project=kturtle -d lng=sq \
-          -d export_mode=preferred \
-          -d preferred_voters=user1,user2 > test1.tgz
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/project/export.php]]
+   - [[http://info.btranslator.org/api-examples-js/#project/export.js]]
+
+   #+BEGIN_EXAMPLE
+   curl -k 'http://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+   curl -k http://dev.btranslator.org/project/export \
+	-d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
+   curl -k http://dev.btranslator.org/project/export \
+	-d origin=test -d project=kturtle -d lng=sq \
+	-d export_mode=preferred \
+	-d preferred_voters=user1,user2 > test1.tgz
+   #+END_EXAMPLE
 
 
 ** diff
+
+   For more details about diffs see: [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs][README.org#snapshots-and-diffs]]
 
    + GET project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
      Return as plain-text the diff of the PO file for a given
@@ -505,35 +503,31 @@
      suggestions since the last snapshot. If the parameter *$nr* is
      missing, it returns a list of the saved diffs instead.
 
-     For more details about diffs see: [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs][README.org#snapshots-and-diffs]]
-
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/project/diff/LibreOffice/sw/sq
-     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2 > 2.diff
-     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
-     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4 > 4.diff
-     curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
-     #+END_EXAMPLE
-
    + GET project/diff-dl/$origin/$project/$lng[/$nr[/$ediff]] ::
      Similar to project_diff, but return a file for download (not plain text).
-
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2
-     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2/ediff
-     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/diff
-     curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/ediff
-     #+END_EXAMPLE
 
    + GET project/diff-latest/$origin/$project/$lng?format=...&export_mode=...&friends=... ::
      Export the latest most voted translations and make the diffs with the last snapshot.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl 'https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff&export_mode=preferred_by_me&friends='
-     #+END_EXAMPLE
+   Examples:
+   #+BEGIN_EXAMPLE
+   curl https://btranslator.org/project/diff/LibreOffice/sw/sq
+   curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2 > 2.diff
+   curl https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+   curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4 > 4.diff
+   curl https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+   #+END_EXAMPLE
+
+   #+BEGIN_EXAMPLE
+   curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2
+   curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/2/ediff
+   curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/diff
+   curl https://btranslator.org/project/diff-dl/LibreOffice/sw/sq/4/ediff
+   #+END_EXAMPLE
+
+   #+BEGIN_EXAMPLE
+   curl 'https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff&export_mode=preferred_by_me&friends='
+   #+END_EXAMPLE
 
 
 ** import
@@ -601,18 +595,20 @@
   =project = 'test1_sq'=. Also, the context of each string will be
   =test1_sq=.
 
+
 ** list
+
    + GET vocabulary/list ::
      Return a list of vocabularies in JSON format.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -s https://btranslator.org/vocabulary/list | python -m json.tool
-     curl -s http://dev.btranslator.org/vocabulary/list | python -m json.tool
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/list.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/list.js]]
 
-     - [[http://dev.btranslator.org/api-examples-php/vocabulary/list.php]]
-     - [[http://info.btranslator.org/api-examples-js/#vocabulary/list.js]]
+   #+BEGIN_EXAMPLE
+   curl -s https://btranslator.org/vocabulary/list | python -m json.tool
+   curl -s http://dev.btranslator.org/vocabulary/list | python -m json.tool
+   #+END_EXAMPLE
 
 
 ** export
@@ -625,21 +621,20 @@
          The output format: =json | txt1 | txt2 | org=.
          Default is =json=.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
-     curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
-     curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/vocabulary/export.php]]
+   - [[http://info.btranslator.org/api-examples-js/#vocabulary/export.js]]
 
-     - [[http://dev.btranslator.org/api-examples-php/vocabulary/export.php]]
-     - [[http://info.btranslator.org/api-examples-js/#vocabulary/export.js]]
+   #+BEGIN_EXAMPLE
+   curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
+   curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
+   curl https://btranslator.org/vocabulary/export/ICT_sq/org > ICT_sq.org
+   #+END_EXAMPLE
 
 
 ** import
 
    Create a vocabulary or update an existing one.
-
 
    + POST api/vocabulary/import ::
      - name ::
@@ -735,6 +730,7 @@
 
 * misc
 
+
 ** latest
 
    + GET latest/$lng[/$origin[/$project]] :: Return a JSON array of
@@ -743,15 +739,15 @@
         cached, so last minute translations may not appear on the
         list.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/latest/sq
-     curl https://btranslator.org/latest/sq/vocabulary
-     curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/misc/latest.php]]
+   - [[http://info.btranslator.org/api-examples-js/#misc/latest.js]]
 
-     - [[http://dev.btranslator.org/api-examples-php/misc/latest.php]]
-     - [[http://info.btranslator.org/api-examples-js/#misc/latest.js]]
+   #+BEGIN_EXAMPLE
+   curl https://btranslator.org/latest/sq
+   curl https://btranslator.org/latest/sq/vocabulary
+   curl https://btranslator.org/latest/sq/vocabulary/ICT_sq
+   #+END_EXAMPLE
 
 
 ** rss-feed
@@ -761,22 +757,22 @@
         means yesterday.  Results are cached, so last minute
         translations may not appear on the list.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://l10n.org.al/btr/rss-feed
-     curl https://l10n.org.al/btr/rss-feed/vocabulary
-     curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/misc/rss-feed.php]]
+   - [[http://info.btranslator.org/api-examples-js/#misc/rss-feed.js]]
 
-     curl https://btranslator.net/btr/rss-feed/LibreOffice/cui/sq
-     curl https://btranslator.net/btr/rss-feed/LibreOffice/cui
+   #+BEGIN_EXAMPLE
+   curl https://l10n.org.al/btr/rss-feed
+   curl https://l10n.org.al/btr/rss-feed/vocabulary
+   curl https://l10n.org.al/btr/rss-feed/vocabulary/ICT_sq
 
-     curl https://btranslator.org/rss-feed/sq
-     curl https://btranslator.org/rss-feed/sq/LibreOffice
-     curl https://btranslator.org/rss-feed/sq/LibreOffice/cui
-     #+END_EXAMPLE
+   curl https://btranslator.net/btr/rss-feed/LibreOffice/cui/sq
+   curl https://btranslator.net/btr/rss-feed/LibreOffice/cui
 
-     - [[http://dev.btranslator.org/api-examples-php/misc/rss-feed.php]]
-     - [[http://info.btranslator.org/api-examples-js/#misc/rss-feed.js]]
+   curl https://btranslator.org/rss-feed/sq
+   curl https://btranslator.org/rss-feed/sq/LibreOffice
+   curl https://btranslator.org/rss-feed/sq/LibreOffice/cui
+   #+END_EXAMPLE
 
 
 ** twitter
@@ -785,81 +781,50 @@
         its translations in a suitable form for the twitter (truncated
         to 100 characters).
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://l10n.org.al/btr/tweet
-     curl https://l10n.org.al/btr/tweet/vocabulary
-     curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
-
-     curl https://btranslator.net/btr/tweet/vocabulary/ICT_sq/sq
-     #+END_EXAMPLE
-
-     - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
-     - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
-
-     *Note:* This can be used in combination with /cli twitter
-     clients/ and with *cron* to post random tweets about
-     translations.  See this script as an example:
-     https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh
-
-
    + GET tweet/$lng[/$origin[/$project]] :: Return a random string and
         its translations in a suitable form for the twitter (truncated
         to 100 characters).
      - lng :: Language of translations.
 
-     Examples:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/tweet/sq
-     curl https://btranslator.org/tweet/sq/vocabulary
-     curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
+   *Note:* This can be used in combination with /cli twitter
+   clients/ and with *cron* to post random tweets about
+   translations.  See this script as an example:
+   https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
 
-     curl -H 'Accept: application/json' \
-          https://btranslator.org/tweet/sq | python -m json.tool
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
+   - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
 
-     - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
-     - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
+   #+BEGIN_EXAMPLE
+   curl https://l10n.org.al/btr/tweet
+   curl https://l10n.org.al/btr/tweet/vocabulary
+   curl https://l10n.org.al/btr/tweet/vocabulary/ICT_sq
 
-     *Note:* This can be used in combination with /cli twitter
-     clients/ and with *cron* to post random tweets about
-     translations.  See this script as an example:
-     https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
+   curl https://btranslator.net/btr/tweet/vocabulary/ICT_sq/sq
+
+   curl https://btranslator.org/tweet/sq
+   curl https://btranslator.org/tweet/sq/vocabulary
+   curl https://btranslator.org/tweet/sq/vocabulary/ICT_sq
+
+   curl -H 'Accept: application/json' \
+	https://btranslator.org/tweet/sq | python -m json.tool
+   #+END_EXAMPLE
 
 
 ** autocomplete
-
-   Examples:
-     - [[http://dev.btranslator.org/api-examples-php/misc/autocomplete.php]]
-     - [[http://info.btranslator.org/api-examples-js/#misc/autocomplete.js]]
 
    + GET auto/project/$str :: Retrieve a JSON list of autocomplete
         suggestions for projects.
      - str :: Beginning of a project name.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/auto/project/kd
-     #+END_EXAMPLE
-
    + GET auto/origin/$str :: Retrieve a JSON list of autocomplete
         suggestions for origins of projects.
      - str :: Beginning of an origin.
-
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/auto/origin/G
-     #+END_EXAMPLE
 
    + GET auto/user/$lng/$str :: Retrieve a JSON list of autocomplete
         suggestions for users.
      - lng :: Language of translations.
      - str :: Beginning of a user name.
-
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/auto/user/sq/d
-     #+END_EXAMPLE
 
    + GET auto/string/$origin/$project/$str ::
      Retrieve a JSON list of autocomplete suggestions for strings.
@@ -869,13 +834,20 @@
                   don't limit by project.
      - str :: Beginning of a string.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
-     curl https://btranslator.org/auto/string/vocabulary/*/a
-     curl https://btranslator.org/auto/string/*/ICT_sq/a
-     curl https://btranslator.org/auto/string/*/*/a
-     #+END_EXAMPLE
+   Examples:
+   - [[http://dev.btranslator.org/api-examples-php/misc/autocomplete.php]]
+   - [[http://info.btranslator.org/api-examples-js/#misc/autocomplete.js]]
+
+   #+BEGIN_EXAMPLE
+   curl https://btranslator.org/auto/project/kd
+   curl https://btranslator.org/auto/origin/G
+   curl https://btranslator.org/auto/user/sq/d
+
+   curl https://btranslator.org/auto/string/vocabulary/ICT_sq/a
+   curl https://btranslator.org/auto/string/vocabulary/*/a
+   curl https://btranslator.org/auto/string/*/ICT_sq/a
+   curl https://btranslator.org/auto/string/*/*/a
+   #+END_EXAMPLE
 
 
 ** other
@@ -883,34 +855,21 @@
    + GET languages :: Return a json list of languages installed on the
                   system and their details.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/languages | python -m json.tool
-     #+END_EXAMPLE
-
-
    + GET string_details/$sguid :: Return string context, a
      list of related projects (where the string appears), etc.
      provider.
      - sguid :: Id of the string.
 
-     Example:
-     #+BEGIN_EXAMPLE
-     curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
-     #+END_EXAMPLE
+   Examples:
+   #+BEGIN_EXAMPLE
+   curl https://btranslator.org/languages | python -m json.tool
+   curl https://btranslator.org/string_details/0f27be1118ae4807f00ed5fa21a0f17fcc3649ed | python -m json.tool
+   #+END_EXAMPLE
 
 
 * oauth2
 
-  For more details and examples see: https://github.com/dashohoxha/oauth2-js
-
-  For PHP examples see:
-  - https://btranslator.org/api-examples-php/config.php
-  - https://btranslator.org/api-examples-php/get_access_token.php
-  - https://btranslator.org/api-examples-php/translations/add.php
-
   + POST oauth2/token :: Get an OAuth2 token.
-
     #+BEGIN_EXAMPLE
     $.ajax(base_url + '/oauth2/token', {
         type: 'POST',
@@ -927,13 +886,8 @@
     });
     #+END_EXAMPLE
 
-    Examples:
-    - [[http://info.btranslator.org/api-examples-js/#oauth2/get_token.js]]
-
-
   + GET oauth2/tokens/<access_token> :: Verify the validity of an
        OAuth2 token.
-
     #+BEGIN_EXAMPLE
     $.ajax(base_url + '/oauth2/tokens/' + access_token)
         .fail(function () {
@@ -944,11 +898,7 @@
         });
     #+END_EXAMPLE
 
-    Examples:
-    - [[http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js]]
-
   + POST oauth2/user/profile :: Get the profile of the user.
-
     #+BEGIN_EXAMPLE
     $.ajax(base_url + '/oauth2/user/profile', {
         type: 'POST',
@@ -959,5 +909,15 @@
     });
     #+END_EXAMPLE
 
-    Examples:
-    - [[http://info.btranslator.org/api-examples-js/#oauth2/get_user_profile.js]]
+  Examples:
+  - [[http://info.btranslator.org/api-examples-js/#oauth2/get_token.js]]
+  - [[http://info.btranslator.org/api-examples-js/#oauth2/verify_token.js]]
+  - [[http://info.btranslator.org/api-examples-js/#oauth2/get_user_profile.js]]
+
+  For more details and examples see: https://github.com/dashohoxha/oauth2-js
+
+  For PHP examples see:
+  - https://btranslator.org/api-examples-php/config.php
+  - https://btranslator.org/api-examples-php/get_access_token.php
+  - https://btranslator.org/api-examples-php/translations/add.php
+
