@@ -38,16 +38,6 @@ var example_data = {
                     ],
                 },
                 {
-                    section: 'vocabulary',
-                    examples: [
-                        {
-                            title: 'Export Vocabulary',
-                            jsfile: 'misc/vocabulary.js',
-                            apiref: '#sec-4-4',
-                        },
-                    ],
-                },
-                {
                     section: 'autocomplete',
                     examples: [
                         {
@@ -244,6 +234,16 @@ var example_data = {
                             title: 'POST api/project/subscribe',
                             jsfile: 'project/subscribe.js',
                             apiref: '#sec-3-1',
+                        },
+                    ],
+                },
+                {
+                    section: 'list_all',
+                    examples: [
+                        {
+                            title: 'GET project/list/all',
+                            jsfile: 'project/list_all.js',
+                            apiref: '#sec-3-2',
                         },
                     ],
                 },
