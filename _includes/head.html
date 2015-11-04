@@ -1,13 +1,30 @@
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/favicon.png">
+
 <title>B-Translator</title>
 
-<link rel="stylesheet" href="/stylesheets/styles.css">
-<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
-<link rel="stylesheet" href="/stylesheets/custom.css">
+<!-- Bootstrap Core and Custom CSS -->
+<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+<link href="/stylesheets/sidebar.css" rel="stylesheet">
+
+<link href="/stylesheets/styles.css" rel="stylesheet">
+<link href="/stylesheets/custom.css" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="/javascripts/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/javascripts/bootstrap.min.js"></script>
+
 <script src="/javascripts/scale.fix.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="/favicon.png">
-<!--[if lt IE 9]>
-<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+
+<script>
+$(document).ready(function(){
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+});
+</script>
