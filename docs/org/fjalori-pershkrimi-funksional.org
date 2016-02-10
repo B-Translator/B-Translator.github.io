@@ -1,0 +1,107 @@
+#+TITLE:     Fjalori ICT -- Funksionaliteti dhe Veçoritë
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-info.css" />
+
+* Shtysa
+
+  Shpesh herë më ka ndodhur që ta kem të vështirë të gjej fjalën e
+  duhur në shqip për një term teknik. Ose ndonjëherë e gjej dhe më pas
+  nuk më kujtohet. Në mungesë të fjalës së duhur, shpesh e kam
+  përdorur shabllon fjalën e huaj, dhe kur bëhen shumë të tilla në një
+  fjali, e folura fillon të çalojë, sikur ke zhavorr në gojë. Kështu
+  që e kam ndjerë mungesën e një fjalori të termave teknike, tek i
+  cili mund të drejtohesh kur ke nevojë.
+
+  Përveç kësaj, kam vënë re se persona të ndryshëm e përkthejnë në
+  mënyra të ndryshme të njëjtën fjalë të huaj. Jo vetëm që kjo është
+  burim hutimi, por ndonjëherë bëhet edhe shkak për debate të forta
+  (mjafton të kujtojmë debatin e famshëm se si duhet përkthyer fjala
+  "login", si "hyr" apo si "kyçu").
+
+  Për mendimin tim, gjuha e folur nuk është gjë tjetër veçse një
+  marrëveshje komunikimi midis të gjithë njerëzve që e flasin
+  atë. Kështu që nuk ka përkthime të drejta dhe përkthime të gabuara;
+  ajo fjalë që përdoret nga të gjithë është (me përkufizim) përkthimi
+  i duhur.
+
+
+* Ideja
+
+  Ideja për të ndërtuar një fjalor teknik nuk është ndonjë ide e re.
+  Por fjalorët në përgjithësi ndërtohen nga një ose disa persona të
+  caktuar, të cilët marrin edhe përgjegjësinë të përcaktojnë se cilat
+  fjalë duhen përshirë në fjalor, dhe cilat janë përkthimet e duhura
+  të tyre.  Në fushën e ICT-së kjo nuk funksionon shumë mirë sepse
+  është një fushë përherë në zhvillim dhe gjithmonë dalin terma të
+  reja. Përveç kësaj, në Shqipëri mungojnë institucionet akademike që
+  të bëjnë një punë të tillë, ose nuk e kanë peshën dhe ndikimin e
+  duhur. Edhe nëse një fjalor i tillë do të botohej, hajde tua
+  mbushësh mendjen të gjithëve që ta përdorin (se për ti detyruar nuk
+  bëhet fjalë).
+
+  Kështu që unë mendova se me e mira do ishte diçka dinamike, që
+  ndryshon dhe përshtatet me kushtet e kohës, ku të gjithë kanë të
+  drejtë të japin mendimin e tyre, dhe të gjithë mund të diskutojnë.
+  Në fund të fundit, një shqiptar i zakonshëm e njeh gjuhën shqipe po
+  aq mirë sa edhe një gjuhëtar, dhe gjuha shqipe i përket çdo
+  shqiptari po aq sa i përket edhe një gjuhëtari apo një akademiku.
+
+  Për mendimin tim, vetë rrahja e mendimeve dhe arritja në një
+  përfundim ka më shumë rëndësi sesa vetë përfundimi, cilido qoftë ai.
+  Kështu që fjalorin e kam konceptuar si një vend diskutimi të hapur,
+  që ka vend për të gjithë, që nuk i imponohet askujt dhe nuk lejon
+  dikë që ti imponohet dikujt, që e respekton mendimin e gjithsecilit,
+  dhe që nuk preferon disa mbi të tjerët.
+
+
+* Funksionimi
+
+  - Elementi bazë i fjalorit është një fushë kërkimi, ku futet një
+    fjalë dhe fjalori të kthen përkthimet përkatëse të asaj
+    fjale. Ndërkohë që fjala është duke u shkruar, programi bën një
+    kërkim automatik dhe të ofron një listë me fjalët e mundshme që
+    gjen në fjalor.
+
+  - Sapo fjala anglisht përcaktohet, programi shfaq përkthimet e
+    mundshme të kësaj fjale, bashkë me detajet e tyre, si: kush e ka
+    shtuar, kur, sa përkrahës ka, etj. Në fakt, përkthimet rreshtohen në
+    faqe sipas numrit të përkrahësve, me atë që ka më shumë përkrahës në
+    krye.
+
+  - Përdoruesi gjithashtu ka mundësi që të përkrahë njërin nga
+    përkthimet e shfaqura, ose mund të shtojë një përkthim të ri, nëse
+    asnjëri prej tyre nuk i pëlqen. Për këtë përdoruesi duhet që
+    fillimisht të identifikohet, dhe identifikimi mund të bëhet edhe
+    duke përdorur identitetin në Google, në Facebook, në LinkedIn, etj.
+
+  - Nëse fjala që po kërkohet nuk gjendet në fjalor, përdoruesi ka mundësi
+    ta shtojë atë. Edhe në këtë rast gjithashtu kërkohet identifikim.
+
+  - Kur shtohet një fjalë e re ose një përkthim i ri, sistemi njofton
+    automatikisht me email të gjithë përdoruesit e interesuar.
+
+  - Përdoruesi mund ti shfaqë fjalët e fjalorit edhe në mënyrë të
+    rastësishme nëse thjesht është kureshtar të dijë se çfarë fjalësh
+    ka, dhe cilat janë përkthimet e tyre. Ndërkohë ai mund të bëjë edhe
+    vlerësimin e përkthimeve, duke përcatuar se cili prej tyre i pëlqen
+    më tepër ose duke shtuar një përkthim të ri. Ky vlerësim mund edhe
+    të ndryshohet më vonë, nëse përdoruesi ndryshon mendim.
+
+  - Po ashtu, cilido mund të shkarkojë një listë të plotë të të gjitha
+    fjalëve të fjalorit (sipas rendit alfabetik), bashkë me përkthimet
+    përkatëse. Për këtë shkohet te menuja, dhe pastaj te /Shkarko/, dhe
+    me pas zgjedh njërin prej formateve.
+
+  - Për çdo fjalë që shfaqet, përdoruesi mund ta shpërndajë atë nëpër
+    rrjetet sociale (Facebook, Google+, Twitter dhe LinkedIn), duke
+    përdorur butonat në fund të saj.
+
+  - Gjithashtu përdoruesi mund të bëjë edhe komente ose tu përgjigjet
+    komenteve, për të diskutuar rreth përkthimeve përkatëse dhe
+    pikpamjeve të tij lidhur me to.
+
+  - Programi është mjaft elastik dhe lejon përdorimin e disa fjalorëve
+    dhe të disa gjuhëve. Për të ndryshuar këto apo pëlqime të tjera,
+    shkohet te menuja dhe më pas te /Përcaktimet/.

@@ -1,0 +1,134 @@
+#+TITLE:     Vocabulary -- Technical Description
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-info.css" />
+
+* Intro
+
+  *Vocabulary* is a responsive web app built with [[https://jquerymobile.com/][jQuery Mobile]]. All it
+  needs to run is a browser and internet connection. So, it is truely
+  cross-platform and works on all devices (iPhone, Android, tablets,
+  laptops, etc.) without needing to be installed. Just open the [[http://fjalori.fs.al][url]]
+  and it will run. However it is designed for small screens (iPhone,
+  Android etc.) and looks better on them.
+
+
+* The Code
+
+  [[https://github.com/B-Translator/vocabulary-jquery][The code of the application]] is hosted on GitHub and it is Free
+  Software (licenced with GPLv3). Besides /jQuery Mobile/ it also uses
+  /jQuery/ and plain /JavaScript+HTML+CSS/, /Moustache Templates/,
+  etc.
+
+  It is built like a single page application (SPA) and is composed of
+  several parts or modules. Each part/module has some HTML code for
+  the view and/or some JavaScript code for the logic (making it
+  dynamic and interactive). Here is a list of these parts and the
+  corresponding HTML and JS files.
+
+    + Main page
+      - html/index.html
+      - html/_html/head.html
+      - html/_html/params.js
+      - js/app.js
+      - js/_app/page_vocabulary.js
+
+    + Configuration
+      - js/config.js
+      - js/options.js
+
+    + User
+      - js/user.js
+      - html/_html/login.html
+      - html/_html/proxylogin.html
+      - html/_html/confirm.html
+
+    + Search term
+      - html/_html/search.html
+      - js/_app/term.js
+
+    + Suggestions
+      - html/_html/suggestions.html
+      - js/_app/suggestions.js
+
+    + Translations
+      - html/_html/translations.html
+      - js/_app/translations.js
+
+    + Translation details
+      - html/_html/translation_details.html
+      - js/_app/translation.js
+
+    + Settings
+      - html/_html/settings.html
+      - js/_app/settings.js
+
+    + Menu
+      - html/_html/menu.html
+      - js/_app/menu.js
+
+    + Disqus comments
+      - html/_html/disqus.html
+      - js/_app/disqus.js
+
+    + Frame
+      - html/_html/frame.html
+      - js/frame.js
+
+    + Share
+      - html/_html/share.html
+      - js/_app/social_share.js
+
+    + REST Client
+      - js/_app/http_request.js
+      - js/_app/messages.js
+
+    + Tracking (Usage Statistics)
+      - js/_app/google_analytics.js
+
+    + Localization (translation)
+      - js/_app/l10n.js
+      - l10n/
+
+
+* The Data
+
+  *Vocabulary* itself is just a thin client application that runs on
+  browser. It does not have any database or data. For the data it
+  relies on the [[https://btranslator.org][B-Translator server]]. It gets and saves data to the
+  server using the [[http://info.btranslator.org/api/][B-Translator API]] (which is a REST API that can be
+  accessed though the HTTP protocol, using AJAX). Here are some
+  [[http://info.btranslator.org/api-examples-js/][B-Translator API Examples]].
+
+
+* Authentication
+
+   *Vocabulary* requires user authentication before adding any new
+   terms or translations. However it does not keep user accounts and
+   permissions itself. It again relies on [[https://btranslator.org][B-Translator server]] for
+   authentication users properly. It does it throuth the OAuth2
+   protocol; users are redirected to the server for authentication,
+   and after that they are redirected back to the client.
+
+   The B-Translator server itself relies on Google, Facebook, LinkedIn
+   etc. for authenticating the users, again using the OAuth2
+   protocol. So, basically users can use the same username and
+   password that they use for Google, FB etc. to authenticate
+   themselves for Vocabulary, instead of having to create yet another
+   username and password that they have to remember. I think this is
+   nice and cool, isn't it?
+
+
+* Misc
+
+  - *Vocabulary* makes use of Disqus comments. Each term can have its
+    own discussions and comments.
+
+  - It is highly configurable. It can support several types of
+    vocabularies, the app can be translated to other languages, it can
+    be used for languages other than Albanian, etc.
+
+  - It is social friendly. Each term and its translations can be
+    shared to social networks (Google+, FB, LinkedIn, etc.) with the
+    touch of a button.
