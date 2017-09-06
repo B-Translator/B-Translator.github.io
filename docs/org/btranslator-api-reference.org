@@ -27,7 +27,7 @@
 
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/report/statistics.php]]
+   - [[https://dev.btranslator.org/api-examples-php/report/statistics.php]]
    - [[http://info.btranslator.org/api-examples-js/#report/statistics_get.js]]
    - [[http://info.btranslator.org/api-examples-js/#report/statistics_post.js]]
 
@@ -55,7 +55,7 @@
      - lng :: language of translations
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/report/project_stats.php]]
+   - [[https://dev.btranslator.org/api-examples-php/report/project_stats.php]]
    - [[http://info.btranslator.org/api-examples-js/#report/project_stats_get.js]]
    - [[http://info.btranslator.org/api-examples-js/#report/project_stats_post.js]]
 
@@ -85,7 +85,7 @@
      - project :: (optional) name of the project 
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/report/topcontrib.php]]
+   - [[https://dev.btranslator.org/api-examples-php/report/topcontrib.php]]
    - [[http://info.btranslator.org/api-examples-js/#report/topcontrib_get.js]]
    - [[http://info.btranslator.org/api-examples-js/#report/topcontrib_post.js]]
 
@@ -111,7 +111,7 @@
          origin1/project2=
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/sguid.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/sguid.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/get_random_sguid.js]]
 
 
@@ -139,13 +139,13 @@
 
    Examples:
    - [[http://info.btranslator.org/api-examples-js/#translations/retrieve.js]]
-   - [[http://dev.btranslator.org/api-examples-php/translations/get.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/get.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/get.js]]
 
    #+BEGIN_EXAMPLE
    curl -k -H 'Accept: application/json' \
-     'http://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-   curl -k -H 'Accept: application/json' http://dev.btranslator.org/translations/sq/random
+     'https://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+   curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/random
    #+END_EXAMPLE
 
 
@@ -164,7 +164,7 @@
          between them.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/add.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
 
 
@@ -176,7 +176,7 @@
      - tguid :: ID of the translation
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/vote.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/vote.js]]
 
 
@@ -188,7 +188,7 @@
      - tguid :: ID of the translation
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/add.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/add.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/add.js]]
 
 
@@ -200,7 +200,7 @@
      - tguid :: ID of the translation
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/vote.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/vote.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/vote.js]]
 
 
@@ -265,13 +265,13 @@
     api/translations=
 
   Examples:
-  - [[http://dev.btranslator.org/api-examples-php/translations/search.php]]
+  - [[https://dev.btranslator.org/api-examples-php/translations/search.php]]
   - [[http://info.btranslator.org/api-examples-js/#translations/list.js]]
   - [[http://info.btranslator.org/api-examples-js/#translations/search.js]]
 
   #+BEGIN_EXAMPLE
   curl -k -H 'Accept: application/json' \
-       'http://dev.btranslator.org/translations/search?lng=sq&words=space'
+       'https://dev.btranslator.org/translations/search?lng=sq&words=space'
   curl -k -H 'Accept: application/json' \
        'https://l10n.org.al/translations/search?lng=sq&words=space'
   #+END_EXAMPLE
@@ -290,7 +290,7 @@
              Associative array of the needed parameters for this action.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/submit.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/submit.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/submit.js]]
 
 
@@ -325,7 +325,7 @@
    translated/corrected PO files.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/translations/import.php]]
+   - [[https://dev.btranslator.org/api-examples-php/translations/import.php]]
    - [[http://info.btranslator.org/api-examples-js/#translations/import.js]]
 
 
@@ -351,7 +351,7 @@
    + POST api/project/subscriptions ::
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/subscribe.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/subscribe.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/subscribe.js]]
 
 
@@ -361,7 +361,7 @@
      Return a full list of all the imported projects and languages.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/list_all.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/list_all.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/list_all.js]]
 
    #+BEGIN_EXAMPLE
@@ -392,12 +392,12 @@
      JSON or TEXT (default).
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/list.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/list.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/list.js]]
 
    #+BEGIN_EXAMPLE
-   curl -k -X POST http://dev.btranslator.org/api/project/list
-   curl -k -X POST http://dev.btranslator.org/api/project/list \
+   curl -k -X POST https://dev.btranslator.org/api/project/list
+   curl -k -X POST https://dev.btranslator.org/api/project/list \
 	-H "Content-type: application/json" \
 	-d '{"origin": "t*"}'
    #+END_EXAMPLE
@@ -479,14 +479,14 @@
          Comma separated list of usernames of the preferred voters.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/export.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/export.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/export.js]]
 
    #+BEGIN_EXAMPLE
-   curl -k 'http://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
-   curl -k http://dev.btranslator.org/project/export \
+   curl -k 'https://dev.btranslator.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+   curl -k https://dev.btranslator.org/project/export \
 	-d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-   curl -k http://dev.btranslator.org/project/export \
+   curl -k https://dev.btranslator.org/project/export \
 	-d origin=test -d project=kturtle -d lng=sq \
 	-d export_mode=preferred \
 	-d preferred_voters=user1,user2 > test1.tgz
@@ -562,7 +562,7 @@
      of =.pot=).
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/import.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/import.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/import.js]]
 
 
@@ -582,7 +582,7 @@
          type, where type can be one of =status=, =warning=, =error=.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/project/delete.php]]
+   - [[https://dev.btranslator.org/api-examples-php/project/delete.php]]
    - [[http://info.btranslator.org/api-examples-js/#project/delete.js]]
 
 
@@ -602,12 +602,12 @@
      Return a list of vocabularies in JSON format.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/list.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/list.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/list.js]]
 
    #+BEGIN_EXAMPLE
    curl -s https://btranslator.org/vocabulary/list | python -m json.tool
-   curl -s http://dev.btranslator.org/vocabulary/list | python -m json.tool
+   curl -s https://dev.btranslator.org/vocabulary/list | python -m json.tool
    #+END_EXAMPLE
 
 
@@ -622,7 +622,7 @@
          Default is =json=.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/export.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/export.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/export.js]]
 
    #+BEGIN_EXAMPLE
@@ -657,7 +657,7 @@
    #+END_EXAMPLE
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/import.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/import.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/import.js]]
 
 
@@ -683,7 +683,7 @@
                    type can be one of /status/, /warning/, /error/
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js]]
 
 
@@ -704,7 +704,7 @@
                    message is an array of a message and a type, where
                    type can be one of /status/, /warning/, /error/
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/add_string.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/add_string.js]]
 
 
@@ -724,7 +724,7 @@
          type, where type can be one of =status=, =warning=, =error=.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/vocabulary/delete.php]]
+   - [[https://dev.btranslator.org/api-examples-php/vocabulary/delete.php]]
    - [[http://info.btranslator.org/api-examples-js/#vocabulary/delete.js]]
 
 
@@ -740,7 +740,7 @@
         list.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/misc/latest.php]]
+   - [[https://dev.btranslator.org/api-examples-php/misc/latest.php]]
    - [[http://info.btranslator.org/api-examples-js/#misc/latest.js]]
 
    #+BEGIN_EXAMPLE
@@ -758,7 +758,7 @@
         translations may not appear on the list.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/misc/rss-feed.php]]
+   - [[https://dev.btranslator.org/api-examples-php/misc/rss-feed.php]]
    - [[http://info.btranslator.org/api-examples-js/#misc/rss-feed.js]]
 
    #+BEGIN_EXAMPLE
@@ -792,7 +792,7 @@
    https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/misc/twitter.php]]
+   - [[https://dev.btranslator.org/api-examples-php/misc/twitter.php]]
    - [[http://info.btranslator.org/api-examples-js/#misc/twitter.js]]
 
    #+BEGIN_EXAMPLE
@@ -835,7 +835,7 @@
      - str :: Beginning of a string.
 
    Examples:
-   - [[http://dev.btranslator.org/api-examples-php/misc/autocomplete.php]]
+   - [[https://dev.btranslator.org/api-examples-php/misc/autocomplete.php]]
    - [[http://info.btranslator.org/api-examples-js/#misc/autocomplete.js]]
 
    #+BEGIN_EXAMPLE
