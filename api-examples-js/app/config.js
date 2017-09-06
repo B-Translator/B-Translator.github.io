@@ -1,14 +1,14 @@
 
 var $config = {
     //api_url: 'https://btranslator.org',
-    api_url: 'http://dev.btranslator.org',
+    api_url: 'https://dev.btranslator.org',
 
     // Settings for oauth2 authentication.
     oauth2: {
         app_id: 'api-examples',
         auth_flow: 'password',     // password | proxy
         //proxy_endpoint: 'https://l10n.org.al/oauth2/proxy',
-        token_endpoint: 'http://dev.btranslator.org/oauth2/token',
+        token_endpoint: 'https://dev.btranslator.org/oauth2/token',
         client_id: 'test1',
         client_secret: '12345',
         scope: 'user_profile',
